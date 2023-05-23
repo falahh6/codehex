@@ -1,7 +1,33 @@
+@font-face {
+    font-family: 'Gotham';
+    src: url('../../utils/fonts/Gotham-Light.otf');
+}
+
 .footer {
-    height: 16rem;
-    width: 100%;
-    background-color: lightgrey;
+    height: 4rem;
+    width: 90%;
+    /* display: flex;
+    flex-direction: column; */
+    margin-left: 5%;
+    /* background-color: lightgrey; */
     position: absolute;
     bottom: 0;
+    font-weight: bold;
+    font-family: 'Gotham';
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: rgb(89, 89, 89);
+}
+
+.copyrightsection {
+    display: flex;
+    justify-content: space-between;
+}
+
+.secondsec {
+    display: flex;
+}
+
+.secondsec p:nth-child(2) {
+    margin-left: 1rem;
 }
