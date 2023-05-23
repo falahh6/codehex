@@ -1,9 +1,14 @@
 import styles from "./Footer.module.css";
-
+import logo from "../../utils/codehex-logo.svg";
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <div></div>
+      <div>
+        <div className={styles.logo}>
+          <img src={logo} alt="logo" />
+        </div>
+        <div></div>
+      </div>
       <hr />
       <div className={styles.copyrightsection}>
         <div className={styles.firstsec}>

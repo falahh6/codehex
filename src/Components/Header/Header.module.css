@@ -35,12 +35,13 @@
 
 .mainItems {
     display: flex;
-    width: 45%;
+    width: 30%;
     justify-content: space-around;
 }
 
 .mainItems li {
     transition: text-shadow 0.3s ease-in-out;
+    list-style-type: none;
 }
 
 .mainItems li:hover {
