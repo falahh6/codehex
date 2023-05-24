@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
+@font-face {
+  font-family: 'Mona-sans-regular';
+  src: url('../src/utils/fonts/Mona-Sans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Mona-sans-semibold';
+  src: url('../src/utils/fonts/Mona-Sans-SemiBoldWide.ttf');
+}
+
+@font-face {
+  font-family: 'Mona-sans-black';
+  src: url('../src/utils/fonts/Mona-Sans-Black.ttf');
+}

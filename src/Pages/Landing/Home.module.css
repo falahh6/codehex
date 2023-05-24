@@ -1,24 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
-
-@font-face {
-    font-family: 'Mona-sans-regular';
-    src: url('../../utils/fonts/Mona-Sans-Regular.ttf');
-}
-
-@font-face {
-    font-family: 'Mona-sans-semibold';
-    src: url('../../utils/fonts/Mona-Sans-SemiBoldWide.ttf');
-}
-
-@font-face {
-    font-family: 'Mona-sans-black';
-    src: url('../../utils/fonts/Mona-Sans-Black.ttf');
-}
-
-
 .main {
     width: 60%;
-    height: 90vh;
+    height: 100vh;
     margin: auto;
     display: flex;
     flex-direction: column;

@@ -1,0 +1,12 @@
+.mainDiv {
+    position: relative;
+    height: 100vh;
+    font-family: 'Mona-sans-black';
+    margin-left: 5%;
+    margin-top: 6rem;
+    text-align: center;
+}
+
+.mainDiv h1 {
+    letter-spacing: 1px;
+}
