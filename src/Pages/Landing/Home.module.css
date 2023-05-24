@@ -39,18 +39,47 @@
 }
 
 .cta {
-    padding: 0.5rem 2rem;
+    flex: 0 0 auto;
     font-size: larger;
     background-color: black;
     color: white;
     border: none;
     font-weight: bolder;
     border-radius: 8px;
-    box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.5), 0 0 10px 5px linear-gradient(91.83deg, rgb(208, 60, 74) 2.26%, rgb(172, 74, 218) 95.81%);
+    padding: 0.5rem 2rem;
+    margin: 2rem;
+    width: fit-content;
+    height: 45px;
+    /* background-color: #00DBDE; */
+    /* background-image: linear-gradient(45deg, #00DBDE 0%, #FC00FF 100%); */
+    position: relative;
+    border-radius: 4px;
+    transition: 0.5s ease;
+    margin-top: 12px;
+}
+
+.cta::after {
+    content: '';
+    border-radius: 4px;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-color: #00DBDE;
+    background-image: linear-gradient(45deg, #00DBDE 0%, #FC00FF 100%);
+    filter: blur(20px);
+    transition: 0.2s ease;
+    margin-left: -12rem;
+    margin-top: 0;
+
 }
 
 
 .cta:hover {
-    transition-duration: 0.25s;
-    opacity: 1;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.cta:hover::after {
+    display: none;
 }

@@ -7,10 +7,12 @@ const Home = () => {
         <h1> Wanna learn coding?</h1>
         <p>
           {" "}
-          "Unlock the Power of Intelligent Coding with CodeHex: The AI-Powered
+          "Unlock the Power of Intelligent Coding with CodeHex : The AI-Powered
           Compiler"
         </p>
-        <button className={styles.cta}>start writing code</button>
+        <div className={styles.ctaWrap}>
+          <button className={styles.cta}>Start writing code</button>
+        </div>
       </div>
     </>
   );
