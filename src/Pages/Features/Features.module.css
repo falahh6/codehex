@@ -16,15 +16,14 @@
 .featureTwo,
 .featureThree {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    text-align: center;
     justify-content: center;
 }
 
 .featureOne div h2,
 .featureTwo div h2,
-.featureThre div h2 {
+.featureThree div h2 {
     margin-right: 4rem;
     text-align: left;
     width: 100%;
@@ -35,13 +34,5 @@
 .featureThree div img {
     width: 60rem;
     margin-top: 4rem;
-}
-
-.featureOne div img,
-.featureThree div img {
-    margin-right: -40rem;
-}
-
-.featureTwo div img {
-    margin-left: -40rem;
+    text-align: left;
 }

@@ -10,11 +10,13 @@
     letter-spacing: 2px;
 }
 
-.main h1 {
+.h1 {
     font-family: 'Mona-sans-black', serif;
     font-size: 44px;
     margin-bottom: 0;
+    transition: all 0.2s ease;
 }
+
 
 .main p {
     padding: none;

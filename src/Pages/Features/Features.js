@@ -12,27 +12,27 @@ const Features = () => {
         <div>
           <div className={styles.featureOne}>
             <div>
-              {" "}
-              <h2>Smart code suggestion</h2>{" "}
+              <img src={testimage1} alt="" />
             </div>
             <div>
-              <img src={testimage1} alt="" />
+              {" "}
+              <h2>Smart code suggestion</h2>{" "}
             </div>
           </div>
           <div className={styles.featureTwo}>
             <div>
-              <img src={testimage2} alt="" />
+              <h2>Smart code suggestion</h2>{" "}
             </div>
             <div>
-              <h2>Smart code suggestion</h2>{" "}
+              <img src={testimage2} alt="" />
             </div>
           </div>
           <div className={styles.featureThree}>
             <div>
-              <h2>Smart code suggestion</h2>{" "}
+              <img src={testimage1} alt="" />
             </div>
             <div>
-              <img src={testimage1} alt="" />
+              <h2>Smart code suggestion</h2>{" "}
             </div>
           </div>
         </div>

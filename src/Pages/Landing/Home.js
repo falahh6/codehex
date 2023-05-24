@@ -1,26 +1,22 @@
-import { useEffect, useState } from "react";
 import Features from "../Features/Features";
 import styles from "./Home.module.css";
+import { TypeAnimation } from "react-type-animation";
 
 const Home = () => {
-  const [texts, setTexts] = useState([
-    "Wanna Learn Coding?",
-    "Looking for a Perfect Compiler?",
-  ]);
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % texts.length);
-    }, 2000);
-
-    return () => clearInterval(timer);
-  }, [texts.length]);
-
   return (
     <>
       <div className={styles.main}>
-        <h1>{texts[index]}</h1>
+        <TypeAnimation
+          className={styles.h1}
+          sequence={[
+            "Wanna Learn Coding?",
+            3000,
+            "Looking for a Perfect Compiler?",
+            3000,
+          ]}
+          speed={30}
+          repeat={Infinity}
+        />
         <p>
           {" "}
           "Unlock the Power of Intelligent Coding with codehex : The AI-Powered

@@ -6,7 +6,6 @@
 .footer {
     height: 4rem;
     width: 90%;
-    margin-left: 5%;
     position: relative;
     bottom: 4rem;
     font-weight: bold;
@@ -14,6 +13,7 @@
     font-size: 12px;
     letter-spacing: 1px;
     color: rgb(89, 89, 89);
+    margin: auto;
 }
 
 .logo img {
