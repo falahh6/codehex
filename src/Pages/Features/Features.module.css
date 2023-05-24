@@ -1,12 +1,47 @@
 .mainDiv {
     position: relative;
-    height: 100vh;
+    height: fit-content;
     font-family: 'Mona-sans-black';
     margin-left: 5%;
-    margin-top: 6rem;
+    padding-top: 6rem;
     text-align: center;
+    margin-bottom: 8rem;
 }
 
 .mainDiv h1 {
     letter-spacing: 1px;
+}
+
+.featureOne,
+.featureTwo,
+.featureThree {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.featureOne div h2,
+.featureTwo div h2,
+.featureThre div h2 {
+    margin-right: 4rem;
+    text-align: left;
+    width: 100%;
+}
+
+.featureOne div img,
+.featureTwo div img,
+.featureThree div img {
+    width: 60rem;
+    margin-top: 4rem;
+}
+
+.featureOne div img,
+.featureThree div img {
+    margin-right: -40rem;
+}
+
+.featureTwo div img {
+    margin-left: -40rem;
 }

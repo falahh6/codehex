@@ -1,5 +1,5 @@
 import styles from "./Footer.module.css";
-import logo from "../../utils/codehex-logo.svg";
+import logo from "../../assets/images/codehex-logo.svg";
 const Footer = () => {
   return (
     <footer className={styles.footer}>

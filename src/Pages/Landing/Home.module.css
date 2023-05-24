@@ -53,15 +53,17 @@
     transition: 0.2s ease;
     margin-left: -12rem;
     margin-top: 0;
-
 }
 
-
 .cta:hover {
-    transform: scale(1.1);
     cursor: pointer;
 }
 
-.cta:hover::after {
-    display: none;
+.ctaWrap {
+    transition: transform 0.2s ease-in-out;
+}
+
+
+.ctaWrap:hover {
+    transform: scale(1.1);
 }
