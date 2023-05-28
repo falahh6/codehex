@@ -4,6 +4,7 @@ import Error from "./Pages/Error/Error";
 import "./App.css";
 import Home from "./Pages/Landing/Home";
 import Compiler from "./Pages/Playground/Compiler";
+import DevelopedBy from "./Pages/DevelopedBy/DevelopedBy";
 
 function App() {
   const router = createBrowserRouter([
@@ -16,11 +17,16 @@ function App() {
           path: "/",
           element: <Home />,
         },
+        {
+          path: "/developer",
+          element: <DevelopedBy />,
+        },
       ],
     },
     {
-      path: "/falah/compiler",
+      path: "/compiler",
       element: <Compiler />,
+      errorElement: <Error />,
     },
   ]);
 

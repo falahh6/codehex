@@ -50,6 +50,19 @@
     border-bottom: 1px solid #094AAD;
 }
 
+
+.mainItems li a {
+    transition: all 0.3s ease-in-out;
+    color: black;
+    text-decoration: none;
+    padding-bottom: 6px;
+}
+
+.mainItems li a.active {
+    transition: all 0.3s ease-in-out;
+    border-bottom: 1px solid #094AAD;
+}
+
 .authItems {
     display: flex;
     list-style-type: none;
@@ -63,13 +76,15 @@
     transition: all 0.3s ease-in-out;
 }
 
-.authItems li:nth-child(2) {
-    border: 1.5px solid #d1d1d1;
-    border-radius: 0.4rem;
-}
 
 .authItems li:nth-child(1):hover {
     background-color: #e2e2e2;
+    border-radius: 0.4rem;
+    cursor: pointer;
+}
+
+.authItems li:nth-child(2) {
+    border: 1.5px solid #d1d1d1;
     border-radius: 0.4rem;
 }
 
@@ -77,4 +92,8 @@
     background-color: #e2e2e2;
     cursor: pointer;
     /* color: white; */
+}
+
+.hamburger {
+    display: none;
 }

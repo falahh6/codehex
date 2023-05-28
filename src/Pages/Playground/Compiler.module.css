@@ -1,0 +1,50 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 4rem;
+    width: 40%;
+}
+
+.form textarea {
+    width: 60%;
+    height: 20vh;
+    padding: 10px;
+}
+
+.form button {
+    padding: 0.5rem;
+    transition: all 0.3s ease-in-out;
+    width: fit-content;
+}
+
+.form button:hover {
+    background-color: #e2e2e2;
+    /* border-radius: 0.4rem; */
+    cursor: pointer;
+}
+
+.output {
+    margin: 4rem;
+    width: 40%;
+}
+
+.headDiv {
+    padding: 2rem;
+    padding-bottom: 0;
+}
+
+.mainDiv {
+    display: flex;
+    width: 100%;
+}
+
+.mainDiv form textarea {
+    width: 110%;
+    height: 40vh;
+}
+
+.langSelect {
+    width: 20%;
+    padding: 1rem;
+}

@@ -12,7 +12,7 @@
     letter-spacing: 1px;
 }
 
-.featureOne,
+/* .featureOne,
 .featureTwo,
 .featureThree {
     display: flex;
@@ -35,4 +35,16 @@
     width: 60rem;
     margin-top: 4rem;
     text-align: left;
+} */
+
+.featureOne {
+    display: flex;
+    padding: 4rem;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+}
+
+.f1i1 img {
+    width: 30rem;
 }

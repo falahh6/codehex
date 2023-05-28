@@ -1,0 +1,30 @@
+.main {
+    width: 80%;
+    /* background-color: antiquewhite; */
+    margin: auto;
+    height: 75vh;
+    font-family: '';
+}
+
+.h1 {
+    margin-top: 15rem;
+}
+
+.main p {
+    font-weight: bold;
+    color: rgb(60, 60, 60);
+    letter-spacing: 1px;
+}
+
+.socials {
+    padding: 2rem;
+    padding-left: 0;
+    padding-top: 0;
+}
+
+.socials a {
+    font-size: 1.5rem;
+    color: black;
+    padding-right: 1rem;
+    color: rgb(60, 60, 60);
+}
