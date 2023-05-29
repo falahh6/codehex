@@ -1,50 +1,76 @@
-.form {
+.mainDiv {
     display: flex;
-    flex-direction: column;
     gap: 1rem;
-    margin: 4rem;
+    justify-content: center;
+}
+
+.form {
     width: 40%;
+    /* background-color: beige; */
 }
 
-.form textarea {
-    width: 60%;
-    height: 20vh;
-    padding: 10px;
+.codeBlock textarea {
+    height: 70vh;
+    width: 95%;
+    resize: none;
+    border-radius: 0.4rem;
 }
 
-.form button {
-    padding: 0.5rem;
-    transition: all 0.3s ease-in-out;
-    width: fit-content;
-}
+.fileName {
+    /* margin-top: 0; */
+    font-size: 1rem;
 
-.form button:hover {
-    background-color: #e2e2e2;
-    /* border-radius: 0.4rem; */
-    cursor: pointer;
 }
 
 .output {
-    margin: 4rem;
     width: 40%;
-}
-
-.headDiv {
-    padding: 2rem;
-    padding-bottom: 0;
-}
-
-.mainDiv {
     display: flex;
-    width: 100%;
+    flex-direction: column;
+    max-height: 71.1vh;
+    margin-top: 4rem;
+    border: 1px solid darkgray;
+    border-radius: 0.4rem;
+    overflow: scroll;
 }
 
-.mainDiv form textarea {
-    width: 110%;
-    height: 40vh;
+.output h4 {
+    position: absolute;
+    top: 6.8rem;
+    font-size: 1rem;
+}
+
+.output p {
+    padding: 8px;
+}
+
+
+.actions {
+    width: 202%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .langSelect {
-    width: 20%;
-    padding: 1rem;
+    background-color: #F0F1F2;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: none;
+}
+
+.runButton {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #7aeb8d;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.runButton:hover {
+    background-color: #7aeb8dc2;
+    cursor: pointer;
+}
+
+.runButton span {
+    margin-left: 8px;
 }

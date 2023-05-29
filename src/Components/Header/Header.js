@@ -1,20 +1,27 @@
 import Logo from "../../utils/Logo";
 import styles from "./Header.module.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 const Header = () => {
   const navigate = useNavigate();
   const redirectHandler = () => {
     navigate("/");
   };
+
+  const navLinkClickHanlder = () => {
+    const featuresSection = document.getElementById("features");
+
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <header className={styles.header}>
       <Logo redirect={redirectHandler} />
-      {/* <div className={styles.leftItems}> */}
       <ul className={styles.mainItems}>
-        <ScrollLink to="features" smooth={true} duration={600}>
+        <Link to="/" onClick={navLinkClickHanlder}>
           <li>Features</li>
-        </ScrollLink>
+        </Link>
         <li>About</li>
         <li>
           {" "}
@@ -26,7 +33,6 @@ const Header = () => {
           </NavLink>
         </li>
       </ul>
-      {/* </div> */}
       <ul className={styles.authItems}>
         <li>Login</li>
         <li>Get Started</li>

@@ -3,7 +3,7 @@ import testimage1 from "../../assets/images/test1.png";
 import { Element } from "react-scroll";
 const Features = () => {
   return (
-    <Element name="features">
+    <Element id="features" name="features">
       <div className={styles.mainDiv}>
         <h1>
           How <span>codehex</span> helps you learn?

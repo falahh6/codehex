@@ -50,6 +50,10 @@
     border-bottom: 1px solid #094AAD;
 }
 
+.mainItems a {
+    color: black;
+    text-decoration: none;
+}
 
 .mainItems li a {
     transition: all 0.3s ease-in-out;

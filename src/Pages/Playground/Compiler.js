@@ -2,6 +2,9 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import styles from "./Compiler.module.css";
 import Logo from "../../utils/Logo";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Accordion } from "react-bootstrap";
 const Compiler = () => {
   const [outputLoading, setOutputLoading] = useState(false);
   const [lineNumbers, setLineNumbers] = useState("");
@@ -247,27 +250,72 @@ const Compiler = () => {
       </div>
       <div className={styles.mainDiv}>
         <form onSubmit={submitHandler} action="" className={styles.form}>
-          <h3 htmlFor="code">Enter your code here</h3>
           {/* <div className={styles["line-numbers"]}></div> */}
-          <select
-            className={styles.langSelect}
-            ref={selectRef}
-            name="test"
-            id="test"
-          >
-            {languageSelection}
-          </select>
-          <textarea
-            ref={codeRef}
-            type="text"
-            id="code"
-            placeholder="//your code here"
-          />
-          <button>Execute</button>
+          <div className={styles.actions}>
+            <select
+              className={styles.langSelect}
+              ref={selectRef}
+              name="test"
+              id="test"
+            >
+              {languageSelection}
+            </select>
+
+            <button className={styles.runButton}>
+              <FontAwesomeIcon icon={faPlay} />
+              <span>Run </span>
+            </button>
+          </div>
+          <div className={styles.codeBlock}>
+            <h4 className={styles.fileName}>main.c</h4>
+            <textarea ref={codeRef} type="text" id="code" placeholder="" />
+          </div>
         </form>
         <div className={styles.output}>
-          <h3>Output</h3>
-          <p>{!outputLoading ? output : "Loading..."}</p>
+          <h4>stdout</h4>
+          <div>
+            <Accordion defaultActiveKey="0" flush alwaysOpen>
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Accordion Item #1</Accordion.Header>
+                <Accordion.Body>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>Accordion Item #2</Accordion.Header>
+                <Accordion.Body>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </Accordion.Body>
+              </Accordion.Item>
+              <Accordion.Item eventKey="2">
+                <Accordion.Header>Accordion Item #3</Accordion.Header>
+                <Accordion.Body>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </div>
         </div>
       </div>
     </div>

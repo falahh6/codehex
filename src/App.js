@@ -5,7 +5,7 @@ import "./App.css";
 import Home from "./Pages/Landing/Home";
 import Compiler from "./Pages/Playground/Compiler";
 import DevelopedBy from "./Pages/DevelopedBy/DevelopedBy";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const router = createBrowserRouter([
     {
