@@ -1,7 +1,6 @@
 import Logo from "../../utils/Logo";
 import styles from "./Header.module.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Link as ScrollLink } from "react-scroll";
 const Header = () => {
   const navigate = useNavigate();
   const redirectHandler = () => {

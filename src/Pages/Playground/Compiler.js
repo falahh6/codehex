@@ -5,6 +5,7 @@ import Logo from "../../utils/Logo";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Accordion } from "react-bootstrap";
+import { Helmet } from "react-helmet";
 const Compiler = () => {
   const [outputLoading, setOutputLoading] = useState(false);
   const [lineNumbers, setLineNumbers] = useState("");
@@ -245,6 +246,9 @@ const Compiler = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Compiler</title>
+      </Helmet>
       <div className={styles.headDiv}>
         <Logo />
       </div>
