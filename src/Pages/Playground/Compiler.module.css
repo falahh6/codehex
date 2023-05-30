@@ -1,6 +1,10 @@
 .headDiv {
     padding-top: 1rem;
-    padding-left: 2rem;
+    padding-left: 10rem;
+}
+
+.headDiv img {
+    width: 8rem;
 }
 
 .mainDiv {
@@ -40,7 +44,7 @@
 
 .output h4 {
     position: absolute;
-    top: 8.8rem;
+    top: 8.1rem;
     font-size: 1rem;
 }
 

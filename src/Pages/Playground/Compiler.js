@@ -1,69 +1,50 @@
 import React, { useRef, useState } from "react";
-import axios from "axios";
 import styles from "./Compiler.module.css";
 import Logo from "../../utils/Logo";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Accordion } from "react-bootstrap";
 import { Helmet } from "react-helmet";
+import { AnimatePresence, motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { compilerOutput } from "../../store/compiler-slice";
+
 const Compiler = () => {
   const [outputLoading, setOutputLoading] = useState(false);
   const [lineNumbers, setLineNumbers] = useState("");
+  const dispatch = useDispatch();
   let outputCheck;
   const codeRef = useRef();
   const selectRef = useRef();
-  const [output, setOutput] = useState("");
-  const executeCodeHandler = async (userCode) => {
-    const options = {
-      method: "POST",
-      url: "https://onecompiler-apis.p.rapidapi.com/api/v1/run",
-      headers: {
-        "content-type": "application/json",
-        "X-RapidAPI-Key": process.env.REACT_APP_COMPILER_API,
-        "X-RapidAPI-Host": "onecompiler-apis.p.rapidapi.com",
-      },
-      data: {
-        language: "javascript",
-        stdin: "Peter",
-        files: [
-          {
-            name: "index.js",
-            content: userCode,
-          },
-        ],
-      },
-    };
-
-    try {
-      const response = await axios.request(options);
-      outputCheck = response.data;
-      console.log(outputCheck);
-    } catch (error) {
-      console.log(error);
-    }
-
-    console.log(outputCheck.stdout);
-    setOutput(outputCheck.stdout);
-    console.log("executing");
-    setOutputLoading(false);
-  };
+  // const [output, setOutput] = useState("");
+  const output = useSelector((state) => state.compiler.output);
+  // const executeCodeHandler = async (userCode) => {
+  //   console.log(output);
+  //   // console.log(outputCheck.stdout);
+  //   // setOutput(outputCheck.stdout);
+  //   // console.log("executing");
+  //   // setOutputLoading(false);
+  // };
 
   const submitHandler = (event) => {
     setOutputLoading(true);
     event.preventDefault();
-    setLineNumbers(
-      event.target.value.split("\n").map((_, i) => <span key={i}>{i + 1}</span>)
-    );
+    // setLineNumbers(
+    //   event.target.value.split("\n").map((_, i) => <span key={i}>{i + 1}</span>)
+    // );
 
     const userCode = codeRef.current.value;
     const selectedOption = selectRef.current.selectedOptions[0];
     const extension = selectedOption.value;
     const language = selectedOption.text;
 
-    console.log(userCode, language, extension);
+    // console.log(userCode, language, extension);
 
     // executeCodeHandler(userCode);
 
+    dispatch(compilerOutput(userCode));
+
+    console.log(output);
     setOutputLoading(false);
   };
 
@@ -245,84 +226,94 @@ const Compiler = () => {
   ));
 
   return (
-    <div>
-      <Helmet>
-        <title>Compiler</title>
-      </Helmet>
-      <div className={styles.headDiv}>
-        <Logo />
-      </div>
-      <div className={styles.mainDiv}>
-        <form onSubmit={submitHandler} action="" className={styles.form}>
-          {/* <div className={styles["line-numbers"]}></div> */}
-          <div className={styles.actions}>
-            <select
-              className={styles.langSelect}
-              ref={selectRef}
-              name="test"
-              id="test"
-            >
-              {languageSelection}
-            </select>
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <div>
+          <Helmet>
+            <title>Compiler</title>
+          </Helmet>
+          <div className={styles.headDiv}>
+            <Logo />
+          </div>
+          <div className={styles.mainDiv}>
+            <form onSubmit={submitHandler} action="" className={styles.form}>
+              {/* <div className={styles["line-numbers"]}></div> */}
+              <div className={styles.actions}>
+                <select
+                  className={styles.langSelect}
+                  ref={selectRef}
+                  name="test"
+                  id="test"
+                >
+                  {languageSelection}
+                  <p>dbb</p>
+                </select>
 
-            <button className={styles.runButton}>
-              <FontAwesomeIcon icon={faPlay} />
-              <span>Run </span>
-            </button>
-          </div>
-          <div className={styles.codeBlock}>
-            <h4 className={styles.fileName}>main.c</h4>
-            <textarea ref={codeRef} type="text" id="code" placeholder="" />
-          </div>
-        </form>
-        <div className={styles.output}>
-          <h4>stdout</h4>
-          <div>
-            <Accordion defaultActiveKey="0" flush alwaysOpen>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Accordion Item #1</Accordion.Header>
-                <Accordion.Body>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="1">
-                <Accordion.Header>Accordion Item #2</Accordion.Header>
-                <Accordion.Body>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>Accordion Item #3</Accordion.Header>
-                <Accordion.Body>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+                <button className={styles.runButton}>
+                  <FontAwesomeIcon icon={faPlay} />
+                  <span>Run </span>
+                </button>
+              </div>
+              <div className={styles.codeBlock}>
+                <h4 className={styles.fileName}>main.c</h4>
+                <textarea ref={codeRef} type="text" id="code" placeholder="" />
+              </div>
+            </form>
+            <div className={styles.output}>
+              {/* <h4>stdout</h4> */}
+              <div>
+                <Accordion defaultActiveKey="0" flush alwaysOpen>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>Output</Accordion.Header>
+                    <Accordion.Body>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                      sint occaecat cupidatat non proident, sunt in culpa qui
+                      officia deserunt mollit anim id est laborum.
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item eventKey="1">
+                    <Accordion.Header>Accordion Item #2</Accordion.Header>
+                    <Accordion.Body>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                      sint occaecat cupidatat non proident, sunt in culpa qui
+                      officia deserunt mollit anim id est laborum.
+                    </Accordion.Body>
+                  </Accordion.Item>
+                  <Accordion.Item eventKey="2">
+                    <Accordion.Header>Accordion Item #3</Accordion.Header>
+                    <Accordion.Body>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                      sint occaecat cupidatat non proident, sunt in culpa qui
+                      officia deserunt mollit anim id est laborum.
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
