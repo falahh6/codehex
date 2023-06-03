@@ -1,4 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
+import programmingLanguages from "../../utils/languages";
+import extensions from "../../utils/extensions";
 import styles from "./Compiler.module.css";
 import Logo from "../../utils/Logo";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
@@ -8,222 +10,45 @@ import { Helmet } from "react-helmet";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { compilerOutput } from "../../store/compiler-slice";
-
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Typography, Space, Menu } from "antd";
+import { useState } from "react";
+import { useEffect } from "react";
 const Compiler = () => {
-  const [outputLoading, setOutputLoading] = useState(false);
-  const [lineNumbers, setLineNumbers] = useState("");
   const dispatch = useDispatch();
-  let outputCheck;
+  const [extensionDisplay, setExtensionDisplay] = useState();
   const codeRef = useRef();
   const selectRef = useRef();
-  // const [output, setOutput] = useState("");
   const output = useSelector((state) => state.compiler.output);
-  // const executeCodeHandler = async (userCode) => {
-  //   console.log(output);
-  //   // console.log(outputCheck.stdout);
-  //   // setOutput(outputCheck.stdout);
-  //   // console.log("executing");
-  //   // setOutputLoading(false);
-  // };
+  const [selectedkeysState, setSelectedKeys] = useState("1");
+
+  const OnChangePLHandler = ({ key }) => {
+    setSelectedKeys(key);
+    // console.log(selectedkeysState);
+  };
+
+  useEffect(() => {
+    console.log(selectedkeysState);
+    console.log();
+    setExtensionDisplay(extensions[selectedkeysState]);
+  }, [selectedkeysState]);
 
   const submitHandler = (event) => {
-    setOutputLoading(true);
     event.preventDefault();
-    // setLineNumbers(
-    //   event.target.value.split("\n").map((_, i) => <span key={i}>{i + 1}</span>)
-    // );
 
     const userCode = codeRef.current.value;
     const selectedOption = selectRef.current.selectedOptions[0];
     const extension = selectedOption.value;
     const language = selectedOption.text;
 
-    // console.log(userCode, language, extension);
-
-    // executeCodeHandler(userCode);
-
-    dispatch(compilerOutput(userCode));
-
-    console.log(output);
-    setOutputLoading(false);
+    dispatch(compilerOutput({ language, extension, userCode }));
   };
 
-  // Array of programming languages
-  const programmingLanguages = [
-    "Select the programming language",
-    "Ada95",
-    "ASM (NASM)",
-    "ASM (NASM)",
-    "Awk (gawk)",
-    "Awk (mawk)",
-    "Bash",
-    "BC",
-    "Brainf*ck",
-    "C",
-    "C",
-    "C (Clang)",
-    "C++",
-    "C++",
-    "C++",
-    "C++ (ASM GCC)",
-    "C++ (Clang)",
-    "Clojure",
-    "CLIPS",
-    "Cobol",
-    "Cobol",
-    "CoffeeScript",
-    "Common Lisp (CLISP)",
-    "Common Lisp (SBCL)",
-    "CPP",
-    "CPP",
-    "D",
-    "D",
-    "D (Clang)",
-    "D (DMD)",
-    "Dart",
-    "Elixir",
-    "Erlang",
-    "FORTRAN",
-    "F#",
-    "Forth",
-    "Groovy",
-    "Gosu",
-    "GPC",
-    "Haskell",
-    "Icon",
-    "INTERCAL",
-    "Java",
-    "Java",
-    "JavaScript",
-    "JavaScript (Rhino)",
-    "Julia",
-    "Kotlin",
-    "Lua",
-    "LabVIEW",
-    "Lisp",
-    "Lisp",
-    "Logo",
-    "Matlab",
-    "Nemerle",
-    "Nice",
-    "Node.js",
-    "Nim",
-    "Objective-C",
-    "Objective-C (Clang)",
-    "Octave",
-    "OCaml",
-    "Pascal",
-    "Pascal (FPC)",
-    "Perl",
-    "Perl",
-    "PHP",
-    "Pico Lisp",
-    "Pike",
-    "Prolog",
-    "Prolog",
-    "Python",
-    "Python",
-    "Python (PyPy)",
-    "Python 3",
-    "Python 3",
-    "R",
-    "R",
-    "Racket",
-    "Ruby",
-    "Rust",
-    "Scala",
-    "Scheme",
-    "Scheme",
-    "Scheme (Chicken)",
-    "Shell",
-    "Smalltalk",
-    "SQL",
-    "SQLite",
-    "Swift",
-    "Tcl",
-    "Unlambda",
-    "VB",
-    "VB.NET",
-    "Visual Basic",
-    "Whitespace",
-  ];
-
-  const extensions = [
-    "",
-    "adb",
-    "asm",
-    "asm",
-    "awk",
-    "awk",
-    "sh",
-    "bc",
-    "bf",
-    "c",
-    "c",
-    "c",
-    "cpp",
-    "cpp",
-    "cpp",
-    "asm",
-    "cpp",
-    "clj",
-    "clp",
-    "cob",
-    "cob",
-    "coffee",
-    "lisp",
-    "lisp",
-    "cpp",
-    "cpp",
-    "d",
-    "d",
-    "m",
-    "d",
-    "dart",
-    "ex",
-    "erl",
-    "f90",
-    "fs",
-    "fr",
-    "groovy",
-    "gs",
-    "gpc",
-    "hs",
-    "icn",
-    "i",
-    "java",
-    "java",
-    "js",
-    "js",
-    "jl",
-    "kt",
-    "lua",
-    "vi",
-    "lisp",
-    "lisp",
-    "logo",
-    "m",
-    "n",
-    "nice",
-    "js",
-    "nim",
-    "m",
-    "m",
-    "m",
-    "swift",
-    "tcl",
-    "uni",
-    "vb",
-    "vb",
-    "bas",
-    "ws",
-  ];
-
-  const languageSelection = programmingLanguages.map((language, index) => (
-    <option key={index} value={extensions[index]}>
-      {language}
-    </option>
-  ));
+  const items = programmingLanguages.map((language, index) => ({
+    key: `${index}`,
+    label: language,
+    extension: extensions[index],
+  }));
 
   return (
     <AnimatePresence>
@@ -244,42 +69,55 @@ const Compiler = () => {
             <form onSubmit={submitHandler} action="" className={styles.form}>
               {/* <div className={styles["line-numbers"]}></div> */}
               <div className={styles.actions}>
-                <select
-                  className={styles.langSelect}
-                  ref={selectRef}
-                  name="test"
-                  id="test"
+                <Dropdown
+                  menu={{
+                    items,
+                    selectable: true,
+                    selectedKeys: selectedkeysState,
+                    onClick: OnChangePLHandler,
+                  }}
+                  autoAdjustOverflow
+                  overlayStyle={{
+                    overflowY: "scroll",
+                    maxHeight: "75.6vh",
+                    border: "1px solid lightgrey",
+                    borderRadius: "4px",
+                  }}
                 >
-                  {languageSelection}
-                  <p>dbb</p>
-                </select>
-
+                  <Typography.Link>
+                    <Space>
+                      {
+                        items.find((item) => item.key === selectedkeysState)
+                          .label
+                      }
+                      <DownOutlined />
+                    </Space>
+                  </Typography.Link>
+                </Dropdown>
                 <button className={styles.runButton}>
                   <FontAwesomeIcon icon={faPlay} />
-                  <span>Run </span>
+                  <span> Run </span>
                 </button>
               </div>
               <div className={styles.codeBlock}>
-                <h4 className={styles.fileName}>main.c</h4>
-                <textarea ref={codeRef} type="text" id="code" placeholder="" />
+                <h4 className={styles.fileName}>
+                  main.<span>{extensionDisplay}</span>
+                </h4>
+                <textarea
+                  className={styles.codeInput}
+                  ref={codeRef}
+                  type="text"
+                  id="code"
+                  placeholder=""
+                />
               </div>
             </form>
             <div className={styles.output}>
-              {/* <h4>stdout</h4> */}
               <div>
                 <Accordion defaultActiveKey="0" flush alwaysOpen>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>Output</Accordion.Header>
-                    <Accordion.Body>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                      sint occaecat cupidatat non proident, sunt in culpa qui
-                      officia deserunt mollit anim id est laborum.
-                    </Accordion.Body>
+                    <Accordion.Body>{output}</Accordion.Body>
                   </Accordion.Item>
                   <Accordion.Item eventKey="1">
                     <Accordion.Header>Accordion Item #2</Accordion.Header>

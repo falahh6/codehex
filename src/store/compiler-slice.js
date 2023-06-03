@@ -9,7 +9,7 @@ const compilerInitialState = {
 
 export const compilerOutput = createAsyncThunk(
   "compilerSlice/output",
-  async (userCode) => {
+  async ({ Selectedlanguage, extension, userCode }) => {
     const options = {
       method: "POST",
       url: "https://onecompiler-apis.p.rapidapi.com/api/v1/run",
@@ -30,14 +30,19 @@ export const compilerOutput = createAsyncThunk(
       },
     };
 
-    axios
-      .request(options)
-      .then((response) => {
-        return response.data.choices;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log(Selectedlanguage, extension);
+
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+      if (response.data.stderr === null) {
+        return response.data.stdout;
+      } else {
+        return response.data.stderr;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 
@@ -47,8 +52,8 @@ const compilerSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(compilerOutput.fulfilled, (state, action) => {
-      state.output = action.payload;
       console.log(action.payload);
+      state.output = action.payload;
     });
     builder.addCase(compilerOutput.rejected, (state, action) => {
       console.log(action.error);

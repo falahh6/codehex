@@ -57,18 +57,24 @@
     width: 202%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
-.langSelect {
+.actions a {
     background-color: #F0F1F2;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     border: none;
     margin-bottom: 1rem;
+    border: 1px solid #F0F1F2;
+}
+
+.langSelect:hover {
+    cursor: pointer;
 }
 
 .runButton {
-    padding: 0.5rem;
+    padding: 0.6rem 1rem;
     margin-bottom: 1rem;
     border: none;
     background-color: #7aeb8d;
@@ -84,4 +90,8 @@
 
 .runButton span {
     margin-left: 8px;
+}
+
+.codeInput {
+    padding: 8px;
 }
