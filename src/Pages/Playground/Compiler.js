@@ -14,6 +14,9 @@ import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Typography, Space, Menu } from "antd";
 import { useState } from "react";
 import { useEffect } from "react";
+import { alternativeCode } from "../../store/compiler-slice";
+// import { OpenAIApi, Configuration } from "openai";
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionDisplay, setExtensionDisplay] = useState();
@@ -21,6 +24,7 @@ const Compiler = () => {
   const selectRef = useRef();
   const output = useSelector((state) => state.compiler.output);
   const [selectedkeysState, setSelectedKeys] = useState("0");
+  const [promptResponse, setPromptResponse] = useState("");
 
   const OnChangePLHandler = ({ key }) => {
     setSelectedKeys(key);
@@ -36,6 +40,27 @@ const Compiler = () => {
     label: language,
     extension: extensions[index],
   }));
+
+  const getResponseHandler = async () => {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [
+          { role: "system", content: "You: tell me a joke" },
+          { role: "user", content: "Assistant: Knock, knock" },
+          { role: "assistant", content: "User: Who's there?" },
+        ],
+      }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -137,13 +162,9 @@ const Compiler = () => {
                     <Accordion.Body>
                       <div className={styles.accbody}>
                         <span>
-                          <button>hey</button>
+                          <button onClick={getResponseHandler}>hey</button>
                         </span>{" "}
-                        <p>
-                          smart code suggestions Lorem ipsum dolor sit amet
-                          consectetur adipisicing elit. Fugiat quidem assumenda
-                          qui illum maiores volupt
-                        </p>
+                        <p>{promptResponse}</p>
                       </div>
                     </Accordion.Body>
                   </Accordion.Item>
