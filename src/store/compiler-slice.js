@@ -19,18 +19,18 @@ export const compilerOutput = createAsyncThunk(
         "X-RapidAPI-Host": "onecompiler-apis.p.rapidapi.com",
       },
       data: {
-        language: "javascript",
+        language: Selectedlanguage,
         stdin: "Peter",
         files: [
           {
-            name: "index.js",
+            name: "index" + extension,
             content: userCode,
           },
         ],
       },
     };
 
-    console.log(Selectedlanguage, extension);
+    console.log(Selectedlanguage, extension, userCode);
 
     try {
       const response = await axios.request(options);

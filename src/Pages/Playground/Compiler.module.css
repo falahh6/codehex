@@ -95,3 +95,55 @@
 .codeInput {
     padding: 8px;
 }
+
+.textCursor {
+    color: #7aeb8d;
+    width: 200%;
+    font-weight: bold;
+    background-color: black;
+    opacity: 0.5;
+    pointer-events: none;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.accbody {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 90%;
+    align-items: flex-start;
+}
+
+.accbody p {
+    margin: 0;
+    padding: 0;
+}
+
+.accbody button {
+    border: none;
+    /* background-color: #7aeb8d; */
+    border-radius: 4px;
+    display: flex;
+    padding: 4px 16px;
+    margin-bottom: 1rem;
+
+}
+
+.accbody button:hover {
+    background-color: #E7F1FF;
+    cursor: pointer;
+}

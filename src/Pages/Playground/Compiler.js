@@ -20,7 +20,7 @@ const Compiler = () => {
   const codeRef = useRef();
   const selectRef = useRef();
   const output = useSelector((state) => state.compiler.output);
-  const [selectedkeysState, setSelectedKeys] = useState("1");
+  const [selectedkeysState, setSelectedKeys] = useState("0");
 
   const OnChangePLHandler = ({ key }) => {
     setSelectedKeys(key);
@@ -28,27 +28,34 @@ const Compiler = () => {
   };
 
   useEffect(() => {
-    console.log(selectedkeysState);
-    console.log();
     setExtensionDisplay(extensions[selectedkeysState]);
   }, [selectedkeysState]);
-
-  const submitHandler = (event) => {
-    event.preventDefault();
-
-    const userCode = codeRef.current.value;
-    const selectedOption = selectRef.current.selectedOptions[0];
-    const extension = selectedOption.value;
-    const language = selectedOption.text;
-
-    dispatch(compilerOutput({ language, extension, userCode }));
-  };
 
   const items = programmingLanguages.map((language, index) => ({
     key: `${index}`,
     label: language,
     extension: extensions[index],
   }));
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+
+    const userCode = codeRef.current.value;
+    const selectedOption = items.filter(
+      (item) => item.key === selectedkeysState
+    );
+    const extension = selectedOption[0].extension;
+    const Selectedlanguage = selectedOption[0].label;
+
+    console.log(Selectedlanguage, extension);
+
+    const payload = {
+      Selectedlanguage,
+      extension,
+      userCode,
+    };
+    dispatch(compilerOutput(payload));
+  };
 
   return (
     <AnimatePresence>
@@ -75,6 +82,7 @@ const Compiler = () => {
                     selectable: true,
                     selectedKeys: selectedkeysState,
                     onClick: OnChangePLHandler,
+                    itemRef: selectRef,
                   }}
                   autoAdjustOverflow
                   overlayStyle={{
@@ -101,8 +109,9 @@ const Compiler = () => {
               </div>
               <div className={styles.codeBlock}>
                 <h4 className={styles.fileName}>
-                  main.<span>{extensionDisplay}</span>
+                  main<span>{extensionDisplay}</span>
                 </h4>
+
                 <textarea
                   className={styles.codeInput}
                   ref={codeRef}
@@ -117,32 +126,25 @@ const Compiler = () => {
                 <Accordion defaultActiveKey="0" flush alwaysOpen>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>Output</Accordion.Header>
-                    <Accordion.Body>{output}</Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>Accordion Item #2</Accordion.Header>
-                    <Accordion.Body>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                      sint occaecat cupidatat non proident, sunt in culpa qui
-                      officia deserunt mollit anim id est laborum.
+                    <Accordion.Body style={{ fontWeight: "bolder" }}>
+                      {"> "}
+                      {output}
+                      <span className={styles.textCursor}> &nbsp;</span>
                     </Accordion.Body>
                   </Accordion.Item>
-                  <Accordion.Item eventKey="2">
-                    <Accordion.Header>Accordion Item #3</Accordion.Header>
+                  <Accordion.Item eventKey="1">
+                    <Accordion.Header>OpenAI</Accordion.Header>
                     <Accordion.Body>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                      sint occaecat cupidatat non proident, sunt in culpa qui
-                      officia deserunt mollit anim id est laborum.
+                      <div className={styles.accbody}>
+                        <span>
+                          <button>hey</button>
+                        </span>{" "}
+                        <p>
+                          smart code suggestions Lorem ipsum dolor sit amet
+                          consectetur adipisicing elit. Fugiat quidem assumenda
+                          qui illum maiores volupt
+                        </p>
+                      </div>
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
