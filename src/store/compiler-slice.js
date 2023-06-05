@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { OpenAIApi, Configuration } from "openai";
 
 const compiler_API_key = process.env.REACT_APP_COMPILER_API;
 
@@ -48,45 +47,36 @@ export const compilerOutput = createAsyncThunk(
   }
 );
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export const alternativeCode = createAsyncThunk(
   "compilerSlice/alternativeCode",
   async () => {
-    const openai = new OpenAIApi(configuration);
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: "Say this is a test",
-      max_tokens: 7,
-      temperature: 0,
-    });
+    const options = {
+      method: "POST",
+      url: "https://chatgpt-gpt4-ai-chatbot.p.rapidapi.com/ask",
+      headers: {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": compiler_API_key,
+        "X-RapidAPI-Host": "chatgpt-gpt4-ai-chatbot.p.rapidapi.com",
+      },
+      data: {
+        query: `
+        write the same code for with intendation in ReactJS :
 
-    console.log(response.data);
-    // try {
-    //   const response = await axios.post(
-    //     "https://api.openai.com/v1/engines/davinci-codex/completions",
-    //     {
-    //       prompt: "write a formal letter asking two days leave",
-    //       max_tokens: 100,
-    //       temperature: 0.7,
-    //       n: 1,
-    //       stop: "\n",
-    //     },
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization:
-    //           "Bearer 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",
-    //       },
-    //     }
-    //   );
+        #include <stdio.h>
+        int main(){
+          printf("testing...");
+          return 0;
+        }
+        `,
+      },
+    };
 
-    //   console.log(response.data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const response = await axios.request(options);
+      return response.data.response;
+    } catch (error) {
+      console.error(error);
+    }
   }
 );
 
@@ -103,7 +93,7 @@ const compilerSlice = createSlice({
       console.log(action.error);
     });
     builder.addCase(alternativeCode.fulfilled, (state, action) => {
-      console.log(action.payload);
+      state.alternativeCode = action.payload;
     });
     builder.addCase(alternativeCode.rejected, (state, action) => {
       console.log(action.payload);

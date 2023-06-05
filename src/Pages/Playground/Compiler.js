@@ -23,6 +23,9 @@ const Compiler = () => {
   const codeRef = useRef();
   const selectRef = useRef();
   const output = useSelector((state) => state.compiler.output);
+  const alternativeCodeGenerated = useSelector(
+    (state) => state.compiler.alternativeCode
+  );
   const [selectedkeysState, setSelectedKeys] = useState("0");
   const [promptResponse, setPromptResponse] = useState("");
 
@@ -42,24 +45,9 @@ const Compiler = () => {
   }));
 
   const getResponseHandler = async () => {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: "You: tell me a joke" },
-          { role: "user", content: "Assistant: Knock, knock" },
-          { role: "assistant", content: "User: Who's there?" },
-        ],
-      }),
-    });
+    dispatch(alternativeCode());
 
-    const data = await response.json();
-    console.log(data);
+    // setPromptResponse(alternativeCodeGenerated);
   };
 
   const submitHandler = (event) => {
@@ -162,9 +150,11 @@ const Compiler = () => {
                     <Accordion.Body>
                       <div className={styles.accbody}>
                         <span>
-                          <button onClick={getResponseHandler}>hey</button>
+                          <button onClick={getResponseHandler}>
+                            alternative code
+                          </button>
                         </span>{" "}
-                        <p>{promptResponse}</p>
+                        <pre>{alternativeCodeGenerated}</pre>
                       </div>
                     </Accordion.Body>
                   </Accordion.Item>
