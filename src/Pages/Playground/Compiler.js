@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import programmingLanguages from "../../utils/languages";
 import extensions from "../../utils/extensions";
 import styles from "./Compiler.module.css";
@@ -11,11 +11,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { compilerOutput } from "../../store/compiler-slice";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Typography, Space, Menu } from "antd";
-import { useState } from "react";
-import { useEffect } from "react";
+import { Dropdown, Typography, Space } from "antd";
 import { alternativeCode } from "../../store/compiler-slice";
-// import { OpenAIApi, Configuration } from "openai";
+import ReactCodeMirror from "@uiw/react-codemirror";
+import { duotoneLight } from "@uiw/codemirror-themes-all";
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const Compiler = () => {
   const dispatch = useDispatch();
@@ -31,7 +30,6 @@ const Compiler = () => {
 
   const OnChangePLHandler = ({ key }) => {
     setSelectedKeys(key);
-    // console.log(selectedkeysState);
   };
 
   useEffect(() => {
@@ -124,14 +122,22 @@ const Compiler = () => {
                 <h4 className={styles.fileName}>
                   main<span>{extensionDisplay}</span>
                 </h4>
-
-                <textarea
-                  className={styles.codeInput}
-                  ref={codeRef}
-                  type="text"
-                  id="code"
-                  placeholder=""
-                />
+                <div className={styles.codeInput}>
+                  <ReactCodeMirror
+                    className={styles.codeInput}
+                    ref={codeRef}
+                    basicSetup={{
+                      foldGutter: true,
+                      dropCursor: false,
+                      allowMultipleSelections: false,
+                      indentOnInput: true,
+                      rectangularSelection: true,
+                      highlightSpecialChars: true,
+                    }}
+                    theme={duotoneLight}
+                    height="31.5rem"
+                  />
+                </div>
               </div>
             </form>
             <div className={styles.output}>
@@ -154,7 +160,10 @@ const Compiler = () => {
                             alternative code
                           </button>
                         </span>{" "}
-                        <pre>{alternativeCodeGenerated}</pre>
+                        <pre>
+                          {" "}
+                          <code>{alternativeCodeGenerated}</code>{" "}
+                        </pre>
                       </div>
                     </Accordion.Body>
                   </Accordion.Item>

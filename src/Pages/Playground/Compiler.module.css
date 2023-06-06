@@ -23,6 +23,8 @@
     width: 95%;
     resize: none;
     border-radius: 0.4rem;
+    padding: none;
+    margin: none;
 }
 
 .fileName {
@@ -36,7 +38,7 @@
     display: flex;
     flex-direction: column;
     max-height: 70.1vh;
-    margin-top: 5.1rem;
+    margin-top: 5.3rem;
     border: 1px solid darkgray;
     border-radius: 0.4rem;
     overflow: scroll;
@@ -93,7 +95,9 @@
 }
 
 .codeInput {
-    padding: 8px;
+    /* border: 1px dotted black; */
+    margin-right: 1rem;
+    border-radius: 1rem;
 }
 
 .textCursor {
