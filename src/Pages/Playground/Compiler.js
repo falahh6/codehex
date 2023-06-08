@@ -19,7 +19,8 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionDisplay, setExtensionDisplay] = useState();
-  const codeRef = useRef();
+  const [userCodeState, setUserCode] = useState();
+  const codeRef = useRef("");
   const selectRef = useRef();
   const output = useSelector((state) => state.compiler.output);
   const alternativeCodeGenerated = useSelector(
@@ -51,21 +52,24 @@ const Compiler = () => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    const userCode = codeRef.current.value;
-    const selectedOption = items.filter(
-      (item) => item.key === selectedkeysState
-    );
-    const extension = selectedOption[0].extension;
-    const Selectedlanguage = selectedOption[0].label;
+    // const userCode = codeRef.current.value;
+    // setUserCode(userCode);
+    // const selectedOption = items.filter(
+    //   (item) => item.key === selectedkeysState
+    // );
+    // const extension = selectedOption[0].extension;
+    // const Selectedlanguage = selectedOption[0].label;
 
-    console.log(Selectedlanguage, extension);
+    // console.log(Selectedlanguage, extension);
 
-    const payload = {
-      Selectedlanguage,
-      extension,
-      userCode,
-    };
-    dispatch(compilerOutput(payload));
+    // const payload = {
+    //   Selectedlanguage,
+    //   extension,
+    //   userCode,
+    // };
+    // dispatch(compilerOutput(payload));
+
+    console.log(codeRef.current.editor);
   };
 
   return (
@@ -80,12 +84,11 @@ const Compiler = () => {
           <Helmet>
             <title>Compiler</title>
           </Helmet>
-          <div className={styles.headDiv}>
+          {/* <div className={styles.headDiv}>
             <Logo />
-          </div>
+          </div> */}
           <div className={styles.mainDiv}>
             <form onSubmit={submitHandler} action="" className={styles.form}>
-              {/* <div className={styles["line-numbers"]}></div> */}
               <div className={styles.actions}>
                 <Dropdown
                   menu={{
@@ -134,9 +137,22 @@ const Compiler = () => {
                       rectangularSelection: true,
                       highlightSpecialChars: true,
                     }}
-                    theme={duotoneLight}
-                    height="31.5rem"
+                    style={{
+                      border: "1px solid darkgrey",
+                      borderRadius: "0.5rem",
+                      overflow: "hidden",
+                    }}
+                    // theme={duotoneLight}
+                    height="28.5rem"
                   />
+
+                  {/* <textarea
+                    className={styles.codeInput}
+                    ref={codeRef}
+                    type="text"
+                    id="code"
+                    placeholder=""
+                  /> */}
                 </div>
               </div>
             </form>

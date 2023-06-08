@@ -11,6 +11,7 @@
     display: flex;
     /* gap: 0.5rem; */
     justify-content: center;
+    margin-top: 4rem;
 }
 
 .form {
@@ -18,6 +19,7 @@
     /* background-color: beige; */
 }
 
+/* 
 .codeBlock textarea {
     height: 75vh;
     width: 95%;
@@ -25,7 +27,7 @@
     border-radius: 0.4rem;
     padding: none;
     margin: none;
-}
+} */
 
 .fileName {
     /* margin-top: 0; */
@@ -95,7 +97,6 @@
 }
 
 .codeInput {
-    /* border: 1px dotted black; */
     margin-right: 1rem;
     border-radius: 1rem;
 }

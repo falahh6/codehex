@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const compiler_API_key = process.env.REACT_APP_COMPILER_API;
-
+const API_key = process.env.REACT_APP_COMPILER_API;
 const compilerInitialState = {
   output: "",
   alternativeCode: "",
@@ -16,7 +15,7 @@ export const compilerOutput = createAsyncThunk(
       url: "https://onecompiler-apis.p.rapidapi.com/api/v1/run",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": compiler_API_key,
+        "X-RapidAPI-Key": API_key,
         "X-RapidAPI-Host": "onecompiler-apis.p.rapidapi.com",
       },
       data: {
@@ -55,7 +54,7 @@ export const alternativeCode = createAsyncThunk(
       url: "https://chatgpt-gpt4-ai-chatbot.p.rapidapi.com/ask",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": compiler_API_key,
+        "X-RapidAPI-Key": API_key,
         "X-RapidAPI-Host": "chatgpt-gpt4-ai-chatbot.p.rapidapi.com",
       },
       data: {
