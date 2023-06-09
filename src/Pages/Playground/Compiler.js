@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from "react";
 import programmingLanguages from "../../utils/languages";
 import extensions from "../../utils/extensions";
 import styles from "./Compiler.module.css";
-import Logo from "../../utils/Logo";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Accordion } from "react-bootstrap";
@@ -13,21 +12,18 @@ import { compilerOutput } from "../../store/compiler-slice";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Typography, Space } from "antd";
 import { alternativeCode } from "../../store/compiler-slice";
-import ReactCodeMirror from "@uiw/react-codemirror";
-import { duotoneLight } from "@uiw/codemirror-themes-all";
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+import MonacoEditor from "react-monaco-editor/lib/editor";
+
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionDisplay, setExtensionDisplay] = useState();
-  const [userCodeState, setUserCode] = useState();
-  const codeRef = useRef("");
+  const [userCode, setUserCode] = useState("");
   const selectRef = useRef();
   const output = useSelector((state) => state.compiler.output);
   const alternativeCodeGenerated = useSelector(
     (state) => state.compiler.alternativeCode
   );
   const [selectedkeysState, setSelectedKeys] = useState("0");
-  const [promptResponse, setPromptResponse] = useState("");
 
   const OnChangePLHandler = ({ key }) => {
     setSelectedKeys(key);
@@ -43,6 +39,19 @@ const Compiler = () => {
     extension: extensions[index],
   }));
 
+  const [editorWidth, setEditorWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setEditorWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   const getResponseHandler = async () => {
     dispatch(alternativeCode());
 
@@ -52,24 +61,21 @@ const Compiler = () => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    // const userCode = codeRef.current.value;
-    // setUserCode(userCode);
-    // const selectedOption = items.filter(
-    //   (item) => item.key === selectedkeysState
-    // );
-    // const extension = selectedOption[0].extension;
-    // const Selectedlanguage = selectedOption[0].label;
+    const selectedOption = items.filter(
+      (item) => item.key === selectedkeysState
+    );
+    const extension = selectedOption[0].extension;
+    const Selectedlanguage = selectedOption[0].label;
 
-    // console.log(Selectedlanguage, extension);
+    console.log(Selectedlanguage, extension);
 
-    // const payload = {
-    //   Selectedlanguage,
-    //   extension,
-    //   userCode,
-    // };
-    // dispatch(compilerOutput(payload));
-
-    console.log(codeRef.current.editor);
+    const payload = {
+      Selectedlanguage,
+      extension,
+      userCode,
+    };
+    dispatch(compilerOutput(payload));
+    console.log(userCode);
   };
 
   return (
@@ -126,33 +132,31 @@ const Compiler = () => {
                   main<span>{extensionDisplay}</span>
                 </h4>
                 <div className={styles.codeInput}>
-                  <ReactCodeMirror
-                    className={styles.codeInput}
-                    ref={codeRef}
-                    basicSetup={{
-                      foldGutter: true,
-                      dropCursor: false,
-                      allowMultipleSelections: false,
-                      indentOnInput: true,
-                      rectangularSelection: true,
-                      highlightSpecialChars: true,
+                  <MonacoEditor
+                    value={userCode}
+                    language="javascript"
+                    theme="vs-dark"
+                    height="450"
+                    width={editorWidth > 768 ? "550px" : "200px"}
+                    onChange={(value) => {
+                      setUserCode(value);
                     }}
-                    style={{
-                      border: "1px solid darkgrey",
-                      borderRadius: "0.5rem",
-                      overflow: "hidden",
+                    options={{
+                      acceptSuggestionOnCommitCharacter: true,
+                      automaticLayout: true,
+                      cursorBlinking: "solid",
+                      cursorStyle: "block",
+                      fontSize: "12px",
+                      fontWeight: "800",
+                      letterSpacing: "1",
+                      glyphMargin: true,
+                      padding: {
+                        top: 10,
+                        bottom: 10,
+                      },
+                      folding: true,
                     }}
-                    // theme={duotoneLight}
-                    height="28.5rem"
                   />
-
-                  {/* <textarea
-                    className={styles.codeInput}
-                    ref={codeRef}
-                    type="text"
-                    id="code"
-                    placeholder=""
-                  /> */}
                 </div>
               </div>
             </form>
