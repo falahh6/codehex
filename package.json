@@ -32,6 +32,7 @@
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
     "react-scroll": "^1.8.9",
+    "react-terminal-ui": "^1.0.5",
     "react-type-animation": "^3.0.1",
     "replit-client": "^0.25.0",
     "web-vitals": "^2.1.4"

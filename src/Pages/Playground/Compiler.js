@@ -13,7 +13,8 @@ import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Typography, Space } from "antd";
 import { alternativeCode } from "../../store/compiler-slice";
 import MonacoEditor from "react-monaco-editor/lib/editor";
-
+import "./editor.css";
+import Terminal from "react-terminal-ui";
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionDisplay, setExtensionDisplay] = useState();
@@ -135,9 +136,9 @@ const Compiler = () => {
                   <MonacoEditor
                     value={userCode}
                     language="javascript"
-                    theme="vs-dark"
-                    height="450"
-                    width={editorWidth > 768 ? "550px" : "200px"}
+                    // theme="vs-dark"
+                    height="80vh"
+                    width="95%"
                     onChange={(value) => {
                       setUserCode(value);
                     }}
@@ -146,22 +147,28 @@ const Compiler = () => {
                       automaticLayout: true,
                       cursorBlinking: "solid",
                       cursorStyle: "block",
+
                       fontSize: "12px",
                       fontWeight: "800",
                       letterSpacing: "1",
-                      glyphMargin: true,
+                      glyphMargin: false,
                       padding: {
                         top: 10,
                         bottom: 10,
                       },
                       folding: true,
+                      lightbulb: {
+                        enabled: true,
+                      },
+                      overviewRulerBorder: true,
+                      extraEditorClassName: "editor",
                     }}
                   />
                 </div>
               </div>
             </form>
             <div className={styles.output}>
-              <div>
+              {/* <div>
                 <Accordion defaultActiveKey="0" flush alwaysOpen>
                   <Accordion.Item eventKey="0">
                     <Accordion.Header>Output</Accordion.Header>
@@ -188,7 +195,8 @@ const Compiler = () => {
                     </Accordion.Body>
                   </Accordion.Item>
                 </Accordion>
-              </div>
+              </div> */}
+              {/* <Terminal startingInputValue="hey" height="63vh" /> */}
             </div>
           </div>
         </div>

@@ -1,0 +1,8 @@
+.editor {
+    background-color: rgb(0, 0, 0);
+    border: 1px solid lightgrey;
+    border-radius: 0.4rem;
+    overflow: hidden;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    height: 80vh;
+}
