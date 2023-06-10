@@ -14,7 +14,7 @@ import { Dropdown, Typography, Space } from "antd";
 import { alternativeCode } from "../../store/compiler-slice";
 import MonacoEditor from "react-monaco-editor/lib/editor";
 import "./editor.css";
-import Terminal from "react-terminal-ui";
+import Terminal from "react-console-emulator";
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionDisplay, setExtensionDisplay] = useState();
@@ -24,6 +24,7 @@ const Compiler = () => {
   const alternativeCodeGenerated = useSelector(
     (state) => state.compiler.alternativeCode
   );
+  //
   const [selectedkeysState, setSelectedKeys] = useState("0");
 
   const OnChangePLHandler = ({ key }) => {
@@ -91,9 +92,6 @@ const Compiler = () => {
           <Helmet>
             <title>Compiler</title>
           </Helmet>
-          {/* <div className={styles.headDiv}>
-            <Logo />
-          </div> */}
           <div className={styles.mainDiv}>
             <form onSubmit={submitHandler} action="" className={styles.form}>
               <div className={styles.actions}>
@@ -147,7 +145,6 @@ const Compiler = () => {
                       automaticLayout: true,
                       cursorBlinking: "solid",
                       cursorStyle: "block",
-
                       fontSize: "12px",
                       fontWeight: "800",
                       letterSpacing: "1",
@@ -168,35 +165,34 @@ const Compiler = () => {
               </div>
             </form>
             <div className={styles.output}>
-              {/* <div>
-                <Accordion defaultActiveKey="0" flush alwaysOpen>
-                  <Accordion.Item eventKey="0">
-                    <Accordion.Header>Output</Accordion.Header>
-                    <Accordion.Body style={{ fontWeight: "bolder" }}>
-                      {"> "}
-                      {output}
-                      <span className={styles.textCursor}> &nbsp;</span>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                  <Accordion.Item eventKey="1">
-                    <Accordion.Header>OpenAI</Accordion.Header>
-                    <Accordion.Body>
-                      <div className={styles.accbody}>
-                        <span>
-                          <button onClick={getResponseHandler}>
-                            alternative code
-                          </button>
-                        </span>{" "}
-                        <pre>
-                          {" "}
-                          <code>{alternativeCodeGenerated}</code>{" "}
-                        </pre>
-                      </div>
-                    </Accordion.Body>
-                  </Accordion.Item>
-                </Accordion>
-              </div> */}
-              {/* <Terminal startingInputValue="hey" height="63vh" /> */}
+              <div className={styles.consoleTabNavs}>
+                <span>Output</span>
+                <span>OpenAI</span>
+              </div>
+              {/* <Terminal
+                welcomeMessage={output}
+                promptLabel={"$"}
+                style={{
+                  backgroundColor: "lightGrey",
+                  fontWeight: "bolder",
+                  height: "80vh",
+                }}
+                contentStyle={{ color: "black" }}
+                inputStyle={{
+                  color: "black",
+                  fontWeight: "bolder",
+                  letterSpacing: "1px",
+                }}
+                value={"yte"}
+                // commands={{
+                //   run: {
+                //     description: "test",
+                //     fn: () => {
+                //       return output;
+                //     },
+                //   },
+                // }}
+              /> */}
             </div>
           </div>
         </div>

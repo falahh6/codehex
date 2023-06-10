@@ -45,7 +45,7 @@
     border: 1px solid darkgray;
     border-radius: 0.4rem;
     overflow: scroll;
-    color: white;
+    color: #FCFCFC;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -150,4 +150,30 @@
 .accbody button:hover {
     background-color: #E7F1FF;
     cursor: pointer;
+}
+
+.consoleTabNavs {
+    color: rgb(78, 78, 78);
+    /* margin: 5px; */
+    font-size: 12px;
+    font-weight: bold;
+    width: 98%;
+    display: flex;
+    justify-content: left;
+    /* background-color: #d9d9d9; */
+    /* background-color: black; */
+    border-radius: 4px;
+}
+
+.consoleTabNavs span {
+    background-color: #F0F1F2;
+    color: rgb(54, 54, 54);
+    border-radius: 8px;
+    padding: 5px 8px;
+    margin: 4px 6px 4px 4px;
+}
+
+.consoleTabNavs span:hover {
+    cursor: pointer;
+    background-color: #b4b4b4;
 }
