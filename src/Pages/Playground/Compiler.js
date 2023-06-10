@@ -4,7 +4,6 @@ import extensions from "../../utils/extensions";
 import styles from "./Compiler.module.css";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Accordion } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,8 +23,9 @@ const Compiler = () => {
   const alternativeCodeGenerated = useSelector(
     (state) => state.compiler.alternativeCode
   );
-  //
+  const [switchTab, setSwitchTab] = useState("output");
   const [selectedkeysState, setSelectedKeys] = useState("0");
+  const [outputState, setOutputState] = useState();
 
   const OnChangePLHandler = ({ key }) => {
     setSelectedKeys(key);
@@ -41,23 +41,8 @@ const Compiler = () => {
     extension: extensions[index],
   }));
 
-  const [editorWidth, setEditorWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setEditorWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
   const getResponseHandler = async () => {
     dispatch(alternativeCode());
-
-    // setPromptResponse(alternativeCodeGenerated);
   };
 
   const submitHandler = (event) => {
@@ -80,6 +65,21 @@ const Compiler = () => {
     console.log(userCode);
   };
 
+  const switchToOutput = () => {
+    setSwitchTab("output");
+  };
+
+  const switchToOpenAI = () => {
+    setSwitchTab("openAI");
+  };
+
+  const activeStyleForTabs = switchTab === "output" ? "tabActive" : "";
+
+  useEffect(() => {
+    setOutputState(output);
+  }, [output]);
+
+  console.log(outputState);
   return (
     <AnimatePresence>
       <motion.div
@@ -166,33 +166,41 @@ const Compiler = () => {
             </form>
             <div className={styles.output}>
               <div className={styles.consoleTabNavs}>
-                <span>Output</span>
-                <span>OpenAI</span>
+                <span onClick={switchToOutput} className={activeStyleForTabs}>
+                  Output
+                </span>
+                <span onClick={switchToOpenAI}>OpenAI</span>
               </div>
-              {/* <Terminal
-                welcomeMessage={output}
-                promptLabel={"$"}
-                style={{
-                  backgroundColor: "lightGrey",
-                  fontWeight: "bolder",
-                  height: "80vh",
-                }}
-                contentStyle={{ color: "black" }}
-                inputStyle={{
-                  color: "black",
-                  fontWeight: "bolder",
-                  letterSpacing: "1px",
-                }}
-                value={"yte"}
-                // commands={{
-                //   run: {
-                //     description: "test",
-                //     fn: () => {
-                //       return output;
-                //     },
-                //   },
-                // }}
-              /> */}
+              {switchTab === "output" && (
+                <Terminal
+                  welcomeMessage={output}
+                  promptLabel={"$"}
+                  style={{
+                    backgroundColor: "lightGrey",
+                    fontWeight: "bolder",
+                    height: "80vh",
+                  }}
+                  contentStyle={{ color: "black" }}
+                  inputStyle={{
+                    color: "black",
+                    fontWeight: "bolder",
+                    letterSpacing: "1px",
+                  }}
+                  value={"yte"}
+                  commands={{
+                    run: {
+                      description: "test",
+                      fn: () => {
+                        return output;
+                      },
+                    },
+                  }}
+                />
+              )}
+
+              {switchTab === "openAI" && (
+                <p className={styles.openAI}>{output}</p>
+              )}
             </div>
           </div>
         </div>

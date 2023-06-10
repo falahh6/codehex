@@ -154,14 +154,11 @@
 
 .consoleTabNavs {
     color: rgb(78, 78, 78);
-    /* margin: 5px; */
     font-size: 12px;
     font-weight: bold;
     width: 98%;
     display: flex;
     justify-content: left;
-    /* background-color: #d9d9d9; */
-    /* background-color: black; */
     border-radius: 4px;
 }
 
@@ -170,10 +167,18 @@
     color: rgb(54, 54, 54);
     border-radius: 8px;
     padding: 5px 8px;
-    margin: 4px 6px 4px 4px;
+    margin: 4px;
+    border: 1px solid transparent;
 }
 
 .consoleTabNavs span:hover {
     cursor: pointer;
     background-color: #b4b4b4;
+}
+
+.openAI {
+    color: grey;
+    height: 100%;
+    margin-bottom: 0;
+    border-radius: 4px;
 }
