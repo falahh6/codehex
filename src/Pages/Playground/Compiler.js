@@ -25,8 +25,9 @@ const Compiler = () => {
   );
   const [switchTab, setSwitchTab] = useState("output");
   const [selectedkeysState, setSelectedKeys] = useState("0");
-  const [outputState, setOutputState] = useState();
-
+  const [outputState, setOutputState] = useState("");
+  const outputRef = useRef();
+  const [outputKey, setOutputKey] = useState(0);
   const OnChangePLHandler = ({ key }) => {
     setSelectedKeys(key);
   };
@@ -63,6 +64,8 @@ const Compiler = () => {
     };
     dispatch(compilerOutput(payload));
     console.log(userCode);
+
+    console.log(outputRef.current.props);
   };
 
   const switchToOutput = () => {
@@ -72,14 +75,22 @@ const Compiler = () => {
   const switchToOpenAI = () => {
     setSwitchTab("openAI");
   };
-
   const activeStyleForTabs = switchTab === "output" ? "tabActive" : "";
 
   useEffect(() => {
-    setOutputState(output);
+    setOutputKey((prevKey) => prevKey + 1);
   }, [output]);
 
-  console.log(outputState);
+  const outputForConsole = (
+    <p className={styles.outputForConsole}>
+      {output}{" "}
+      <span>
+        <form className={styles.outputForConsoleForm} action="">
+          <input type="text" />
+        </form>
+      </span>
+    </p>
+  );
   return (
     <AnimatePresence>
       <motion.div
@@ -173,7 +184,9 @@ const Compiler = () => {
               </div>
               {switchTab === "output" && (
                 <Terminal
-                  welcomeMessage={output}
+                  ref={outputRef}
+                  key={outputKey}
+                  welcomeMessage={outputForConsole}
                   promptLabel={"$"}
                   style={{
                     backgroundColor: "lightGrey",
@@ -186,12 +199,12 @@ const Compiler = () => {
                     fontWeight: "bolder",
                     letterSpacing: "1px",
                   }}
-                  value={"yte"}
                   commands={{
                     run: {
                       description: "test",
                       fn: () => {
-                        return output;
+                        const testOutput = output;
+                        return testOutput;
                       },
                     },
                   }}
@@ -199,7 +212,7 @@ const Compiler = () => {
               )}
 
               {switchTab === "openAI" && (
-                <p className={styles.openAI}>{output}</p>
+                <p className={styles.openAI}> OpenAI </p>
               )}
             </div>
           </div>
