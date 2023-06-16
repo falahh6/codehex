@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
 .headDiv {
     padding-top: 1rem;
     padding-left: 10rem;
@@ -183,25 +185,42 @@
     border-radius: 4px;
 }
 
-.outputForConsoleForm input {
-    background-color: transparent;
-    width: 4px;
-    border: none;
+.Terminal {
+    background-color: lightgray;
+    font-weight: bolder;
+    height: 80vh;
+    color: black;
+    display: flex;
+    align-items: baseline;
+    font-family: 'IBM Plex Sans', sans-serif;
+    letter-spacing: 0.3px;
 }
 
+
+
+.outputForConsoleForm input {
+    background-color: transparent;
+    width: fit-content;
+    border: none;
+    outline: none;
+}
+
+
 .outputForConsoleForm {
-    background-color: #7aeb8d;
     width: 10px;
     padding: 0;
     margin: 0;
+    z-index: 999;
+    display: flex;
+    align-self: center;
 }
 
-.outputForConsole {
-    background-color: #b4b4b4;
-    padding: 0;
-    margin: 0;
+.promptLabel {
+    margin: 1rem 0 0 1rem;
 }
 
-.outputForConsole div {
-    background-color: #7aeb8d;
+.commandMessage {
+    position: relative;
+    top: 1.5rem;
+    left: -2.6rem;
 }

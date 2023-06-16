@@ -25,12 +25,22 @@ const Compiler = () => {
   );
   const [switchTab, setSwitchTab] = useState("output");
   const [selectedkeysState, setSelectedKeys] = useState("0");
-  const [outputState, setOutputState] = useState("");
+  // const [outputState, setOutputState] = useState("");
   const outputRef = useRef();
-  const [outputKey, setOutputKey] = useState(0);
+  const [Output, setOutput] = useState(
+    <form className={styles.outputForConsoleForm} action="">
+      <input type="text" />
+    </form>
+  );
+  const [programTakingInput, setProgramTakingInput] = useState(true);
   const OnChangePLHandler = ({ key }) => {
     setSelectedKeys(key);
   };
+  const [logs, setLogs] = useState([]);
+
+  useEffect(() => {
+    setLogs((prevLogs) => [...prevLogs, { message: output }]);
+  }, [output]);
 
   useEffect(() => {
     setExtensionDisplay(extensions[selectedkeysState]);
@@ -64,8 +74,6 @@ const Compiler = () => {
     };
     dispatch(compilerOutput(payload));
     console.log(userCode);
-
-    console.log(outputRef.current.props);
   };
 
   const switchToOutput = () => {
@@ -77,20 +85,6 @@ const Compiler = () => {
   };
   const activeStyleForTabs = switchTab === "output" ? "tabActive" : "";
 
-  useEffect(() => {
-    setOutputKey((prevKey) => prevKey + 1);
-  }, [output]);
-
-  const outputForConsole = (
-    <p className={styles.outputForConsole}>
-      {output}{" "}
-      <span>
-        <form className={styles.outputForConsoleForm} action="">
-          <input type="text" />
-        </form>
-      </span>
-    </p>
-  );
   return (
     <AnimatePresence>
       <motion.div
@@ -183,32 +177,20 @@ const Compiler = () => {
                 <span onClick={switchToOpenAI}>OpenAI</span>
               </div>
               {switchTab === "output" && (
-                <Terminal
-                  ref={outputRef}
-                  key={outputKey}
-                  welcomeMessage={outputForConsole}
-                  promptLabel={"$"}
-                  style={{
-                    backgroundColor: "lightGrey",
-                    fontWeight: "bolder",
-                    height: "80vh",
-                  }}
-                  contentStyle={{ color: "black" }}
-                  inputStyle={{
-                    color: "black",
-                    fontWeight: "bolder",
-                    letterSpacing: "1px",
-                  }}
-                  commands={{
-                    run: {
-                      description: "test",
-                      fn: () => {
-                        const testOutput = output;
-                        return testOutput;
-                      },
-                    },
-                  }}
-                />
+                <div className={styles.Terminal}>
+                  <span className={styles.promptLabel}>$</span>
+                  <p>
+                    {Output}{" "}
+                    <span>
+                      {programTakingInput ? (
+                        <form className={styles.outputForConsoleForm} action="">
+                          <input type="text" />
+                        </form>
+                      ) : null}
+                    </span>
+                  </p>
+                  <p className={styles.commandMessage}>Command not found</p>
+                </div>
               )}
 
               {switchTab === "openAI" && (
