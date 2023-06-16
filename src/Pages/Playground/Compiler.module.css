@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500&display=swap');
-
 .headDiv {
     padding-top: 1rem;
     padding-left: 10rem;
@@ -37,7 +35,7 @@
 
 }
 
-.output {
+.outputComponent {
     width: 45%;
     display: flex;
     flex-direction: column;
@@ -51,15 +49,15 @@
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.output h4 {
+.outputComponent h4 {
     position: absolute;
     top: 8.1rem;
     font-size: 1rem;
 }
 
-.output p {
+/* .outputComponent p {
     padding: 8px;
-}
+} */
 
 
 .actions {
@@ -192,11 +190,13 @@
     color: black;
     display: flex;
     align-items: baseline;
-    font-family: 'IBM Plex Sans', sans-serif;
     letter-spacing: 0.3px;
 }
 
-
+.Terminal div {
+    display: flex;
+    flex-direction: column;
+}
 
 .outputForConsoleForm input {
     background-color: transparent;
@@ -217,10 +217,17 @@
 
 .promptLabel {
     margin: 1rem 0 0 1rem;
+    font-size: 14px;
+}
+
+.output {
+    margin: 0;
+    padding-left: 8px;
+    font-size: 14px;
 }
 
 .commandMessage {
-    position: relative;
-    top: 1.5rem;
-    left: -2.6rem;
+    padding: 0;
+    margin-left: -1rem;
+    font-size: 14px;
 }

@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+.xterm {
+    color: black;
+    background-color: white;
+    height: 75vh;
+    overflow: hidden;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: bolder;
+}
+
+.xterm-prompt {
+    color: #61afef;
+    font-weight: bolder;
+
+}
+
+.xterm-input {
+    color: #abb2bf;
+    font-weight: bolder;
+}

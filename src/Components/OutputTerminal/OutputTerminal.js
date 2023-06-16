@@ -1,11 +1,14 @@
 import { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import "xterm/css/xterm.css";
-
-const XTerminal = () => {
+import "./OutputTerminal.css";
+import styles from "./OutputTerminal.module.css";
+const XTerminal = ({ executeCommand }) => {
   const terminalRef = useRef(null);
   const [terminal, setTerminal] = useState(null);
+  const output = useSelector((state) => state.compiler.output);
 
   useEffect(() => {
     const xterm = new Terminal();
@@ -15,46 +18,57 @@ const XTerminal = () => {
     xterm.loadAddon(fitAddon);
     xterm.focus();
     fitAddon.fit();
+    const promptLabel = "$ ";
 
-    const handleCommand = (e) => {
-      if (e.key === "Enter") {
-        const command = xterm._core.buffer.translateBufferLineToString(
-          xterm._core.buffer.ybase + xterm._core.buffer.y
-        );
-        xterm.writeln(""); // Add a new line after the command
-        xterm._core.buffer.y++; // Move the cursor to the next line
-        executeCommand(command);
-      }
+    const handleCommand = (command) => {
+      xterm.writeln("");
+      executeCommand(command);
     };
 
     const executeCommand = (command) => {
-      // Process the command and perform actions accordingly
-      // For example, you can handle different commands using a switch statement
       switch (command.trim()) {
-        case "hello":
+        case "$ hello":
           xterm.writeln("Hello, world!");
           break;
-        case "date":
+        case "$ date":
           const date = new Date().toLocaleString();
           xterm.writeln(date);
+          break;
+        case "$ run":
+          xterm.writeln(output);
           break;
         default:
           xterm.writeln(`Unknown command: ${command}`);
       }
+      xterm.write(promptLabel);
     };
 
     xterm.onKey((e) => {
+      const printable =
+        !e.domEvent.altKey && !e.domEvent.ctrlKey && !e.domEvent.metaKey;
       if (e.domEvent.key === "Enter") {
-        handleCommand(e.domEvent);
+        const command = xterm._core.buffer.translateBufferLineToString(
+          xterm._core.buffer.ybase + xterm._core.buffer.y
+        );
+        handleCommand(command);
+      } else if (e.domEvent.key === "Backspace") {
+        const cursorPosition = xterm._core.buffer.x;
+        if (cursorPosition > promptLabel.length) {
+          xterm.write("\b \b");
+        }
+      } else if (printable) {
+        xterm.write(e.key);
       }
     });
+
+    xterm.write(promptLabel);
 
     return () => {
       xterm.dispose();
     };
   }, []);
 
-  return <div ref={terminalRef} />;
+  return <div className={styles.Terminal} ref={terminalRef} />;
 };
 
 export default XTerminal;

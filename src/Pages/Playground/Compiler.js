@@ -13,8 +13,7 @@ import { Dropdown, Typography, Space } from "antd";
 import { alternativeCode } from "../../store/compiler-slice";
 import MonacoEditor from "react-monaco-editor/lib/editor";
 import "./editor.css";
-import Terminal from "react-console-emulator";
-import XTerminal from "../../Components/OutputTerminal/OutputTerminal";
+// import XTerminal from "../../Components/OutputTerminal/OutputTerminal";
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionDisplay, setExtensionDisplay] = useState();
@@ -26,14 +25,7 @@ const Compiler = () => {
   );
   const [switchTab, setSwitchTab] = useState("output");
   const [selectedkeysState, setSelectedKeys] = useState("0");
-  // const [outputState, setOutputState] = useState("");
-  const outputRef = useRef();
-  const [Output, setOutput] = useState(
-    <form className={styles.outputForConsoleForm} action="">
-      <input type="text" />
-    </form>
-  );
-  const [programTakingInput, setProgramTakingInput] = useState(true);
+  const [programTakingInput, setProgramTakingInput] = useState(false);
   const OnChangePLHandler = ({ key }) => {
     setSelectedKeys(key);
   };
@@ -170,7 +162,7 @@ const Compiler = () => {
                 </div>
               </div>
             </form>
-            <div className={styles.output}>
+            <div className={styles.outputComponent}>
               <div className={styles.consoleTabNavs}>
                 <span onClick={switchToOutput} className={activeStyleForTabs}>
                   Output
@@ -178,22 +170,25 @@ const Compiler = () => {
                 <span onClick={switchToOpenAI}>OpenAI</span>
               </div>
               {switchTab === "output" && (
-                // <div className={styles.Terminal}>
-                //   <span className={styles.promptLabel}>$</span>
-                //   <p>
-                //     {Output}{" "}
-                //     <span>
-                //       {programTakingInput ? (
-                //         <form className={styles.outputForConsoleForm} action="">
-                //           <input type="text" />
-                //         </form>
-                //       ) : null}
-                //     </span>
-                //   </p>
-                //   <p className={styles.commandMessage}>Command not found</p>
-                // </div>
-
-                <XTerminal />
+                <div className={styles.Terminal}>
+                  <span className={styles.promptLabel}>$</span>
+                  <div>
+                    <p className={styles.output}>
+                      {output}{" "}
+                      <span>
+                        {programTakingInput ? (
+                          <form
+                            className={styles.outputForConsoleForm}
+                            action=""
+                          >
+                            <input type="text" />
+                          </form>
+                        ) : null}
+                      </span>
+                    </p>
+                    {/* <p className={styles.commandMessage}>Command not found</p> */}
+                  </div>
+                </div>
               )}
 
               {switchTab === "openAI" && (
