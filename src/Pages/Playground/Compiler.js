@@ -14,6 +14,7 @@ import { alternativeCode } from "../../store/compiler-slice";
 import MonacoEditor from "react-monaco-editor/lib/editor";
 import "./editor.css";
 import Terminal from "react-console-emulator";
+import XTerminal from "../../Components/OutputTerminal/OutputTerminal";
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionDisplay, setExtensionDisplay] = useState();
@@ -177,20 +178,22 @@ const Compiler = () => {
                 <span onClick={switchToOpenAI}>OpenAI</span>
               </div>
               {switchTab === "output" && (
-                <div className={styles.Terminal}>
-                  <span className={styles.promptLabel}>$</span>
-                  <p>
-                    {Output}{" "}
-                    <span>
-                      {programTakingInput ? (
-                        <form className={styles.outputForConsoleForm} action="">
-                          <input type="text" />
-                        </form>
-                      ) : null}
-                    </span>
-                  </p>
-                  <p className={styles.commandMessage}>Command not found</p>
-                </div>
+                // <div className={styles.Terminal}>
+                //   <span className={styles.promptLabel}>$</span>
+                //   <p>
+                //     {Output}{" "}
+                //     <span>
+                //       {programTakingInput ? (
+                //         <form className={styles.outputForConsoleForm} action="">
+                //           <input type="text" />
+                //         </form>
+                //       ) : null}
+                //     </span>
+                //   </p>
+                //   <p className={styles.commandMessage}>Command not found</p>
+                // </div>
+
+                <XTerminal />
               )}
 
               {switchTab === "openAI" && (
