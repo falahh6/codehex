@@ -191,11 +191,14 @@
     display: flex;
     align-items: baseline;
     letter-spacing: 0.3px;
+    font-size: 14px;
+    flex-direction: column;
 }
 
 .Terminal div {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: baseline;
 }
 
 .outputForConsoleForm input {
@@ -217,17 +220,14 @@
 
 .promptLabel {
     margin: 1rem 0 0 1rem;
-    font-size: 14px;
 }
 
 .output {
     margin: 0;
     padding-left: 8px;
-    font-size: 14px;
 }
 
 .commandMessage {
     padding: 0;
-    margin-left: -1rem;
-    font-size: 14px;
+    padding-left: 1rem;
 }

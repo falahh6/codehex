@@ -7,34 +7,54 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet } from "react-helmet";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { compilerOutput } from "../../store/compiler-slice";
+import {
+  compilerOutput,
+  initialExecutionForInput,
+} from "../../store/compiler-slice";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Typography, Space } from "antd";
 import { alternativeCode } from "../../store/compiler-slice";
 import MonacoEditor from "react-monaco-editor/lib/editor";
 import "./editor.css";
 // import XTerminal from "../../Components/OutputTerminal/OutputTerminal";
+
+const checkingIfInputNeeded = (userCode) => {
+  const inputPatterns = [
+    /prompt\(/i,
+    /readline\(/i,
+    /input\(/i,
+    /raw_input\(/i,
+    /sys.stdin.readline\(/i,
+    /Scanner\s*\w+\s*=\s*new\s*Scanner\(System\.in\)/i,
+    /gets\(/i,
+    /STDIN.gets\(/i,
+  ];
+
+  for (const pattern of inputPatterns) {
+    if (pattern.test(userCode)) {
+      return true;
+    }
+  }
+  return false;
+};
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionDisplay, setExtensionDisplay] = useState();
   const [userCode, setUserCode] = useState("");
   const selectRef = useRef();
   const output = useSelector((state) => state.compiler.output);
+  const finalOutput = useSelector((state) => state.compiler.finalOutput);
   const alternativeCodeGenerated = useSelector(
     (state) => state.compiler.alternativeCode
   );
   const [switchTab, setSwitchTab] = useState("output");
   const [selectedkeysState, setSelectedKeys] = useState("0");
   const [programTakingInput, setProgramTakingInput] = useState(false);
+  const [userInput, setUserInput] = useState([]);
   const OnChangePLHandler = ({ key }) => {
     setSelectedKeys(key);
   };
-  const [logs, setLogs] = useState([]);
-
-  useEffect(() => {
-    setLogs((prevLogs) => [...prevLogs, { message: output }]);
-  }, [output]);
-
+  const inputRef = useRef();
   useEffect(() => {
     setExtensionDisplay(extensions[selectedkeysState]);
   }, [selectedkeysState]);
@@ -59,14 +79,42 @@ const Compiler = () => {
     const Selectedlanguage = selectedOption[0].label;
 
     console.log(Selectedlanguage, extension);
+    console.log(userCode);
+    const doesProgramNeedsInput = checkingIfInputNeeded(userCode);
+
+    setProgramTakingInput(doesProgramNeedsInput);
 
     const payload = {
       Selectedlanguage,
       extension,
       userCode,
+      doesProgramNeedsInput,
+    };
+
+    dispatch(initialExecutionForInput(payload));
+  };
+
+  const consoleInputFormOnSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(inputRef.current.value);
+    const newInput = inputRef.current.value;
+    setUserInput((prevInput) => [...prevInput, newInput]);
+    const selectedOption = items.filter(
+      (item) => item.key === selectedkeysState
+    );
+    const extension = selectedOption[0].extension;
+    const Selectedlanguage = selectedOption[0].label;
+
+    const payload = {
+      Selectedlanguage,
+      extension,
+      userCode,
+      userInput,
     };
     dispatch(compilerOutput(payload));
-    console.log(userCode);
+
+    inputRef.current.value = "";
   };
 
   const switchToOutput = () => {
@@ -171,23 +219,21 @@ const Compiler = () => {
               </div>
               {switchTab === "output" && (
                 <div className={styles.Terminal}>
-                  <span className={styles.promptLabel}>$</span>
-                  <div>
-                    <p className={styles.output}>
-                      {output}{" "}
-                      <span>
-                        {programTakingInput ? (
-                          <form
-                            className={styles.outputForConsoleForm}
-                            action=""
-                          >
-                            <input type="text" />
-                          </form>
-                        ) : null}
-                      </span>
-                    </p>
-                    {/* <p className={styles.commandMessage}>Command not found</p> */}
+                  <div className={styles.outputForConsole}>
+                    <span className={styles.promptLabel}>$</span>
+                    <p className={styles.output}>{output} </p>
+                    <span>
+                      {programTakingInput ? (
+                        <form
+                          className={styles.outputForConsoleForm}
+                          onSubmit={consoleInputFormOnSubmit}
+                        >
+                          <input ref={inputRef} type="text" />
+                        </form>
+                      ) : null}
+                    </span>
                   </div>
+                  <p className={styles.commandMessage}>{finalOutput}</p>
                 </div>
               )}
 
