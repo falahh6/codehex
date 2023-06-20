@@ -30,7 +30,7 @@
 } */
 
 .fileName {
-    /* margin-top: 0; */
+    margin: 6px 0px;
     font-size: 1rem;
 
 }
@@ -225,9 +225,15 @@
 .output {
     margin: 0;
     padding-left: 8px;
+    width: fit-content;
+    height: fit-content;
+    white-space: pre-line;
 }
 
 .commandMessage {
     padding: 0;
     padding-left: 1rem;
+    color: black;
+    z-index: 999;
+    white-space: pre-line;
 }

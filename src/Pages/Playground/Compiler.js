@@ -16,7 +16,7 @@ import { Dropdown, Typography, Space } from "antd";
 import { alternativeCode } from "../../store/compiler-slice";
 import MonacoEditor from "react-monaco-editor/lib/editor";
 import "./editor.css";
-// import XTerminal from "../../Components/OutputTerminal/OutputTerminal";
+import PreLoader from "../../Components/UI/PreLoader";
 
 const checkingIfInputNeeded = (userCode) => {
   const inputPatterns = [
@@ -30,13 +30,16 @@ const checkingIfInputNeeded = (userCode) => {
     /STDIN.gets\(/i,
   ];
 
+  let inputCount = 0;
   for (const pattern of inputPatterns) {
-    if (pattern.test(userCode)) {
-      return true;
+    const matches = userCode.match(pattern);
+    if (matches) {
+      inputCount += matches.length;
     }
   }
-  return false;
+  return inputCount;
 };
+
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionDisplay, setExtensionDisplay] = useState();
@@ -47,10 +50,20 @@ const Compiler = () => {
   const alternativeCodeGenerated = useSelector(
     (state) => state.compiler.alternativeCode
   );
+  const [outputState, setOutputState] = useState(output);
+  const [finalOutputState, setFinalOutputState] = useState(finalOutput);
   const [switchTab, setSwitchTab] = useState("output");
   const [selectedkeysState, setSelectedKeys] = useState("0");
   const [programTakingInput, setProgramTakingInput] = useState(false);
-  const [userInput, setUserInput] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  });
+
   const OnChangePLHandler = ({ key }) => {
     setSelectedKeys(key);
   };
@@ -82,7 +95,9 @@ const Compiler = () => {
     console.log(userCode);
     const doesProgramNeedsInput = checkingIfInputNeeded(userCode);
 
-    setProgramTakingInput(doesProgramNeedsInput);
+    if (doesProgramNeedsInput) {
+      setProgramTakingInput(true);
+    }
 
     const payload = {
       Selectedlanguage,
@@ -92,6 +107,7 @@ const Compiler = () => {
     };
 
     dispatch(initialExecutionForInput(payload));
+    setOutputState(output);
   };
 
   const consoleInputFormOnSubmit = (e) => {
@@ -99,22 +115,22 @@ const Compiler = () => {
 
     console.log(inputRef.current.value);
     const newInput = inputRef.current.value;
-    setUserInput((prevInput) => [...prevInput, newInput]);
     const selectedOption = items.filter(
       (item) => item.key === selectedkeysState
     );
     const extension = selectedOption[0].extension;
     const Selectedlanguage = selectedOption[0].label;
 
+    const doesProgramNeedsInput = checkingIfInputNeeded(userCode);
     const payload = {
       Selectedlanguage,
       extension,
       userCode,
-      userInput,
+      newInput,
+      doesProgramNeedsInput,
     };
     dispatch(compilerOutput(payload));
-
-    inputRef.current.value = "";
+    setFinalOutputState(finalOutput);
   };
 
   const switchToOutput = () => {
@@ -127,124 +143,137 @@ const Compiler = () => {
   const activeStyleForTabs = switchTab === "output" ? "tabActive" : "";
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 1 }}
-      >
-        <div>
-          <Helmet>
-            <title>Compiler</title>
-          </Helmet>
-          <div className={styles.mainDiv}>
-            <form onSubmit={submitHandler} action="" className={styles.form}>
-              <div className={styles.actions}>
-                <Dropdown
-                  menu={{
-                    items,
-                    selectable: true,
-                    selectedKeys: selectedkeysState,
-                    onClick: OnChangePLHandler,
-                    itemRef: selectRef,
-                  }}
-                  autoAdjustOverflow
-                  overlayStyle={{
-                    overflowY: "scroll",
-                    maxHeight: "75.6vh",
-                    border: "1px solid lightgrey",
-                    borderRadius: "4px",
-                  }}
+    <>
+      {isLoading ? (
+        <PreLoader />
+      ) : (
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <div>
+              <Helmet>
+                <title>Compiler</title>
+              </Helmet>
+              <div className={styles.mainDiv}>
+                <form
+                  onSubmit={submitHandler}
+                  action=""
+                  className={styles.form}
                 >
-                  <Typography.Link>
-                    <Space>
-                      {
-                        items.find((item) => item.key === selectedkeysState)
-                          .label
-                      }
-                      <DownOutlined />
-                    </Space>
-                  </Typography.Link>
-                </Dropdown>
-                <button className={styles.runButton}>
-                  <FontAwesomeIcon icon={faPlay} />
-                  <span> Run </span>
-                </button>
-              </div>
-              <div className={styles.codeBlock}>
-                <h4 className={styles.fileName}>
-                  main<span>{extensionDisplay}</span>
-                </h4>
-                <div className={styles.codeInput}>
-                  <MonacoEditor
-                    value={userCode}
-                    language="javascript"
-                    // theme="vs-dark"
-                    height="80vh"
-                    width="95%"
-                    onChange={(value) => {
-                      setUserCode(value);
-                    }}
-                    options={{
-                      acceptSuggestionOnCommitCharacter: true,
-                      automaticLayout: true,
-                      cursorBlinking: "solid",
-                      cursorStyle: "block",
-                      fontSize: "12px",
-                      fontWeight: "800",
-                      letterSpacing: "1",
-                      glyphMargin: false,
-                      padding: {
-                        top: 10,
-                        bottom: 10,
-                      },
-                      folding: true,
-                      lightbulb: {
-                        enabled: true,
-                      },
-                      overviewRulerBorder: true,
-                      extraEditorClassName: "editor",
-                    }}
-                  />
-                </div>
-              </div>
-            </form>
-            <div className={styles.outputComponent}>
-              <div className={styles.consoleTabNavs}>
-                <span onClick={switchToOutput} className={activeStyleForTabs}>
-                  Output
-                </span>
-                <span onClick={switchToOpenAI}>OpenAI</span>
-              </div>
-              {switchTab === "output" && (
-                <div className={styles.Terminal}>
-                  <div className={styles.outputForConsole}>
-                    <span className={styles.promptLabel}>$</span>
-                    <p className={styles.output}>{output} </p>
-                    <span>
-                      {programTakingInput ? (
-                        <form
-                          className={styles.outputForConsoleForm}
-                          onSubmit={consoleInputFormOnSubmit}
-                        >
-                          <input ref={inputRef} type="text" />
-                        </form>
-                      ) : null}
-                    </span>
+                  <div className={styles.actions}>
+                    <Dropdown
+                      menu={{
+                        items,
+                        selectable: true,
+                        selectedKeys: selectedkeysState,
+                        onClick: OnChangePLHandler,
+                        itemRef: selectRef,
+                      }}
+                      autoAdjustOverflow
+                      overlayStyle={{
+                        overflowY: "scroll",
+                        maxHeight: "75.6vh",
+                        border: "1px solid lightgrey",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      <Typography.Link>
+                        <Space>
+                          {
+                            items.find((item) => item.key === selectedkeysState)
+                              .label
+                          }
+                          <DownOutlined />
+                        </Space>
+                      </Typography.Link>
+                    </Dropdown>
+                    <button className={styles.runButton}>
+                      <FontAwesomeIcon icon={faPlay} />
+                      <span> Run </span>
+                    </button>
                   </div>
-                  <p className={styles.commandMessage}>{finalOutput}</p>
-                </div>
-              )}
+                  <div className={styles.codeBlock}>
+                    <h4 className={styles.fileName}>
+                      main<span>{extensionDisplay}</span>
+                    </h4>
+                    <div className={styles.codeInput}>
+                      <MonacoEditor
+                        value={userCode}
+                        language="javascript"
+                        // theme="vs-dark"
+                        height="80vh"
+                        width="95%"
+                        onChange={(value) => {
+                          setUserCode(value);
+                        }}
+                        options={{
+                          acceptSuggestionOnCommitCharacter: true,
+                          automaticLayout: true,
+                          cursorBlinking: "solid",
+                          cursorStyle: "block",
+                          fontSize: "12px",
+                          fontWeight: "800",
+                          letterSpacing: "1",
+                          glyphMargin: false,
+                          padding: {
+                            top: 10,
+                            bottom: 10,
+                          },
+                          folding: true,
+                          lightbulb: {
+                            enabled: true,
+                          },
+                          overviewRulerBorder: true,
+                          extraEditorClassName: "editor",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </form>
+                <div className={styles.outputComponent}>
+                  <div className={styles.consoleTabNavs}>
+                    <span
+                      onClick={switchToOutput}
+                      className={activeStyleForTabs}
+                    >
+                      Output
+                    </span>
+                    <span onClick={switchToOpenAI}>OpenAI</span>
+                  </div>
+                  {switchTab === "output" && (
+                    <div className={styles.Terminal}>
+                      <div className={styles.outputForConsole}>
+                        <span className={styles.promptLabel}>$</span>
+                        <p className={styles.output}>{outputState.message}</p>
+                        <span>
+                          {programTakingInput ? (
+                            <form
+                              className={styles.outputForConsoleForm}
+                              onSubmit={consoleInputFormOnSubmit}
+                            >
+                              <input ref={inputRef} type="text" />
+                            </form>
+                          ) : null}
+                        </span>
+                      </div>
+                      <p className={styles.commandMessage}>
+                        {finalOutputState.message}
+                      </p>
+                    </div>
+                  )}
 
-              {switchTab === "openAI" && (
-                <p className={styles.openAI}> OpenAI </p>
-              )}
+                  {switchTab === "openAI" && <p className={styles.openAI}></p>}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+          </motion.div>
+        </AnimatePresence>
+      )}
+    </>
   );
 };
 

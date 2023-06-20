@@ -33,9 +33,9 @@ export const initialExecutionForInput = createAsyncThunk(
 
     try {
       const response = await axios.request(options);
-      // if (doesProgramNeedsInput) {
-      //   console.log("input is required");
-      // }
+      if (doesProgramNeedsInput) {
+        console.log("input is required");
+      }
       return response.data.stdout;
     } catch (error) {
       return error;
@@ -45,7 +45,13 @@ export const initialExecutionForInput = createAsyncThunk(
 
 export const compilerOutput = createAsyncThunk(
   "compilerSlice/output",
-  async ({ Selectedlanguage, extension, userCode, userInput }) => {
+  async ({
+    Selectedlanguage,
+    extension,
+    userCode,
+    newInput,
+    doesProgramNeedsInput,
+  }) => {
     const options = {
       method: "POST",
       url: "https://onecompiler-apis.p.rapidapi.com/api/v1/run",
@@ -56,7 +62,7 @@ export const compilerOutput = createAsyncThunk(
       },
       data: {
         language: Selectedlanguage,
-        stdin: userInput,
+        stdin: newInput,
         files: [
           {
             name: "index" + extension,
@@ -66,11 +72,11 @@ export const compilerOutput = createAsyncThunk(
       },
     };
 
-    console.log(Selectedlanguage, extension, userCode);
+    console.log(Selectedlanguage, extension, userCode, newInput);
 
     try {
       const response = await axios.request(options);
-      console.log(response.data);
+      console.log(response.data.stdout);
       if (response.data.stderr === null) {
         return response.data.stdout;
       } else {
