@@ -4,7 +4,7 @@ import axios from "axios";
 const API_KEY = "80c2437ae0msh8b10a7096d8c152p1e04f2jsn9e113e29af91";
 const compilerInitialState = {
   output: "",
-  alternativeCode: "",
+  alternativeCodeIni: "",
   finalOutput: "",
 };
 
@@ -101,7 +101,7 @@ export const alternativeCode = createAsyncThunk(
       },
       data: {
         query: `
-        write the same code for with intendation in ReactJS :
+        explain the below code in bulletpoints :
 
         #include <stdio.h>
         int main(){
@@ -143,7 +143,7 @@ const compilerSlice = createSlice({
       console.log(action.error);
     });
     builder.addCase(alternativeCode.fulfilled, (state, action) => {
-      state.alternativeCode = action.payload;
+      state.alternativeCodeIni = action.payload;
     });
     builder.addCase(alternativeCode.rejected, (state, action) => {
       console.log(action.payload);

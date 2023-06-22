@@ -1,5 +1,4 @@
 const extensions = [
-  "",
   ".adb",
   ".asm",
   ".asm",

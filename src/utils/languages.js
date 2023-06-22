@@ -1,5 +1,4 @@
 const languages = [
-  "Select the programming language",
   "ada95",
   "asm (nasm)",
   "asm (nasm)",

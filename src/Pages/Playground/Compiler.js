@@ -11,13 +11,13 @@ import {
   compilerOutput,
   initialExecutionForInput,
 } from "../../store/compiler-slice";
-import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Typography, Space } from "antd";
-import { alternativeCode } from "../../store/compiler-slice";
+
 import MonacoEditor from "react-monaco-editor/lib/editor";
 import "./editor.css";
 import PreLoader from "../../Components/UI/PreLoader";
-
+import useDropdown from "../../hooks/useDropdown";
+import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
+import OpenAImodes from "../../Components/OpenAIModes/OpenAImodes";
 const checkingIfInputNeeded = (userCode) => {
   const inputPatterns = [
     /prompt\(/i,
@@ -42,21 +42,24 @@ const checkingIfInputNeeded = (userCode) => {
 
 const Compiler = () => {
   const dispatch = useDispatch();
-  const [extensionDisplay, setExtensionDisplay] = useState();
+  const [extensionState, setExtension] = useState();
   const [userCode, setUserCode] = useState("");
-  const selectRef = useRef();
+  const [language, setLanguage] = useState("");
+
   const output = useSelector((state) => state.compiler.output);
   const finalOutput = useSelector((state) => state.compiler.finalOutput);
-  const alternativeCodeGenerated = useSelector(
-    (state) => state.compiler.alternativeCode
-  );
   const [outputState, setOutputState] = useState(output);
   const [finalOutputState, setFinalOutputState] = useState(finalOutput);
   const [switchTab, setSwitchTab] = useState("output");
-  const [selectedkeysState, setSelectedKeys] = useState("0");
   const [programTakingInput, setProgramTakingInput] = useState(false);
-
   const [isLoading, setIsLoading] = useState(true);
+
+  const languageDropdown = useDropdown("1");
+
+  const handlerLanguageSelect = (selectedOption) => {
+    setExtension(selectedOption.extension);
+    setLanguage(selectedOption.label);
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -64,32 +67,19 @@ const Compiler = () => {
     }, 2000);
   });
 
-  const OnChangePLHandler = ({ key }) => {
-    setSelectedKeys(key);
-  };
   const inputRef = useRef();
-  useEffect(() => {
-    setExtensionDisplay(extensions[selectedkeysState]);
-  }, [selectedkeysState]);
 
-  const items = programmingLanguages.map((language, index) => ({
+  const languagesItems = programmingLanguages.map((language, index) => ({
     key: `${index}`,
     label: language,
     extension: extensions[index],
   }));
 
-  const getResponseHandler = async () => {
-    dispatch(alternativeCode());
-  };
-
   const submitHandler = (event) => {
     event.preventDefault();
 
-    const selectedOption = items.filter(
-      (item) => item.key === selectedkeysState
-    );
-    const extension = selectedOption[0].extension;
-    const Selectedlanguage = selectedOption[0].label;
+    const extension = extensionState;
+    const Selectedlanguage = language;
 
     console.log(Selectedlanguage, extension);
     console.log(userCode);
@@ -106,6 +96,8 @@ const Compiler = () => {
       doesProgramNeedsInput,
     };
 
+    console.log(payload);
+
     dispatch(initialExecutionForInput(payload));
     setOutputState(output);
   };
@@ -113,13 +105,9 @@ const Compiler = () => {
   const consoleInputFormOnSubmit = (e) => {
     e.preventDefault();
 
-    console.log(inputRef.current.value);
     const newInput = inputRef.current.value;
-    const selectedOption = items.filter(
-      (item) => item.key === selectedkeysState
-    );
-    const extension = selectedOption[0].extension;
-    const Selectedlanguage = selectedOption[0].label;
+    const extension = extensionState;
+    const Selectedlanguage = language;
 
     const doesProgramNeedsInput = checkingIfInputNeeded(userCode);
     const payload = {
@@ -129,6 +117,7 @@ const Compiler = () => {
       newInput,
       doesProgramNeedsInput,
     };
+
     dispatch(compilerOutput(payload));
     setFinalOutputState(finalOutput);
   };
@@ -165,32 +154,13 @@ const Compiler = () => {
                   className={styles.form}
                 >
                   <div className={styles.actions}>
-                    <Dropdown
-                      menu={{
-                        items,
-                        selectable: true,
-                        selectedKeys: selectedkeysState,
-                        onClick: OnChangePLHandler,
-                        itemRef: selectRef,
-                      }}
-                      autoAdjustOverflow
-                      overlayStyle={{
-                        overflowY: "scroll",
-                        maxHeight: "75.6vh",
-                        border: "1px solid lightgrey",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      <Typography.Link>
-                        <Space>
-                          {
-                            items.find((item) => item.key === selectedkeysState)
-                              .label
-                          }
-                          <DownOutlined />
-                        </Space>
-                      </Typography.Link>
-                    </Dropdown>
+                    <DropdownComponent
+                      items={languagesItems}
+                      dropdownHook={languageDropdown}
+                      dropdownStyle={styles.langSelect}
+                      maxMenuHeight="90vh"
+                      onOptionSelect={handlerLanguageSelect}
+                    />
                     <button className={styles.runButton}>
                       <FontAwesomeIcon icon={faPlay} />
                       <span> Run </span>
@@ -198,13 +168,12 @@ const Compiler = () => {
                   </div>
                   <div className={styles.codeBlock}>
                     <h4 className={styles.fileName}>
-                      main<span>{extensionDisplay}</span>
+                      main<span>{extensionState}</span>
                     </h4>
                     <div className={styles.codeInput}>
                       <MonacoEditor
                         value={userCode}
                         language="javascript"
-                        // theme="vs-dark"
                         height="80vh"
                         width="95%"
                         onChange={(value) => {
@@ -266,7 +235,7 @@ const Compiler = () => {
                     </div>
                   )}
 
-                  {switchTab === "openAI" && <p className={styles.openAI}></p>}
+                  {switchTab === "openAI" && <OpenAImodes />}
                 </div>
               </div>
             </div>
