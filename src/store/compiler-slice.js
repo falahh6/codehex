@@ -103,7 +103,7 @@ export const alternativeCode = createAsyncThunk(
           {
             role: "user",
             content:
-              "write ReactJS code to make async thunk request [only code, no explanation needed]",
+              "write ReactJS code to make async thunk request [Response should be an JavaScript object where the format should be { type : 'code', code : 'your responsed code'} and if the response has explanation it should be an another object ] ",
           },
         ],
         temperature: 1,

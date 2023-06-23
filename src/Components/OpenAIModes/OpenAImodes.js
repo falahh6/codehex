@@ -57,7 +57,7 @@ const OpenAImodes = () => {
           </div>
         </div>
         <div className={styles.openAIresponse}>
-          <SyntaxHighlighter language="jsx" style={schoolBook}>
+          <SyntaxHighlighter wrapLines={true} language="jsx" style={schoolBook}>
             {alternativeCodeIni}
           </SyntaxHighlighter>
         </div>
