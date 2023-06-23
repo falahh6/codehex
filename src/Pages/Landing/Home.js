@@ -3,8 +3,6 @@ import styles from "./Home.module.css";
 import { TypeAnimation } from "react-type-animation";
 import { AnimatePresence, motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import PreLoader from "../../Components/UI/PreLoader";
-import { useEffect, useState } from "react";
 const Home = () => {
   return (
     <>

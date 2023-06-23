@@ -87,34 +87,32 @@ export const compilerOutput = createAsyncThunk(
     }
   }
 );
-
 export const alternativeCode = createAsyncThunk(
   "compilerSlice/alternativeCode",
   async () => {
     const options = {
       method: "POST",
-      url: "https://chatgpt-gpt4-ai-chatbot.p.rapidapi.com/ask",
+      url: "https://chatgpt53.p.rapidapi.com/",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": API_KEY,
-        "X-RapidAPI-Host": "chatgpt-gpt4-ai-chatbot.p.rapidapi.com",
+        "X-RapidAPI-Key": "80c2437ae0msh8b10a7096d8c152p1e04f2jsn9e113e29af91",
+        "X-RapidAPI-Host": "chatgpt53.p.rapidapi.com",
       },
       data: {
-        query: `
-        explain the below code in bulletpoints :
-
-        #include <stdio.h>
-        int main(){
-          printf("testing...");
-          return 0;
-        }
-        `,
+        messages: [
+          {
+            role: "user",
+            content:
+              "write ReactJS code to make async thunk request [only code, no explanation needed]",
+          },
+        ],
+        temperature: 1,
       },
     };
 
     try {
       const response = await axios.request(options);
-      return response.data.response;
+      return response.data.choices[0].message.content;
     } catch (error) {
       console.error(error);
     }

@@ -6,6 +6,9 @@ import DropdownComponent from "../UI/Dropdown/DropdownComponent";
 import { alternativeCode } from "../../store/compiler-slice";
 import { useDispatch, useSelector } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import { schoolBook } from "react-syntax-highlighter/dist/esm/styles/hljs";
+
 const OpenAImodes = () => {
   const [mode, setMode] = useState("");
   const dispatch = useDispatch();
@@ -35,7 +38,7 @@ const OpenAImodes = () => {
     console.log(selectedOption.label);
   };
 
-  const promptHandler = () => {
+  const promptHandler = async () => {
     console.log(mode + " testing mode selection...");
     dispatch(alternativeCode());
   };
@@ -54,7 +57,9 @@ const OpenAImodes = () => {
           </div>
         </div>
         <div className={styles.openAIresponse}>
-          <p className={styles.genCode}>{alternativeCodeIni}</p>
+          <SyntaxHighlighter language="jsx" style={schoolBook}>
+            {alternativeCodeIni}
+          </SyntaxHighlighter>
         </div>
       </div>
     </>

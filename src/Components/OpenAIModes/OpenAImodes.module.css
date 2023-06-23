@@ -35,13 +35,12 @@
 
 .openAIresponse {
     padding: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    word-wrap: normal;
+    word-break: normal;
 }
 
-.openAIresponse p {
-    width: 100%;
-}
-
-.genCode {
-    white-space: normal;
-    width: 100%;
+.openAIresponse pre {
+    background-color: aliceblue;
 }
