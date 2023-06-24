@@ -6,14 +6,25 @@ import DropdownComponent from "../UI/Dropdown/DropdownComponent";
 import { alternativeCode } from "../../store/compiler-slice";
 import { useDispatch, useSelector } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
-import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
-import { schoolBook } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { Highlight, themes } from "prism-react-renderer";
+
+const codeBlock = `
+const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
+  return (
+    <div>
+      <h2>{item.name}</h2>
+      <p>Price: {item.price}</p>
+      <p>Quantity: {item.quantity}</p>
+    </div>
+  );
+}
+`;
 
 const OpenAImodes = () => {
   const [mode, setMode] = useState("");
   const dispatch = useDispatch();
   const alternativeCodeIni = useSelector(
-    (state) => state.compiler.alternativeCodeIni
+    (state) => state.compiler.alternativeCodeIni.response
   );
 
   const modeDropdown = useDropdown("1");
@@ -57,9 +68,33 @@ const OpenAImodes = () => {
           </div>
         </div>
         <div className={styles.openAIresponse}>
-          <SyntaxHighlighter wrapLines={true} language="jsx" style={schoolBook}>
-            {alternativeCodeIni}
-          </SyntaxHighlighter>
+          {/* {alternativeCodeIni ? (
+            <SyntaxHighlighter
+              wrapLines={true}
+              language="jsx"
+              style={atomOneDark}
+              className={styles.codeSnippet}
+            >
+              {alternativeCodeIni}
+            </SyntaxHighlighter>
+          ) : (
+            ""
+          )} */}
+          {/* {alternativeCodeIni} */}
+          <Highlight theme={themes.github} code={codeBlock} language="tsx">
+            {({ className, style, tokens, getLineProps, getTokenProps }) => (
+              <pre style={style}>
+                {tokens.map((line, i) => (
+                  <div key={i} {...getLineProps({ line })}>
+                    <span>{i + 1}</span>
+                    {line.map((token, key) => (
+                      <span key={key} {...getTokenProps({ token })} />
+                    ))}
+                  </div>
+                ))}
+              </pre>
+            )}
+          </Highlight>
         </div>
       </div>
     </>

@@ -44,3 +44,7 @@
 .openAIresponse pre {
     background-color: aliceblue;
 }
+
+.codeSnippet {
+    font-size: 12px;
+}

@@ -4,7 +4,10 @@ import axios from "axios";
 const API_KEY = "80c2437ae0msh8b10a7096d8c152p1e04f2jsn9e113e29af91";
 const compilerInitialState = {
   output: "",
-  alternativeCodeIni: "",
+  alternativeCodeIni: {
+    status: "",
+    response: "",
+  },
   finalOutput: "",
 };
 
@@ -102,8 +105,11 @@ export const alternativeCode = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content:
-              "write ReactJS code to make async thunk request [Response should be an JavaScript object where the format should be { type : 'code', code : 'your responsed code'} and if the response has explanation it should be an another object ] ",
+            content: `I need an alternative code to this snippet {
+                a = input("a : ");
+                b = input("b : ");
+                print(a , b);
+                }. Please format it in a displayable highlighted format.`,
           },
         ],
         temperature: 1,
@@ -140,8 +146,12 @@ const compilerSlice = createSlice({
     builder.addCase(compilerOutput.rejected, (state, action) => {
       console.log(action.error);
     });
+    builder.addCase(alternativeCode.pending, (state, action) => {
+      console.log("response is loading");
+    });
     builder.addCase(alternativeCode.fulfilled, (state, action) => {
-      state.alternativeCodeIni = action.payload;
+      console.log(action.payload);
+      state.alternativeCodeIni.response = action.payload;
     });
     builder.addCase(alternativeCode.rejected, (state, action) => {
       console.log(action.payload);
