@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import styles from "./OpenAImodes.module.css";
@@ -8,21 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
 import { Highlight, themes } from "prism-react-renderer";
 
-const codeBlock = `
-const GroceryItem: React.FC<GroceryItemProps> = ({ item }) => {
-  return (
-    <div>
-      <h2>{item.name}</h2>
-      <p>Price: {item.price}</p>
-      <p>Quantity: {item.quantity}</p>
-    </div>
-  );
-}
-`;
-
-const OpenAImodes = () => {
+const OpenAImodes = (props) => {
   const [mode, setMode] = useState("");
   const dispatch = useDispatch();
+  const userCode = useState(props.code)[0];
   const alternativeCodeIni = useSelector(
     (state) => state.compiler.alternativeCodeIni.response
   );
@@ -51,7 +41,7 @@ const OpenAImodes = () => {
 
   const promptHandler = async () => {
     console.log(mode + " testing mode selection...");
-    dispatch(alternativeCode());
+    dispatch(alternativeCode(userCode));
   };
   return (
     <>
@@ -68,25 +58,16 @@ const OpenAImodes = () => {
           </div>
         </div>
         <div className={styles.openAIresponse}>
-          {/* {alternativeCodeIni ? (
-            <SyntaxHighlighter
-              wrapLines={true}
-              language="jsx"
-              style={atomOneDark}
-              className={styles.codeSnippet}
-            >
-              {alternativeCodeIni}
-            </SyntaxHighlighter>
-          ) : (
-            ""
-          )} */}
-          {/* {alternativeCodeIni} */}
-          <Highlight theme={themes.github} code={codeBlock} language="tsx">
+          <p>Here is you alternative code :</p>
+          <Highlight
+            theme={themes.jettwaveDark}
+            code={alternativeCodeIni}
+            language="tsx"
+          >
             {({ className, style, tokens, getLineProps, getTokenProps }) => (
-              <pre style={style}>
+              <pre className={styles.codeSnippet} style={style}>
                 {tokens.map((line, i) => (
                   <div key={i} {...getLineProps({ line })}>
-                    <span>{i + 1}</span>
                     {line.map((token, key) => (
                       <span key={key} {...getTokenProps({ token })} />
                     ))}

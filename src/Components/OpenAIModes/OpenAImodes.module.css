@@ -46,5 +46,7 @@
 }
 
 .codeSnippet {
-    font-size: 12px;
+    font-size: 14px;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
 }

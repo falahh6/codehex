@@ -235,7 +235,7 @@ const Compiler = () => {
                     </div>
                   )}
 
-                  {switchTab === "openAI" && <OpenAImodes />}
+                  {switchTab === "openAI" && <OpenAImodes code={userCode} />}
                 </div>
               </div>
             </div>
