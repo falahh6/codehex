@@ -105,7 +105,7 @@ export const alternativeCode = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `${userCode} \n explain the above code`,
+            content: `${userCode} \n explain the above code , [use 'enter' after 10 words to break the statements ]`,
           },
         ],
         temperature: 1,
