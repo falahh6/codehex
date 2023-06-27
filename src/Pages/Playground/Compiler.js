@@ -8,10 +8,11 @@ import { Helmet } from "react-helmet";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  alternativeCode,
   compilerOutput,
   initialExecutionForInput,
 } from "../../store/compiler-slice";
-
+import { compilerActions } from "../../store/compiler-slice";
 import MonacoEditor from "react-monaco-editor/lib/editor";
 import "./editor.css";
 import PreLoader from "../../Components/UI/PreLoader";
@@ -53,7 +54,9 @@ const Compiler = () => {
   const [switchTab, setSwitchTab] = useState("output");
   const [programTakingInput, setProgramTakingInput] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  const alternativeCodeIni = useSelector(
+    (state) => state.compiler.alternativeCodeIni.response
+  );
   const languageDropdown = useDropdown("1");
 
   const handlerLanguageSelect = (selectedOption) => {
@@ -130,6 +133,10 @@ const Compiler = () => {
     setSwitchTab("openAI");
   };
   const activeStyleForTabs = switchTab === "output" ? "tabActive" : "";
+
+  const codeReplacehandler = () => {
+    setUserCode(alternativeCodeIni);
+  };
 
   return (
     <>
@@ -217,7 +224,7 @@ const Compiler = () => {
                     <div className={styles.Terminal}>
                       <div className={styles.outputForConsole}>
                         <span className={styles.promptLabel}>$</span>
-                        <p className={styles.output}>{outputState.message}</p>
+                        <p className={styles.output}>{output}</p>
                         <span>
                           {programTakingInput ? (
                             <form
@@ -235,7 +242,12 @@ const Compiler = () => {
                     </div>
                   )}
 
-                  {switchTab === "openAI" && <OpenAImodes code={userCode} />}
+                  {switchTab === "openAI" && (
+                    <OpenAImodes
+                      code={[userCode, setUserCode]}
+                      codeReplaceHandlerProp={codeReplacehandler}
+                    />
+                  )}
                 </div>
               </div>
             </div>

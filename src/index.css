@@ -28,3 +28,13 @@ code {
   font-family: 'Mona-sans-black';
   src: url('../src/utils/fonts/Mona-Sans-Black.ttf');
 }
+
+@font-face {
+  font-family: 'AvenirLStd-book';
+  src: url('./utils/fonts/AvenirLTStd-Book.otf');
+}
+
+@font-face {
+  font-family: 'AvenirLStd-Heavy';
+  src: url('./utils/fonts/AvenirLTStd-Heavy.otf');
+}

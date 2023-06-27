@@ -105,7 +105,7 @@ export const alternativeCode = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `I need an alternative code to this code snippet ${userCode}. Please provide only the code`,
+            content: `I need an alternative code to this code snippet ${userCode}. Please provide only the code in the same programming language as the code`,
           },
         ],
         temperature: 1,
@@ -124,7 +124,13 @@ export const alternativeCode = createAsyncThunk(
 const compilerSlice = createSlice({
   name: "openAIAPIrequest",
   initialState: compilerInitialState,
-  reducers: {},
+  reducers: {
+    resetState: (state, action) => {
+      state.alternativeCodeIni = "";
+      state.finalOutput = "";
+      state.output = "";
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(initialExecutionForInput.fulfilled, (state, action) => {
       state.output = action.payload;

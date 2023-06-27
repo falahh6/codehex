@@ -12,7 +12,8 @@ import { Highlight, themes } from "prism-react-renderer";
 const OpenAImodes = (props) => {
   const [mode, setMode] = useState("");
   const dispatch = useDispatch();
-  const userCode = useState(props.code)[0];
+  const [userCode, setUserCode] = useState(props.code);
+  const [showRes, setShowRes] = useState(false);
   const alternativeCodeIni = useSelector(
     (state) => state.compiler.alternativeCodeIni.response
   );
@@ -40,8 +41,9 @@ const OpenAImodes = (props) => {
   };
 
   const promptHandler = async () => {
-    console.log(mode + " testing mode selection...");
+    console.log(userCode);
     dispatch(alternativeCode(userCode));
+    setShowRes(true);
   };
   return (
     <>
@@ -58,24 +60,41 @@ const OpenAImodes = (props) => {
           </div>
         </div>
         <div className={styles.openAIresponse}>
-          <p>Here is you alternative code :</p>
-          <Highlight
-            theme={themes.jettwaveDark}
-            code={alternativeCodeIni}
-            language="tsx"
-          >
-            {({ className, style, tokens, getLineProps, getTokenProps }) => (
-              <pre className={styles.codeSnippet} style={style}>
-                {tokens.map((line, i) => (
-                  <div key={i} {...getLineProps({ line })}>
-                    {line.map((token, key) => (
-                      <span key={key} {...getTokenProps({ token })} />
+          {showRes ? (
+            <div>
+              <p>Here is your alternative code :</p>
+              <Highlight
+                theme={themes.nightOwlLight}
+                code={alternativeCodeIni}
+                language="tsx"
+              >
+                {({
+                  className,
+                  style,
+                  tokens,
+                  getLineProps,
+                  getTokenProps,
+                }) => (
+                  <pre className={styles.codeSnippet} style={style}>
+                    {tokens.map((line, i) => (
+                      <div key={i} {...getLineProps({ line })}>
+                        {line.map((token, key) => (
+                          <span key={key} {...getTokenProps({ token })} />
+                        ))}
+                      </div>
                     ))}
-                  </div>
-                ))}
-              </pre>
-            )}
-          </Highlight>
+                  </pre>
+                )}
+              </Highlight>
+
+              <button onClick={props.codeReplaceHandlerProp}>
+                {" "}
+                Replace code
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </>
