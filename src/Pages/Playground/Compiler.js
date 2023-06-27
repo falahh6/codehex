@@ -8,11 +8,9 @@ import { Helmet } from "react-helmet";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  alternativeCode,
   compilerOutput,
   initialExecutionForInput,
 } from "../../store/compiler-slice";
-import { compilerActions } from "../../store/compiler-slice";
 import MonacoEditor from "react-monaco-editor/lib/editor";
 import "./editor.css";
 import PreLoader from "../../Components/UI/PreLoader";
@@ -49,7 +47,7 @@ const Compiler = () => {
 
   const output = useSelector((state) => state.compiler.output);
   const finalOutput = useSelector((state) => state.compiler.finalOutput);
-  const [outputState, setOutputState] = useState(output);
+  // const [outputState, setOutputState] = useState(output);
   const [finalOutputState, setFinalOutputState] = useState(finalOutput);
   const [switchTab, setSwitchTab] = useState("output");
   const [programTakingInput, setProgramTakingInput] = useState(false);
@@ -102,7 +100,7 @@ const Compiler = () => {
     console.log(payload);
 
     dispatch(initialExecutionForInput(payload));
-    setOutputState(output);
+    // setOutputState(output);
   };
 
   const consoleInputFormOnSubmit = (e) => {

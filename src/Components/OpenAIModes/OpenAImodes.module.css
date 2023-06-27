@@ -35,7 +35,7 @@
 }
 
 .openAIresponse {
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     width: 100%;
     box-sizing: border-box;
     word-wrap: normal;
@@ -50,4 +50,6 @@
     font-size: 14px;
     padding: 0.5rem 1rem;
     border-radius: 4px;
+    word-break: keep-all;
+    word-wrap: break-word;
 }

@@ -92,7 +92,7 @@ export const compilerOutput = createAsyncThunk(
 );
 export const alternativeCode = createAsyncThunk(
   "compilerSlice/alternativeCode",
-  async (userCode) => {
+  async ({ mode, userCode }) => {
     const options = {
       method: "POST",
       url: "https://chatgpt53.p.rapidapi.com/",
@@ -105,7 +105,7 @@ export const alternativeCode = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `I need an alternative code to this code snippet ${userCode}. Please provide only the code in the same programming language as the code`,
+            content: `${userCode} \n explain the above code`,
           },
         ],
         temperature: 1,
