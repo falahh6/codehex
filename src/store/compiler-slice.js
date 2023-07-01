@@ -4,10 +4,6 @@ import axios from "axios";
 const API_KEY = "80c2437ae0msh8b10a7096d8c152p1e04f2jsn9e113e29af91";
 const compilerInitialState = {
   output: "",
-  alternativeCodeIni: {
-    status: "",
-    response: "",
-  },
   finalOutput: "",
 };
 
@@ -90,43 +86,12 @@ export const compilerOutput = createAsyncThunk(
     }
   }
 );
-export const alternativeCode = createAsyncThunk(
-  "compilerSlice/alternativeCode",
-  async ({ mode, userCode }) => {
-    const options = {
-      method: "POST",
-      url: "https://chatgpt53.p.rapidapi.com/",
-      headers: {
-        "content-type": "application/json",
-        "X-RapidAPI-Key": "80c2437ae0msh8b10a7096d8c152p1e04f2jsn9e113e29af91",
-        "X-RapidAPI-Host": "chatgpt53.p.rapidapi.com",
-      },
-      data: {
-        messages: [
-          {
-            role: "user",
-            content: `${userCode} \n Given the following code snippet, provide an alternative implementation that achieves the same functionality. with little explanation`,
-          },
-        ],
-        temperature: 1,
-      },
-    };
-
-    try {
-      const response = await axios.request(options);
-      return response.data.choices[0].message.content;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-);
 
 const compilerSlice = createSlice({
   name: "openAIAPIrequest",
   initialState: compilerInitialState,
   reducers: {
     resetState: (state, action) => {
-      state.alternativeCodeIni = "";
       state.finalOutput = "";
       state.output = "";
     },
@@ -147,15 +112,6 @@ const compilerSlice = createSlice({
     });
     builder.addCase(compilerOutput.rejected, (state, action) => {
       console.log(action.error);
-    });
-    builder.addCase(alternativeCode.pending, (state, action) => {
-      console.log("response is loading");
-    });
-    builder.addCase(alternativeCode.fulfilled, (state, action) => {
-      state.alternativeCodeIni.response = action.payload;
-    });
-    builder.addCase(alternativeCode.rejected, (state, action) => {
-      console.log(action.payload);
     });
   },
 });

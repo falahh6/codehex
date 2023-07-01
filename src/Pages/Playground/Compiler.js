@@ -52,7 +52,7 @@ const Compiler = () => {
   const [programTakingInput, setProgramTakingInput] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const alternativeCodeIni = useSelector(
-    (state) => state.compiler.alternativeCodeIni.response
+    (state) => state.openai.alternativeCodeIni.response
   );
   const languageDropdown = useDropdown("1");
 

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import styles from "./OpenAImodes.module.css";
 import DropdownComponent from "../UI/Dropdown/DropdownComponent";
-import { alternativeCode } from "../../store/compiler-slice";
+import { alternativeCode } from "../../store/openai-slice";
 import { useDispatch } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
 import { TypeAnimation } from "react-type-animation";
@@ -15,7 +15,6 @@ const OpenAImodes = (props) => {
   const [modeDisplay, setModeDisplay] = useState(null);
   const dispatch = useDispatch();
   const userCode = useState(props.code)[0];
-  // const [showRes, setShowRes] = useState(false);
   const modeDropdown = useDropdown("1");
 
   const modeItems = [
@@ -26,7 +25,6 @@ const OpenAImodes = (props) => {
     {
       key: "1",
       label: "code explanation",
-      ui: `<p>code ex </p>`,
     },
     {
       key: "2",
@@ -50,9 +48,6 @@ const OpenAImodes = (props) => {
     };
 
     dispatch(alternativeCode(payload));
-    // setTimeout(() => {
-    //   setShowRes(true);
-    // }, 5000);
   };
 
   const er = "error detection and fix";

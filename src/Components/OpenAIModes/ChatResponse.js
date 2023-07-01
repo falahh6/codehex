@@ -4,7 +4,7 @@ import { TypeAnimation } from "react-type-animation";
 import styles from "./OpenAImodes.module.css";
 const ChatResponse = () => {
   const alternativeCodeIni = useSelector(
-    (state) => state.compiler.alternativeCodeIni.response
+    (state) => state.openai.alternativeCodeIni.response
   );
 
   const codeBlock = alternativeCodeIni.split(/(```[\w-]*\n[\s\S]*?\n```)/);
