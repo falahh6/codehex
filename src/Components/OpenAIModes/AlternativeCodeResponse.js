@@ -2,17 +2,16 @@ import { useSelector } from "react-redux";
 import { Highlight, themes } from "prism-react-renderer";
 import { TypeAnimation } from "react-type-animation";
 import styles from "./OpenAImodes.module.css";
-const ChatResponse = () => {
+const AlternativeCodeResponse = () => {
   const alternativeCodeIni = useSelector(
     (state) => state.openai.alternativeCodeIni.response
   );
 
-  const codeBlock = alternativeCodeIni.split(/(```[\w-]*\n[\s\S]*?\n```)/);
+  const codeBlocks = alternativeCodeIni.split(/(```[\w-]*\n[\s\S]*?\n```)/);
 
-  console.log(codeBlock);
-  const formattedResponse = codeBlock.map((block, index) => {
+  const formattedResponse = codeBlocks.map((block, index) => {
     if (index % 2 === 1) {
-      const language = codeBlock[index - 1];
+      const language = codeBlocks[index - 1];
       return (
         <Highlight
           theme={themes.nightOwlLight}
@@ -38,10 +37,17 @@ const ChatResponse = () => {
       );
     }
 
-    return <TypeAnimation sequence={[block]} speed={100} cursor={false} />;
+    return (
+      <TypeAnimation
+        key={index}
+        sequence={[block]}
+        speed={100}
+        cursor={false}
+      />
+    );
   });
 
   return <>{formattedResponse}</>;
 };
 
-export default ChatResponse;
+export default AlternativeCodeResponse;

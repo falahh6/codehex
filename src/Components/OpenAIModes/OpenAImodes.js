@@ -8,7 +8,7 @@ import { alternativeCode } from "../../store/openai-slice";
 import { useDispatch } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
 import { TypeAnimation } from "react-type-animation";
-import ChatResponse from "./ChatResponse";
+import AlternativeCodeResponse from "./AlternativeCodeResponse";
 
 const OpenAImodes = (props) => {
   const [mode, setMode] = useState("");
@@ -68,7 +68,7 @@ const OpenAImodes = (props) => {
         <div className={styles.openAIresponse}>
           {modeDisplay === "0" && (
             <div>
-              <ChatResponse />
+              <AlternativeCodeResponse />
 
               {/* <button onClick={props.codeReplaceHandlerProp}>
                 {" "}
