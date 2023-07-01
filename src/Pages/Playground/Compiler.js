@@ -47,7 +47,6 @@ const Compiler = () => {
 
   const output = useSelector((state) => state.compiler.output);
   const finalOutput = useSelector((state) => state.compiler.finalOutput);
-  // const [outputState, setOutputState] = useState(output);
   const [finalOutputState, setFinalOutputState] = useState(finalOutput);
   const [switchTab, setSwitchTab] = useState("output");
   const [programTakingInput, setProgramTakingInput] = useState(false);

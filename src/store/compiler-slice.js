@@ -105,7 +105,7 @@ export const alternativeCode = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `${userCode} \n explain the above code , [use 'enter' after 10 words to break the statements ]`,
+            content: `${userCode} \n Given the following code snippet, provide an alternative implementation that achieves the same functionality. with little explanation`,
           },
         ],
         temperature: 1,
@@ -152,7 +152,6 @@ const compilerSlice = createSlice({
       console.log("response is loading");
     });
     builder.addCase(alternativeCode.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.alternativeCodeIni.response = action.payload;
     });
     builder.addCase(alternativeCode.rejected, (state, action) => {
