@@ -5,7 +5,7 @@ import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import styles from "./OpenAImodes.module.css";
 import DropdownComponent from "../UI/Dropdown/DropdownComponent";
 import { alternativeCode } from "../../store/compiler-slice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
 import { TypeAnimation } from "react-type-animation";
 import ChatResponse from "./ChatResponse";
