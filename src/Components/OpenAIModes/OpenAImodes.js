@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import styles from "./OpenAImodes.module.css";
 import DropdownComponent from "../UI/Dropdown/DropdownComponent";
-import { alternativeCode } from "../../store/openai-slice";
+import { alternativeCode, codeExplanation } from "../../store/openai-slice";
 import { useDispatch, useSelector } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
 import { TypeAnimation } from "react-type-animation";
@@ -18,6 +18,9 @@ const OpenAImodes = (props) => {
   const modeDropdown = useDropdown("1");
   const alternativeCodeIni = useSelector(
     (state) => state.openai.alternativeCodeIni.response
+  );
+  const codeExplanationIni = useSelector(
+    (state) => state.openai.codeExplanationIni.response
   );
 
   const modeItems = [
@@ -40,8 +43,6 @@ const OpenAImodes = (props) => {
     setModeDisplay(
       modeItems.find((item) => item.label === selectedOption.label).key
     );
-    console.log(modeItems.find((item) => item.label === selectedOption.label));
-    console.log(selectedOption.label);
   };
 
   const promptHandler = async () => {
@@ -50,10 +51,13 @@ const OpenAImodes = (props) => {
       userCode,
     };
 
-    dispatch(alternativeCode(payload));
+    if (mode === "Alternative code") {
+      dispatch(alternativeCode(payload));
+    } else if (mode === "code explanation") {
+      dispatch(codeExplanation(payload));
+    }
   };
 
-  const er = "error detection and fix";
   return (
     <>
       <div className={styles.openAI}>
@@ -79,15 +83,9 @@ const OpenAImodes = (props) => {
               </button> */}
             </div>
           )}
-          {modeDisplay === "1" && (
-            <Response
-              response={
-                "testbhfdvsgvcd  bdjhgfmv hgkduywg jhufivygk hdwkvuy diywgv hjgcdyusv code ex"
-              }
-            />
-          )}
+          {modeDisplay === "1" && <Response response={codeExplanationIni} />}
           {modeDisplay === "2" && (
-            <TypeAnimation sequence={[er]} cursor={false} />
+            <TypeAnimation sequence={["test"]} cursor={false} />
           )}
         </div>
       </div>

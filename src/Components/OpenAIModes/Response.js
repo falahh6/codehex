@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { Highlight, themes } from "prism-react-renderer";
 import { TypeAnimation } from "react-type-animation";
 import styles from "./OpenAImodes.module.css";
