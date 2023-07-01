@@ -5,10 +5,10 @@ import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import styles from "./OpenAImodes.module.css";
 import DropdownComponent from "../UI/Dropdown/DropdownComponent";
 import { alternativeCode } from "../../store/openai-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
 import { TypeAnimation } from "react-type-animation";
-import AlternativeCodeResponse from "./AlternativeCodeResponse";
+import Response from "./Response";
 
 const OpenAImodes = (props) => {
   const [mode, setMode] = useState("");
@@ -16,6 +16,9 @@ const OpenAImodes = (props) => {
   const dispatch = useDispatch();
   const userCode = useState(props.code)[0];
   const modeDropdown = useDropdown("1");
+  const alternativeCodeIni = useSelector(
+    (state) => state.openai.alternativeCodeIni.response
+  );
 
   const modeItems = [
     {
@@ -68,7 +71,7 @@ const OpenAImodes = (props) => {
         <div className={styles.openAIresponse}>
           {modeDisplay === "0" && (
             <div>
-              <AlternativeCodeResponse />
+              <Response response={alternativeCodeIni} />
 
               {/* <button onClick={props.codeReplaceHandlerProp}>
                 {" "}
@@ -77,7 +80,11 @@ const OpenAImodes = (props) => {
             </div>
           )}
           {modeDisplay === "1" && (
-            <TypeAnimation sequence={["code explanation"]} cursor={false} />
+            <Response
+              response={
+                "testbhfdvsgvcd  bdjhgfmv hgkduywg jhufivygk hdwkvuy diywgv hjgcdyusv code ex"
+              }
+            />
           )}
           {modeDisplay === "2" && (
             <TypeAnimation sequence={[er]} cursor={false} />

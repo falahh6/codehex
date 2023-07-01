@@ -2,12 +2,13 @@ import { useSelector } from "react-redux";
 import { Highlight, themes } from "prism-react-renderer";
 import { TypeAnimation } from "react-type-animation";
 import styles from "./OpenAImodes.module.css";
-const AlternativeCodeResponse = () => {
-  const alternativeCodeIni = useSelector(
-    (state) => state.openai.alternativeCodeIni.response
-  );
+const Response = (props) => {
+  // const alternativeCodeIni = useSelector(
+  //   (state) => state.openai.alternativeCodeIni.response
+  // );
+  const response = props.response;
 
-  const codeBlocks = alternativeCodeIni.split(/(```[\w-]*\n[\s\S]*?\n```)/);
+  const codeBlocks = response.split(/(```[\w-]*\n[\s\S]*?\n```)/);
 
   const formattedResponse = codeBlocks.map((block, index) => {
     if (index % 2 === 1) {
@@ -50,4 +51,4 @@ const AlternativeCodeResponse = () => {
   return <>{formattedResponse}</>;
 };
 
-export default AlternativeCodeResponse;
+export default Response;
