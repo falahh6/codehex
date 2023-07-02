@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const API_KEY = "80c2437ae0msh8b10a7096d8c152p1e04f2jsn9e113e29af91";
+const API_KEY_2 = "6f84765971msh15453b1a9f81460p1d90d5jsn9e2bf0e57a61";
 const compilerInitialState = {
   output: "",
   finalOutput: "",
@@ -15,7 +16,7 @@ export const initialExecutionForInput = createAsyncThunk(
       url: "https://onecompiler-apis.p.rapidapi.com/api/v1/run",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": API_KEY,
+        "X-RapidAPI-Key": API_KEY_2,
         "X-RapidAPI-Host": "onecompiler-apis.p.rapidapi.com",
       },
       data: {
@@ -56,7 +57,7 @@ export const compilerOutput = createAsyncThunk(
       url: "https://onecompiler-apis.p.rapidapi.com/api/v1/run",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": API_KEY,
+        "X-RapidAPI-Key": API_KEY_2,
         "X-RapidAPI-Host": "onecompiler-apis.p.rapidapi.com",
       },
       data: {
@@ -70,8 +71,6 @@ export const compilerOutput = createAsyncThunk(
         ],
       },
     };
-
-    console.log(Selectedlanguage, extension, userCode, newInput);
 
     try {
       const response = await axios.request(options);
@@ -99,6 +98,7 @@ const compilerSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(initialExecutionForInput.fulfilled, (state, action) => {
       state.output = action.payload;
+      console.log(action.payload);
     });
     builder.addCase(initialExecutionForInput.rejected, (state, action) => {
       console.log(action.payload);
@@ -109,6 +109,7 @@ const compilerSlice = createSlice({
         new RegExp(existingOutput, "g"),
         ""
       );
+      console.log(action.payload);
     });
     builder.addCase(compilerOutput.rejected, (state, action) => {
       console.log(action.error);

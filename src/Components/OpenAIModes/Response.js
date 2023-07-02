@@ -6,7 +6,6 @@ const Response = (props) => {
   //   (state) => state.openai.alternativeCodeIni.response
   // );
   const response = props.response;
-
   const codeBlocks = response.split(/(```[\w-]*\n[\s\S]*?\n```)/);
 
   const formattedResponse = codeBlocks.map((block, index) => {

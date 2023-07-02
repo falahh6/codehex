@@ -21,6 +21,7 @@
     "framer-motion": "^10.12.16",
     "openai": "^3.2.1",
     "prism-react-renderer": "^2.0.5",
+    "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-dom": "^18.2.0",
