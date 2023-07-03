@@ -4,18 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import styles from "./OpenAImodes.module.css";
 import DropdownComponent from "../UI/Dropdown/DropdownComponent";
-import {
-  alternativeCode,
-  codeExplanation,
-  OpenAIActions,
-} from "../../store/openai-slice";
+import { alternativeCode, codeExplanation } from "../../store/openai-slice";
 import { useDispatch, useSelector } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
-import { TypeAnimation } from "react-type-animation";
 import Response from "./Response";
+import { useEffect } from "react";
 
 const OpenAImodes = (props) => {
-  const [mode, setMode] = useState("");
+  const [mode, setMode] = useState({ key: "", label: "" });
   const [modeDisplay, setModeDisplay] = useState(null);
   const dispatch = useDispatch();
   const userCode = useState(props.code)[0];
@@ -43,25 +39,36 @@ const OpenAImodes = (props) => {
   ];
 
   const handlerModeSelect = (selectedOption) => {
-    setMode(selectedOption.label);
-    setModeDisplay(
-      modeItems.find((item) => item.label === selectedOption.label).key
-    );
+    setMode({
+      key: modeItems.find((item) => item.label === selectedOption.label).key,
+      label: selectedOption.label,
+    });
+    console.log(mode);
   };
+
+  // useEffect(() => {
+  //   if (mode === "Alternative code") {
+  //     setModeDisplay("0");
+  //   } else if (mode === "code explanation") {
+  //     setModeDisplay("1");
+  //   } else if (mode === "error detection and fix") {
+  //     setModeDisplay("2");
+  //   }
+  //   console.log(mode, modeDisplay);
+  // }, [mode]);
 
   const promptHandler = async () => {
     const payload = {
       mode,
       userCode,
     };
-    console.log(mode);
 
-    setModeDisplay(modeItems.find((item) => item.label === mode).key);
-    console.log(modeDisplay);
-
-    if (mode === "Alternative code") {
+    // setModeDisplay(modeItems.find((item) => item.label === mode).key);
+    if (mode.label === "Alternative code") {
+      setModeDisplay("0");
       dispatch(alternativeCode(payload));
-    } else if (mode === "code explanation") {
+    } else if (mode.label === "code explanation") {
+      setModeDisplay("1");
       dispatch(codeExplanation(payload));
     }
   };
@@ -81,7 +88,7 @@ const OpenAImodes = (props) => {
           </div>
         </div>
         <div className={styles.openAIresponse}>
-          {modeDisplay === "0" && (
+          {mode.key === "0" && (
             <div>
               <Response response={alternativeCodeIni} />
 
@@ -91,8 +98,13 @@ const OpenAImodes = (props) => {
               </button> */}
             </div>
           )}
-          {modeDisplay === "1" && <Response response={codeExplanationIni} />}
-          {modeDisplay === "2" && <Response response={"error and fix"} />}
+          {mode.key === "1" && (
+            <div>
+              {" "}
+              <Response response={codeExplanationIni} />
+            </div>
+          )}
+          {mode.key === "2" && <Response response={"error and fix"} />}
         </div>
       </div>
     </>

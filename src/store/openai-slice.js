@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Configuration, OpenAIApi } from "openai";
-import axios from "axios";
+// import { config } from "dotenv";
 
 const configuration = new Configuration({
   organization: "org-vBr2OjQTvBZS9SFiOOkOiDSj",
-  apiKey: "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",
+  apiKey: process.env.REACT_APP_OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
@@ -62,7 +62,7 @@ export const alternativeCode = createAsyncThunk(
 
       return response.data.choices[0].message.content;
     } catch (error) {
-      return error;
+      return error.message;
     }
   }
 );
@@ -102,7 +102,7 @@ export const codeExplanation = createAsyncThunk(
 
       return response.data.choices[0].message.content;
     } catch (error) {
-      return error;
+      return error.message;
     }
   }
 );

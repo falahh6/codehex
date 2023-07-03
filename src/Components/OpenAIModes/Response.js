@@ -1,4 +1,5 @@
 import { Highlight, themes } from "prism-react-renderer";
+import { useEffect } from "react";
 import { TypeAnimation } from "react-type-animation";
 import styles from "./OpenAImodes.module.css";
 const Response = (props) => {
@@ -16,14 +17,15 @@ const Response = (props) => {
           theme={themes.nightOwlLight}
           code={block}
           language={language}
+          key={index}
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <pre className={styles.codeSnippet} style={style}>
+            <pre key={index} className={styles.codeSnippet} style={style}>
               {tokens.map((line, i) => (
                 <div key={i} {...getLineProps({ line })}>
                   {line.map((token, key) => (
                     <TypeAnimation
-                      key={key}
+                      key={index}
                       sequence={[token.content]}
                       cursor={false}
                     />
