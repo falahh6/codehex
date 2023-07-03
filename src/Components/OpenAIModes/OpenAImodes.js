@@ -8,11 +8,9 @@ import { alternativeCode, codeExplanation } from "../../store/openai-slice";
 import { useDispatch, useSelector } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
 import Response from "./Response";
-import { useEffect } from "react";
 
 const OpenAImodes = (props) => {
   const [mode, setMode] = useState({ key: "", label: "" });
-  const [modeDisplay, setModeDisplay] = useState(null);
   const dispatch = useDispatch();
   const userCode = useState(props.code)[0];
   const modeDropdown = useDropdown("1");
@@ -65,10 +63,8 @@ const OpenAImodes = (props) => {
 
     // setModeDisplay(modeItems.find((item) => item.label === mode).key);
     if (mode.label === "Alternative code") {
-      setModeDisplay("0");
       dispatch(alternativeCode(payload));
     } else if (mode.label === "code explanation") {
-      setModeDisplay("1");
       dispatch(codeExplanation(payload));
     }
   };

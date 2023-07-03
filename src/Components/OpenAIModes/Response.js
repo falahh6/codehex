@@ -1,5 +1,4 @@
 import { Highlight, themes } from "prism-react-renderer";
-import { useEffect } from "react";
 import { TypeAnimation } from "react-type-animation";
 import styles from "./OpenAImodes.module.css";
 const Response = (props) => {

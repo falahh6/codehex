@@ -17,7 +17,6 @@ import PreLoader from "../../Components/UI/PreLoader";
 import useDropdown from "../../hooks/useDropdown";
 import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
 import OpenAImodes from "../../Components/OpenAIModes/OpenAImodes";
-import Prism from "prismjs";
 
 const checkingIfInputNeeded = (userCode) => {
   const inputPatterns = [
