@@ -17,6 +17,9 @@ const OpenAImodes = (props) => {
   const alternativeCodeIni = useSelector(
     (state) => state.openai.alternativeCodeIni.response
   );
+  const alternativeCodeIniStatus = useSelector(
+    (state) => state.openai.alternativeCodeIni.status
+  );
   const codeExplanationIni = useSelector(
     (state) => state.openai.codeExplanationIni.response
   );
@@ -86,7 +89,11 @@ const OpenAImodes = (props) => {
         <div className={styles.openAIresponse}>
           {mode.key === "0" && (
             <div>
-              <Response response={alternativeCodeIni} />
+              {alternativeCodeIniStatus === "pending" ? (
+                "loading..."
+              ) : (
+                <Response response={alternativeCodeIni} />
+              )}
 
               {/* <button onClick={props.codeReplaceHandlerProp}>
                 {" "}
@@ -97,7 +104,11 @@ const OpenAImodes = (props) => {
           {mode.key === "1" && (
             <div>
               {" "}
-              <Response response={codeExplanationIni} />
+              {alternativeCodeIniStatus === "pending" ? (
+                "loading..."
+              ) : (
+                <Response response={codeExplanationIni} />
+              )}
             </div>
           )}
           {mode.key === "2" && <Response response={"error and fix"} />}
