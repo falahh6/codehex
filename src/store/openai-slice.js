@@ -17,6 +17,10 @@ const initialState = {
     status: "idle",
     response: "",
   },
+  errorDnFIni: {
+    status: "idle",
+    response: "",
+  },
 };
 
 export const alternativeCode = createAsyncThunk(
@@ -61,6 +65,27 @@ export const codeExplanation = createAsyncThunk(
   }
 );
 
+export const errorDnF = createAsyncThunk(
+  "OpenAISlice/errorDnF",
+  async ({ userCode }) => {
+    try {
+      const response = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "user",
+            content: `${userCode} \n Given the following code snippet, Check if the code has any errors and list the errors with response fixed code snippet .`,
+          },
+        ],
+      });
+
+      return response.data.choices[0].message.content;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 const OpenAISlice = createSlice({
   name: "openai-slice",
   initialState: initialState,
@@ -91,6 +116,16 @@ const OpenAISlice = createSlice({
     builder.addCase(codeExplanation.rejected, (state, action) => {
       console.log(action.payload);
       state.codeExplanationIni.status = "rejected";
+    });
+    builder.addCase(errorDnF.pending, (state, action) => {
+      state.errorDnFIni.status = "pending";
+    });
+    builder.addCase(errorDnF.fulfilled, (state, action) => {
+      state.errorDnFIni.status = "fullfilled";
+      state.errorDnFIni.response = action.payload;
+    });
+    builder.addCase(errorDnF.rejected, (state, action) => {
+      state.errorDnFIni.status = "rejected";
     });
   },
 });

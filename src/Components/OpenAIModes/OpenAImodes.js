@@ -4,7 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import styles from "./OpenAImodes.module.css";
 import DropdownComponent from "../UI/Dropdown/DropdownComponent";
-import { alternativeCode, codeExplanation } from "../../store/openai-slice";
+import {
+  alternativeCode,
+  codeExplanation,
+  errorDnF,
+} from "../../store/openai-slice";
 import { useDispatch, useSelector } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
 import Response from "./Response";
@@ -15,15 +19,12 @@ const OpenAImodes = (props) => {
   const userCode = useState(props.code)[0];
   const modeDropdown = useDropdown("1");
   const alternativeCodeIni = useSelector(
-    (state) => state.openai.alternativeCodeIni.response
-  );
-  const alternativeCodeIniStatus = useSelector(
-    (state) => state.openai.alternativeCodeIni.status
+    (state) => state.openai.alternativeCodeIni
   );
   const codeExplanationIni = useSelector(
-    (state) => state.openai.codeExplanationIni.response
+    (state) => state.openai.codeExplanationIni
   );
-
+  const errorDnFIni = useSelector((state) => state.openai.errorDnFIni);
   const modeItems = [
     {
       key: "0",
@@ -69,6 +70,8 @@ const OpenAImodes = (props) => {
       dispatch(alternativeCode(payload));
     } else if (mode.label === "code explanation") {
       dispatch(codeExplanation(payload));
+    } else if (mode.label === "error detection and fix") {
+      dispatch(errorDnF(payload));
     }
   };
 
@@ -89,29 +92,33 @@ const OpenAImodes = (props) => {
         <div className={styles.openAIresponse}>
           {mode.key === "0" && (
             <div>
-              {alternativeCodeIniStatus === "pending" ? (
-                "loading..."
+              {alternativeCodeIni.status === "pending" ? (
+                <span className={styles.textCursor}>...</span>
               ) : (
-                <Response response={alternativeCodeIni} />
+                <Response response={alternativeCodeIni.response} />
               )}
-
-              {/* <button onClick={props.codeReplaceHandlerProp}>
-                {" "}
-                Replace code
-              </button> */}
+              <span className={styles.textCursor}> </span>
             </div>
           )}
           {mode.key === "1" && (
             <div>
               {" "}
-              {alternativeCodeIniStatus === "pending" ? (
-                "loading..."
+              {codeExplanationIni.status === "pending" ? (
+                <span className={styles.textCursor}>...</span>
               ) : (
-                <Response response={codeExplanationIni} />
+                <Response response={codeExplanationIni.response} />
               )}
             </div>
           )}
-          {mode.key === "2" && <Response response={"error and fix"} />}
+          {mode.key === "2" && (
+            <div>
+              {errorDnFIni.status === "pending" ? (
+                <span className={styles.textCursor}>...</span>
+              ) : (
+                <Response response={errorDnFIni.response} />
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>
