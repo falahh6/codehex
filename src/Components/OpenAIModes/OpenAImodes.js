@@ -7,6 +7,7 @@ import DropdownComponent from "../UI/Dropdown/DropdownComponent";
 import {
   alternativeCode,
   codeExplanation,
+  codeRefactor,
   errorDnF,
 } from "../../store/openai-slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +25,7 @@ const OpenAImodes = (props) => {
   const codeExplanationIni = useSelector(
     (state) => state.openai.codeExplanationIni
   );
+  const codeRefactorIni = useSelector((state) => state.openai.codeRefactorIni);
   const errorDnFIni = useSelector((state) => state.openai.errorDnFIni);
   const modeItems = [
     {
@@ -37,6 +39,10 @@ const OpenAImodes = (props) => {
     {
       key: "2",
       label: "error detection and fix",
+    },
+    {
+      key: "3",
+      label: "code refactoring suggestions",
     },
   ];
 
@@ -65,13 +71,14 @@ const OpenAImodes = (props) => {
       userCode,
     };
 
-    // setModeDisplay(modeItems.find((item) => item.label === mode).key);
     if (mode.label === "Alternative code") {
       dispatch(alternativeCode(payload));
     } else if (mode.label === "code explanation") {
       dispatch(codeExplanation(payload));
     } else if (mode.label === "error detection and fix") {
       dispatch(errorDnF(payload));
+    } else if (mode.label === "code refactoring suggestions") {
+      dispatch(codeRefactor(payload));
     }
   };
 
@@ -93,11 +100,15 @@ const OpenAImodes = (props) => {
           {mode.key === "0" && (
             <div>
               {alternativeCodeIni.status === "pending" ? (
-                <span className={styles.textCursor}>...</span>
+                <span className={styles.textCursor}></span>
               ) : (
                 <Response response={alternativeCodeIni.response} />
               )}
-              <span className={styles.textCursor}> </span>
+              {alternativeCodeIni.status === "done" ? (
+                ""
+              ) : (
+                <span className={styles.textCursor}></span>
+              )}
             </div>
           )}
           {mode.key === "1" && (
@@ -108,6 +119,11 @@ const OpenAImodes = (props) => {
               ) : (
                 <Response response={codeExplanationIni.response} />
               )}
+              {codeExplanationIni.status === "done" ? (
+                ""
+              ) : (
+                <span className={styles.textCursor}></span>
+              )}
             </div>
           )}
           {mode.key === "2" && (
@@ -116,6 +132,25 @@ const OpenAImodes = (props) => {
                 <span className={styles.textCursor}>...</span>
               ) : (
                 <Response response={errorDnFIni.response} />
+              )}
+              {codeExplanationIni.status === "done" ? (
+                ""
+              ) : (
+                <span className={styles.textCursor}></span>
+              )}
+            </div>
+          )}
+          {mode.key === "3" && (
+            <div>
+              {codeRefactorIni.status === "pending" ? (
+                <span className={styles.textCursor}>...</span>
+              ) : (
+                <Response response={codeRefactorIni.response} />
+              )}
+              {codeRefactorIni.status === "done" ? (
+                ""
+              ) : (
+                <span className={styles.textCursor}></span>
               )}
             </div>
           )}

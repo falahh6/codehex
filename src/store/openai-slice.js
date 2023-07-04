@@ -1,5 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
@@ -18,6 +17,10 @@ const initialState = {
     response: "",
   },
   errorDnFIni: {
+    status: "idle",
+    response: "",
+  },
+  codeRefactorIni: {
     status: "idle",
     response: "",
   },
@@ -86,6 +89,27 @@ export const errorDnF = createAsyncThunk(
   }
 );
 
+export const codeRefactor = createAsyncThunk(
+  "OpenAISlice/codeRefactor",
+  async ({ userCode }) => {
+    try {
+      const response = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "user",
+            content: `Please provide code refactoring suggestions for the following code snippet: \n ${userCode}`,
+          },
+        ],
+      });
+
+      return response.data.choices[0].message.content;
+    } catch (error) {
+      return error.message;
+    }
+  }
+);
+
 const OpenAISlice = createSlice({
   name: "openai-slice",
   initialState: initialState,
@@ -97,7 +121,7 @@ const OpenAISlice = createSlice({
     });
     builder.addCase(alternativeCode.fulfilled, (state, action) => {
       state.alternativeCodeIni.response = action.payload;
-      state.alternativeCodeIni.status = "fulfilled";
+      state.alternativeCodeIni.status = "done";
     });
     builder.addCase(alternativeCode.rejected, (state, action) => {
       console.log(action.payload);
@@ -111,7 +135,7 @@ const OpenAISlice = createSlice({
     builder.addCase(codeExplanation.fulfilled, (state, action) => {
       console.log(action.payload);
       state.codeExplanationIni.response = action.payload;
-      state.codeExplanationIni.status = "fullfilled";
+      state.codeExplanationIni.status = "done";
     });
     builder.addCase(codeExplanation.rejected, (state, action) => {
       console.log(action.payload);
@@ -126,6 +150,16 @@ const OpenAISlice = createSlice({
     });
     builder.addCase(errorDnF.rejected, (state, action) => {
       state.errorDnFIni.status = "rejected";
+    });
+    builder.addCase(codeRefactor.pending, (state, action) => {
+      state.codeRefactorIni.status = "pending";
+    });
+    builder.addCase(codeRefactor.fulfilled, (state, action) => {
+      state.codeRefactorIni.status = "fullfilled";
+      state.codeRefactorIni.response = action.payload;
+    });
+    builder.addCase(codeRefactor.rejected, (state, action) => {
+      state.codeRefactorIni.status = "rejected";
     });
   },
 });
