@@ -9,6 +9,7 @@ import {
   codeExplanation,
   codeRefactor,
   errorDnF,
+  codeTranslation,
 } from "../../store/openai-slice";
 import { useDispatch, useSelector } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
@@ -18,6 +19,7 @@ const OpenAImodes = (props) => {
   const [mode, setMode] = useState({ key: "", label: "" });
   const dispatch = useDispatch();
   const userCode = useState(props.code)[0];
+  const [toLangauge, setToLangauge] = useState("");
   const modeDropdown = useDropdown("1");
   const alternativeCodeIni = useSelector(
     (state) => state.openai.alternativeCodeIni
@@ -27,6 +29,9 @@ const OpenAImodes = (props) => {
   );
   const codeRefactorIni = useSelector((state) => state.openai.codeRefactorIni);
   const errorDnFIni = useSelector((state) => state.openai.errorDnFIni);
+  const codeTranslationIni = useSelector(
+    (state) => state.openai.codeTranslationIni
+  );
   const modeItems = [
     {
       key: "0",
@@ -44,6 +49,10 @@ const OpenAImodes = (props) => {
       key: "3",
       label: "code refactoring suggestions",
     },
+    {
+      key: "4",
+      label: "code translation",
+    },
   ];
 
   const handlerModeSelect = (selectedOption) => {
@@ -51,7 +60,6 @@ const OpenAImodes = (props) => {
       key: modeItems.find((item) => item.label === selectedOption.label).key,
       label: selectedOption.label,
     });
-    console.log(mode);
   };
 
   // useEffect(() => {
@@ -65,10 +73,17 @@ const OpenAImodes = (props) => {
   //   console.log(mode, modeDisplay);
   // }, [mode]);
 
+  const toLangauageHandler = (event) => {
+    const languageName = event.target.value.trim();
+    setToLangauge(languageName);
+    console.log(languageName);
+  };
+
   const promptHandler = async () => {
     const payload = {
       mode,
       userCode,
+      toLangauge,
     };
 
     if (mode.label === "Alternative code") {
@@ -79,7 +94,11 @@ const OpenAImodes = (props) => {
       dispatch(errorDnF(payload));
     } else if (mode.label === "code refactoring suggestions") {
       dispatch(codeRefactor(payload));
+    } else if (mode.label === "code translation") {
+      dispatch(codeTranslation(payload));
     }
+
+    console.log(toLangauge);
   };
 
   return (
@@ -102,57 +121,62 @@ const OpenAImodes = (props) => {
               {alternativeCodeIni.status === "pending" ? (
                 <span className={styles.textCursor}></span>
               ) : (
-                <Response response={alternativeCodeIni.response} />
-              )}
-              {alternativeCodeIni.status === "done" ? (
                 ""
-              ) : (
-                <span className={styles.textCursor}></span>
               )}
+              <Response response={alternativeCodeIni.response} />
             </div>
           )}
           {mode.key === "1" && (
             <div>
-              {" "}
               {codeExplanationIni.status === "pending" ? (
-                <span className={styles.textCursor}>...</span>
-              ) : (
-                <Response response={codeExplanationIni.response} />
-              )}
-              {codeExplanationIni.status === "done" ? (
-                ""
-              ) : (
                 <span className={styles.textCursor}></span>
+              ) : (
+                ""
               )}
+
+              <Response response={codeExplanationIni.response} />
             </div>
           )}
           {mode.key === "2" && (
             <div>
               {errorDnFIni.status === "pending" ? (
-                <span className={styles.textCursor}>...</span>
-              ) : (
-                <Response response={errorDnFIni.response} />
-              )}
-              {codeExplanationIni.status === "done" ? (
-                ""
-              ) : (
                 <span className={styles.textCursor}></span>
+              ) : (
+                ""
               )}
+              <Response response={errorDnFIni.response} />
             </div>
           )}
           {mode.key === "3" && (
             <div>
               {codeRefactorIni.status === "pending" ? (
-                <span className={styles.textCursor}>...</span>
-              ) : (
-                <Response response={codeRefactorIni.response} />
-              )}
-              {codeRefactorIni.status === "done" ? (
-                ""
-              ) : (
                 <span className={styles.textCursor}></span>
+              ) : (
+                ""
               )}
+
+              <Response response={codeRefactorIni.response} />
             </div>
+          )}
+          {mode.key === "4" && (
+            <>
+              <span> Enter the langauge in which you want to translate : </span>{" "}
+              <input
+                type="text"
+                maxLength="20"
+                onChange={toLangauageHandler}
+                className={styles.langaugeToInput}
+              />
+              <hr />
+              <div>
+                {codeTranslationIni.status === "pending" ? (
+                  <span className={styles.textCursor}></span>
+                ) : (
+                  ""
+                )}
+                <Response response={codeTranslationIni.response} />
+              </div>
+            </>
           )}
         </div>
       </div>

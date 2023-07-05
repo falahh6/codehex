@@ -87,3 +87,13 @@
       opacity: 0;
     }
   }
+
+  
+.langaugeToInput{
+    border: none;
+    width: fit-content;
+    border-bottom: 1px solid blue;
+    outline: 1px solid lightgray;
+    height: 22px;
+    padding-left: 4px;
+}

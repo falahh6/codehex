@@ -40,6 +40,12 @@ const checkingIfInputNeeded = (userCode) => {
   return inputCount;
 };
 
+export const languagesItems = programmingLanguages.map((language, index) => ({
+  key: `${index}`,
+  label: language,
+  extension: extensions[index],
+}));
+
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionState, setExtension] = useState();
@@ -70,11 +76,11 @@ const Compiler = () => {
 
   const inputRef = useRef();
 
-  const languagesItems = programmingLanguages.map((language, index) => ({
-    key: `${index}`,
-    label: language,
-    extension: extensions[index],
-  }));
+  // const languagesItems = programmingLanguages.map((language, index) => ({
+  //   key: `${index}`,
+  //   label: language,
+  //   extension: extensions[index],
+  // }));
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -97,10 +103,7 @@ const Compiler = () => {
       doesProgramNeedsInput,
     };
 
-    // console.log(payload);
-
     dispatch(initialExecutionForInput(payload));
-    // setOutputState(output);
   };
 
   const consoleInputFormOnSubmit = (e) => {
