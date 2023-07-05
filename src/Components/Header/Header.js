@@ -33,8 +33,8 @@ const Header = () => {
         </li>
       </ul>
       <ul className={styles.authItems}>
-        <li>Login</li>
-        <li>Get Started</li>
+        <NavLink to="login">Login</NavLink>
+        <NavLink to="sign-up">Get Started</NavLink>
       </ul>
       <div className={styles.hamburger}>test</div>
     </header>

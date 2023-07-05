@@ -1,16 +1,18 @@
 .main {
     width: 80%;
     margin: auto;
-    height: 62vh;
+    height: 56vh;
     font-family: 'Avenir-book';
 }
 
 .h1 {
-    margin-top: 15rem;
+    margin-top: 14rem;
+    font-size: 24px;
 }
 
 .main p {
     font-weight: bold;
+    font-size: 12px;
     color: rgb(60, 60, 60);
     letter-spacing: 1px;
 }
@@ -27,3 +29,7 @@
     padding-right: 1rem;
     color: rgb(60, 60, 60);
 }
+
+/* .socials a:hover{
+    transform: scale(1.8);
+} */

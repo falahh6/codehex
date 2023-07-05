@@ -5,12 +5,12 @@
     right: 0;
     padding: 3rem;
     height: 1rem;
-    /* width: 100%; */
+    width: 90%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 12px;
     letter-spacing: 2px;
     margin: auto;
     font-family: 'Gotham';
@@ -75,27 +75,27 @@
 
 }
 
-.authItems li {
+.authItems a {
     padding: 0.5rem;
     transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    color: black;
 }
 
-
-.authItems li:nth-child(1):hover {
+.authItems a:nth-child(1):hover {
     background-color: #e2e2e2;
     border-radius: 0.4rem;
     cursor: pointer;
 }
 
-.authItems li:nth-child(2) {
+.authItems a:nth-child(2) {
     border: 1.5px solid #d1d1d1;
     border-radius: 0.4rem;
 }
 
-.authItems li:nth-child(2):hover {
+.authItems a:nth-child(2):hover {
     background-color: #e2e2e2;
     cursor: pointer;
-    /* color: white; */
 }
 
 .hamburger {
