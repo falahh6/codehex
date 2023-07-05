@@ -40,7 +40,9 @@ export const alternativeCode = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `${userCode} \n Given the following code snippet, provide an alternative implementation that achieves the same functionality. with little explanation and the code snipet you will provide should be wrapped within three backticks`,
+            constent: `Provide me the alternative code for the following code and the functionality remains same
+           ${userCode}
+            the output should be : a little explanation with code wrapped with three backticks`,
           },
         ],
       });
@@ -61,7 +63,9 @@ export const codeExplanation = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `${userCode} \n Given the following code snippet, provide me the generic explanation of the code.`,
+            content: `Provide me the code explanation for the following code
+            ${userCode}
+            the output should be : a minimal high quality explanation`,
           },
         ],
       });
@@ -82,7 +86,10 @@ export const errorDnF = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `${userCode} \n Given the following code snippet, Check if the code has any errors and list the errors with response fixed code snippet  and the code snipet you will provide should be wrapped within three backticks.`,
+            content: `Given the following code, detect if the code has any errors and provide me the fix of the every error , if the code does not have any errors then respond with only 'code is correct ;) '
+            ${userCode}    
+            the output should be : the code snippets where the code has error and potential fixes with little high quality information
+            note that the code should be wrappen within three backticks`,
           },
         ],
       });
@@ -103,7 +110,9 @@ export const codeRefactor = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `Please provide code refactoring suggestions for the following code snippet: \n ${userCode}  and the code snipet you will provide should be wrapped within three backticks`,
+            content: `Given the following code, refactor the code with the best practices used to write the given code.
+            ${userCode}
+            the output should be : a refactored code and the statements what all have been refactored`,
           },
         ],
       });
@@ -124,7 +133,9 @@ export const codeTranslation = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `${userCode} \n Given the snippet translate the code into ${toLangauge}[programming langauge] and provide the code wrapped with three backticks`,
+            content: `Given the following code, translate the code into ${toLangauge}
+            ${userCode}
+            the output should be : only the translated code with no explanation or statements `,
           },
         ],
       });
