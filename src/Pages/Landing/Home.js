@@ -2,7 +2,7 @@ import styles from "./Home.module.css";
 import { TypeAnimation } from "react-type-animation";
 import { AnimatePresence, motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import codesnippet from "../../assets/images/code-snipet.svg";
+import workingStructure from "../../assets/images/landing-page-tr.svg";
 const Home = () => {
   return (
     <>
@@ -37,17 +37,12 @@ const Home = () => {
             </div>
           </div>
           <div className={styles.about}>
-            <div className={styles.codeDemo}>
-              <div>
-                <div>
-                  <img
-                    className={styles.codesnippet}
-                    src={codesnippet}
-                    alt="your code"
-                  />
-                </div>
-              </div>
-            </div>
+            <img src={workingStructure} alt="workingStructure" />
+            <h1>
+              <span className={styles.logoname}>codehex</span> uses GPT - 3.5
+              Turbo
+            </h1>
+            <p>to optimise the code with 175 billion parameters</p>
           </div>
         </motion.div>
       </AnimatePresence>

@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400&display=swap');
+
 
 .main {
     width: 90%;
@@ -10,7 +12,7 @@
     justify-content: center;
     text-align: center;
     letter-spacing: 2px;
-    background-color: #eff5ff;
+    background-color: #f0f4ff;
     margin-top: 6rem;
     box-sizing: border-box;
     border-radius: 40px;
@@ -80,40 +82,27 @@
 }
 
 .about{
-    height: 100vh;
+    height: fit-content;
     width: 100%;
     display: flex;
     font-family: 'Mona-sans-black', serif;
     text-align: center;
+    flex-direction: column;
+    padding-bottom: 10rem;
 }
-
+.about img{
+    margin: -10rem auto 0 auto;
+    padding-left: 2rem;
+}
 .about h1{
-    margin: 0 auto;
-    margin-top: 8rem;
+    font-family:'Josefin Sans', sans-serif;
 }
 
-.codeDemo{
-    width: 70%;
-    background-color: #ffffff;
-    margin-top: -10rem;
-    margin-left: 15%;
-    height: 24rem;
-    border-radius: 20px;
+.logoname{
+    color: #004AAD;
 }
 
-.codeDemo div{
-    height: 80%;
-    width: 80%;
-    background-color: #eff5ff;
-    z-index: 999;
-    margin-left: 10%;
-    margin-top: 3%;
-    border-radius: 10px ;
-    font-family: 'Roboto Mono', monospace;
-}
-
-.codesnippet{
-    padding-top: 2rem;
-    border-radius: 1rem;
-    overflow: hidden ;
+.about p{
+    font-family:'Josefin Sans', sans-serif;
+    font-weight: 400;
 }
