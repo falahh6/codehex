@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+
 .main {
-    width: 60%;
-    height: 46rem;
+    width: 90%;
+    height: 80vh;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -8,13 +10,19 @@
     justify-content: center;
     text-align: center;
     letter-spacing: 2px;
+    background-color: #eff5ff;
+    margin-top: 6rem;
+    box-sizing: border-box;
+    border-radius: 40px;
 }
+
 
 .h1 {
     font-family: 'Mona-sans-black', serif;
     font-size: 32px;
     margin-bottom: 0;
     transition: all 0.2s ease;
+    margin-top: -4rem;
 }
 
 
@@ -53,7 +61,7 @@
     background-image: linear-gradient(45deg, #00DBDE 0%, #FC00FF 100%);
     filter: blur(20px);
     transition: 0.2s ease;
-    margin-left: -14.5rem;
+    margin-left: -15.5rem;
     margin-top: 0;
 }
 
@@ -69,4 +77,43 @@
 
 .ctaWrap:hover {
     transform: scale(1.2);
+}
+
+.about{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    font-family: 'Mona-sans-black', serif;
+    text-align: center;
+}
+
+.about h1{
+    margin: 0 auto;
+    margin-top: 8rem;
+}
+
+.codeDemo{
+    width: 70%;
+    background-color: #ffffff;
+    margin-top: -10rem;
+    margin-left: 15%;
+    height: 24rem;
+    border-radius: 20px;
+}
+
+.codeDemo div{
+    height: 80%;
+    width: 80%;
+    background-color: #eff5ff;
+    z-index: 999;
+    margin-left: 10%;
+    margin-top: 3%;
+    border-radius: 10px ;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.codesnippet{
+    padding-top: 2rem;
+    border-radius: 1rem;
+    overflow: hidden ;
 }

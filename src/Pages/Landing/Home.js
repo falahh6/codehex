@@ -1,8 +1,8 @@
-import Features from "../Features/Features";
 import styles from "./Home.module.css";
 import { TypeAnimation } from "react-type-animation";
 import { AnimatePresence, motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import codesnippet from "../../assets/images/code-snipet.svg";
 const Home = () => {
   return (
     <>
@@ -36,7 +36,19 @@ const Home = () => {
               </NavLink>
             </div>
           </div>
-          <Features />
+          <div className={styles.about}>
+            <div className={styles.codeDemo}>
+              <div>
+                <div>
+                  <img
+                    className={styles.codesnippet}
+                    src={codesnippet}
+                    alt="your code"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.div>
       </AnimatePresence>
     </>
