@@ -39,10 +39,27 @@ const Home = () => {
           <div className={styles.about}>
             <img src={workingStructure} alt="workingStructure" />
             <h1>
-              <span className={styles.logoname}>codehex</span> uses GPT - 3.5
-              Turbo
+              What <span className={styles.logoname}>codehex</span> does?
             </h1>
-            <p>to optimise the code with 175 billion parameters</p>
+            <p>
+              {" "}
+              <span className={styles.logoname}>codehex</span> is a powerful
+              tool that helps optimize, provide alternative solutions, explain
+              your code, detect errors, refactor your code, and even translate
+              your code to different programming languages. It's designed to
+              enhance your coding experience and improve the quality of learning
+              new programming langauges. <br /> Explore the possibilities and
+              take your projects to the next level with CodeHex.
+            </p>
+            <button className={styles.exploreBtn}>Explore now !!</button>
+
+            <div className={styles.features}>
+              <div className={styles.test}></div>
+              <div className={styles.test}></div>
+              <div className={styles.test}></div>
+              <div className={styles.test}></div>
+              <div className={styles.test}></div>
+            </div>
           </div>
         </motion.div>
       </AnimatePresence>

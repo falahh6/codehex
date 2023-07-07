@@ -5,6 +5,7 @@ import "./App.css";
 import Home from "./Pages/Landing/Home";
 import Compiler from "./Pages/Playground/Compiler";
 import DevelopedBy from "./Pages/DevelopedBy/DevelopedBy";
+import Features from "./Pages/Features/Features";
 function App() {
   const router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ function App() {
           element: <DevelopedBy />,
         },
       ],
+    },
+    {
+      path: "/features",
+      element: <Features />,
     },
     {
       path: "/compiler",

@@ -7,18 +7,11 @@ const Header = () => {
     navigate("/");
   };
 
-  const navLinkClickHanlder = () => {
-    const featuresSection = document.getElementById("features");
-
-    if (featuresSection) {
-      featuresSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
   return (
     <header className={styles.header}>
       <Logo redirect={redirectHandler} />
       <ul className={styles.mainItems}>
-        <Link to="/" onClick={navLinkClickHanlder}>
+        <Link to="/features">
           <li>Features</li>
         </Link>
         <li>About</li>
