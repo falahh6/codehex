@@ -11,10 +11,10 @@ const Header = () => {
     <header className={styles.header}>
       <Logo redirect={redirectHandler} />
       <ul className={styles.mainItems}>
-        <Link to="/features">
+        {/* <Link to="/features">
           <li>Features</li>
-        </Link>
-        <li>About</li>
+        </Link> */}
+        {/* <li>About</li> */}
         <li>
           {" "}
           <NavLink

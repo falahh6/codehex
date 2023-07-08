@@ -20,15 +20,13 @@ const DevelopedBy = () => {
           <h1 className={styles.h1}>Mohammed Falah</h1>
           <hr />
           <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt,
-            veritatis velit ipsam repudiandae necessitatibus vel adipisci quasi
-            deleniti quisquam commodi! Aut fuga beatae unde! Suscipit, saepe.
-            Ipsam assumenda molestiae ullam illo esse, doloremque rerum, debitis
-            beatae, accusamus vel suscipit voluptate ducimus aliquid. Ad ex
-            doloribus recusandae aut, voluptate nihil excepturi rerum harum amet
-            enim? Error ut eveniet reiciendis ullam aliquam recusandae
-            consectetur deserunt omnis voluptates, corrupti ad ratione assumenda
-            cumque!
+            My name is Mohammed Falah, and I am a passionate developer. I
+            specialize in using ReactJS for front-end development, creating
+            dynamic and interactive user interfaces. I also leverage the power
+            of Supabase for backend development, ensuring seamless data
+            management and robust API integration. With my skills and expertise,
+            I strive to deliver high-quality and scalable web applications that
+            meet the needs of users and businesses alike.
           </p>
           <div className={styles.socials}>
             <a title="twitter" href="https://www.twitter.com/ffalah_">
