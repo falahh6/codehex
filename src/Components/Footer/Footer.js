@@ -7,7 +7,6 @@ const Footer = () => {
         <div className={styles.logo}>
           <img src={logo} alt="logo" />
         </div>
-        <div></div>
       </div>
       <hr />
       <div className={styles.copyrightsection}>

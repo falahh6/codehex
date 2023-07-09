@@ -46,17 +46,15 @@ const Home = () => {
           <div className={styles.about}>
             <img src={workingStructure} alt="workingStructure" />
             <h1>
-              What <span className={styles.logoname}>codehex</span> does?
+              <span className={styles.logoname}>codehex</span> can help you
+              learn coding in a new way
             </h1>
             <p>
               {" "}
-              <span className={styles.logoname}>codehex</span> is a powerful
-              tool that helps optimize, provide alternative solutions, explain
-              your code, detect errors, refactor your code, and even translate
-              your code to different programming languages. It's designed to
-              enhance your coding experience and improve the quality of learning
-              new programming langauges. <br /> Explore the possibilities and
-              take your projects to the next level with CodeHex.
+              Discover a New Way to Learn Coding with codehex. Gain hands-on
+              experience, receive personalized guidance, and unlock creative
+              problem-solving skills. Empower yourself with a unique learning
+              platform that enhances your coding journey.
             </p>
             {/* <button className={styles.exploreBtn}>Explore now !!</button> */}
 
