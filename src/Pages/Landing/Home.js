@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import workingStructure from "../../assets/images/landing-page-tr.svg";
 
-//icons
 import altcodeIcon from "../../assets/features-icons/altcode.svg";
 import codexplIcon from "../../assets/features-icons/codexpl.svg";
 import errcodeIcon from "../../assets/features-icons/errcode.svg";
