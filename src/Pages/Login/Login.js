@@ -6,26 +6,26 @@ import appleLogo from "../../assets/images/apple-logo.png";
 import { AnimatePresence, motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
-
-import { createClient } from "@supabase/supabase-js";
-const supabase = createClient(
-  "https://ufddgfehydaxupoezqri.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVmZGRnZmVoeWRheHVwb2V6cXJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODg1Njc4NDcsImV4cCI6MjAwNDE0Mzg0N30.8F-wgfNdtG6SZZBS_ObdqGKKauF5XiwUmwERO0eJG1A"
-);
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../store/auth-slice";
+import { useEffect } from "react";
 
 const Login = () => {
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [loginMode, setLoginMode] = useState(true);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
+  const dispatch = useDispatch();
   const signinGoogle = () => {
-    supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
+    dispatch(authActions.loginWithGoogle());
   };
 
   const changeAuthMode = () => {
     setLoginMode((prevState) => !prevState);
   };
+
+  useEffect(() => {
+    console.log(isLoggedIn);
+  });
 
   return (
     <AnimatePresence>
@@ -69,8 +69,21 @@ const Login = () => {
           <form className={styles.form}>
             {loginMode === false && (
               <>
-                <label>Username</label>
-                <input type="text" />
+                <motion.label
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  exit={{ opacity: 0, y: -20 }}
+                >
+                  Username
+                </motion.label>
+                <motion.input
+                  type="text"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                />
               </>
             )}
 
@@ -80,14 +93,16 @@ const Login = () => {
             <label>Password</label>
             <input type="password" />
 
-            <a href="/">forget password?</a>
+            {loginMode ? <a href="/">forget password?</a> : null}
 
             <button>Login</button>
           </form>
 
           <p className={styles.noAccount}>
             Don't have and account?{" "}
-            <span onClick={changeAuthMode}>Sign Up</span>
+            <span onClick={changeAuthMode}>
+              {loginMode ? "Sign up" : "Log in"}
+            </span>
           </p>
         </div>
       </motion.div>

@@ -1,6 +1,6 @@
 import Logo from "../../utils/Logo";
 import styles from "./Header.module.css";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
   const redirectHandler = () => {
