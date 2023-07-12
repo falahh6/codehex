@@ -130,14 +130,19 @@ form input:nth-child(4){
     display: flex;
     align-items: center;
     justify-content :center;
+    padding: 4px;
 }
 
-.Dlogin button img{
-    width: 20px;
+.Dlogin button img,
+.Dlogin button svg{
+    width: 24px;
     margin: 0;
     margin-right: 1rem;
 }
-
+.Dlogin button svg{
+    width: 24px;
+    height: 28px;
+}
 .Dlogin button:hover{
     background-color: #ededed5a;
     cursor: pointer;

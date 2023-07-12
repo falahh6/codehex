@@ -7,6 +7,7 @@ const supabase = createClient(
 
 const authInitialState = {
   isLoggedIn: false,
+  user: "",
 };
 
 export const userAuthCheck = createAsyncThunk(
@@ -27,17 +28,6 @@ const authSlice = createSlice({
   name: "auth-slice",
   initialState: authInitialState,
   reducers: {
-    // authCheck: async (state) => {
-    //   const {
-    //     data: { user },
-    //   } = await supabase.auth.getUser();
-
-    //   setTimeout(() => {
-    //     if (user) {
-    //       state.isLoggedIn = true;
-    //     }
-    //   }, 500);
-    // },
     login: (state) => {},
 
     logout: (state) => {
@@ -52,11 +42,19 @@ const authSlice = createSlice({
       });
       state.isLoggedIn = true;
     },
+
+    loginWithGitHub: (state) => {
+      supabase.auth.signInWithOAuth({
+        provider: "github",
+      });
+      state.isLoggedIn = true;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(userAuthCheck.fulfilled, (state, action) => {
       state.isLoggedIn = true;
       console.log(action.payload);
+      state.user = action.payload;
     });
     builder.addCase(userAuthCheck.rejected, (state, action) => {
       console.log("no user found \n" + action.payload);

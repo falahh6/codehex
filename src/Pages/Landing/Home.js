@@ -49,8 +49,6 @@ const Home = () => {
               speed={30}
               repeat={Infinity}
             />
-            {isLoggedIn && <button onClick={logoutUser}>logout</button>}
-            {isLoggedIn && "\nuser is logged In"}
             <p>
               {" "}
               "Unlock the Power of Intelligent Coding with codehex : The
@@ -76,7 +74,6 @@ const Home = () => {
               problem-solving skills. Empower yourself with a unique learning
               platform that enhances your coding journey.
             </p>
-            {/* <button className={styles.exploreBtn}>Explore now !!</button> */}
 
             <div className={styles.features}>
               <div>

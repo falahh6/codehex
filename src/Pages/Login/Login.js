@@ -2,13 +2,14 @@ import { useState } from "react";
 import styles from "./Login.module.css";
 import Logo from "../../assets/images/codehex-logo.svg";
 import googleLogo from "../../assets/images/google-logo.png";
-import appleLogo from "../../assets/images/apple-logo.png";
 import { AnimatePresence, motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/auth-slice";
 import { useEffect } from "react";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Login = () => {
   const [loginMode, setLoginMode] = useState(true);
@@ -17,6 +18,10 @@ const Login = () => {
   const dispatch = useDispatch();
   const signinGoogle = () => {
     dispatch(authActions.loginWithGoogle());
+  };
+
+  const signinGithub = () => {
+    dispatch(authActions.loginWithGitHub());
   };
 
   const changeAuthMode = () => {
@@ -55,12 +60,13 @@ const Login = () => {
             <button onClick={signinGoogle}>
               {" "}
               <img src={googleLogo} alt="google-logo" />{" "}
-              {loginMode ? "Log in" : "Sign up"} with google
+              {loginMode ? "Log in" : "Sign up"} with Google
             </button>
-            <button>
+            <button onClick={signinGithub}>
               {" "}
-              <img src={appleLogo} alt="apple-logo" />
-              {loginMode ? "Log in" : "Sign up"} with Apple
+              {/* <img src={appleLogo} alt="apple-logo" /> */}
+              <FontAwesomeIcon icon={faGithub} />
+              {loginMode ? "Log in" : "Sign up"} with GitHub
             </button>
           </div>
 
