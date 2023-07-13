@@ -10,11 +10,12 @@ import errcodeIcon from "../../assets/features-icons/errcode.svg";
 import coderefIcon from "../../assets/features-icons/coderef.svg";
 import codetrIcon from "../../assets/features-icons/codetr.svg";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userAuthCheck } from "../../store/auth-slice";
 import { Parallax } from "react-scroll-parallax";
 const Home = () => {
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   useEffect(() => {
     dispatch(userAuthCheck());
   }, [dispatch]);
@@ -48,7 +49,10 @@ const Home = () => {
               </p>
 
               <div className={styles.ctaWrap}>
-                <NavLink to="/compiler" className={styles.cta}>
+                <NavLink
+                  to={isLoggedIn ? "/compiler" : "/login"}
+                  className={styles.cta}
+                >
                   Start writing code
                 </NavLink>
               </div>

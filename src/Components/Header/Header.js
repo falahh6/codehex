@@ -26,9 +26,6 @@ const Header = () => {
 
   const logoutUser = () => {
     dispatch(authActions.logout());
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
   };
 
   const items = [
@@ -52,12 +49,12 @@ const Header = () => {
         {/* <li>About</li> */}
         <li>
           {" "}
-          <NavLink
+          {/* <NavLink
             className={({ isActive }) => (isActive ? styles.active : undefined)}
             to="developer"
           >
             Developed by
-          </NavLink>
+          </NavLink> */}
         </li>
       </ul>
       <ul className={styles.authItems}>

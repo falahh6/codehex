@@ -34,6 +34,9 @@ const authSlice = createSlice({
       supabase.auth.signOut();
       console.log("user is logged out");
       state.isLoggedIn = false;
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     },
 
     loginWithGoogle: (state) => {
