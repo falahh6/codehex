@@ -10,23 +10,14 @@ import errcodeIcon from "../../assets/features-icons/errcode.svg";
 import coderefIcon from "../../assets/features-icons/coderef.svg";
 import codetrIcon from "../../assets/features-icons/codetr.svg";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { authActions, userAuthCheck } from "../../store/auth-slice";
+import { useDispatch } from "react-redux";
+import { userAuthCheck } from "../../store/auth-slice";
 
 const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(userAuthCheck());
-  }, []);
-
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
-  const logoutUser = () => {
-    dispatch(authActions.logout());
-    setTimeout(() => {
-      window.location.reload();
-    }, 300);
-  };
+  }, [dispatch]);
 
   return (
     <>

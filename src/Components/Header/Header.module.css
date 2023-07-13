@@ -22,10 +22,10 @@
 }
 
 .leftItems {
-    display: flex;
-    align-items: center;
-    width: 70%;
-    justify-content: space-between;
+    /* display: flex; */
+    /* align-items: center; */
+    /* width: 70%; */
+    /* justify-content: space-between; */
 }
 
 .leftItems ul {
@@ -72,7 +72,6 @@
     list-style-type: none;
     width: 18%;
     justify-content: space-around;
-
 }
 
 .authItems a {
@@ -100,4 +99,28 @@
 
 .hamburger {
     display: none;
+}
+
+.dropdownSpace{
+   font-weight: 700;
+   font-size: 12px ;
+   padding: 0.2rem 0.5rem 0.2rem 0.5rem ;
+   border-radius: 20px ;
+}
+
+.dropdownSpace svg{
+    font-size: 18px ;
+    background-color: rgba(205, 205, 205, 0.36);
+    border-radius: 100%;
+    padding: 7px;
+}
+
+.dropdownSpace:hover{
+    color: #094AAD;
+    cursor: pointer;
+    background-color: rgba(205, 205, 205, 0.72);
+}
+
+.dropdownOverlay{
+    text-align: center;
 }

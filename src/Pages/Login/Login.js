@@ -2,15 +2,14 @@ import { useState } from "react";
 import styles from "./Login.module.css";
 import Logo from "../../assets/images/codehex-logo.svg";
 import googleLogo from "../../assets/images/google-logo.png";
+import githubLogo from "../../assets/images/github-logo.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/auth-slice";
 import { useEffect } from "react";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { Divider } from "antd";
 const Login = () => {
   const [loginMode, setLoginMode] = useState(true);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -64,13 +63,12 @@ const Login = () => {
             </button>
             <button onClick={signinGithub}>
               {" "}
-              {/* <img src={appleLogo} alt="apple-logo" /> */}
-              <FontAwesomeIcon icon={faGithub} />
+              <img src={githubLogo} alt="github-logo" />
               {loginMode ? "Log in" : "Sign up"} with GitHub
             </button>
           </div>
 
-          <div className={styles.partition}>or</div>
+          <Divider style={{ fontSize: "12px" }}>or</Divider>
 
           <form className={styles.form}>
             {loginMode === false && (
