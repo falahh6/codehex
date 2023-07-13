@@ -36,11 +36,10 @@ export const alternativeCode = createAsyncThunk(
     try {
       const response = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
-        temperature: 0.2,
         messages: [
           {
             role: "user",
-            constent: `Provide me the alternative code for the following code and the functionality remains same
+            content: `Provide me the alternative code for the following code and the functionality remains same
            ${userCode}
             the output should be : a little explanation with code wrapped with three backticks`,
           },
