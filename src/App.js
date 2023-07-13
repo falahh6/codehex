@@ -6,6 +6,7 @@ import Home from "./Pages/Landing/Home";
 import Compiler from "./Pages/Playground/Compiler";
 import DevelopedBy from "./Pages/DevelopedBy/DevelopedBy";
 import Login from "./Pages/Login/Login";
+import { ParallaxProvider } from "react-scroll-parallax";
 function App() {
   const router = createBrowserRouter([
     {
@@ -34,7 +35,11 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router}></RouterProvider>;
+  return (
+    <ParallaxProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </ParallaxProvider>
+  );
 }
 
 export default App;

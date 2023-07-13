@@ -2,7 +2,7 @@ import styles from "./Home.module.css";
 import { TypeAnimation } from "react-type-animation";
 import { AnimatePresence, motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import workingStructure from "../../assets/images/landing-page-tr.svg";
+import workingStructure from "../../assets/images/workingstructure.svg";
 
 import altcodeIcon from "../../assets/features-icons/altcode.svg";
 import codexplIcon from "../../assets/features-icons/codexpl.svg";
@@ -12,7 +12,7 @@ import codetrIcon from "../../assets/features-icons/codetr.svg";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { userAuthCheck } from "../../store/auth-slice";
-
+import { Parallax } from "react-scroll-parallax";
 const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,32 +28,37 @@ const Home = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }}
         >
-          <div className={styles.main}>
-            <TypeAnimation
-              className={styles.h1}
-              sequence={[
-                "Wanna Learn Coding?",
-                3000,
-                "Looking for a Perfect Compiler?",
-                3000,
-              ]}
-              speed={30}
-              repeat={Infinity}
-            />
-            <p>
-              {" "}
-              "Unlock the Power of Intelligent Coding with codehex : The
-              AI-Powered Compiler"
-            </p>
+          <Parallax scale={[1.5, 0.5]}>
+            <div className={styles.main}>
+              <TypeAnimation
+                className={styles.h1}
+                sequence={[
+                  "Wanna Learn Coding?",
+                  3000,
+                  "Looking for a Perfect Compiler?",
+                  3000,
+                ]}
+                speed={30}
+                repeat={Infinity}
+              />
+              <p>
+                {" "}
+                "Unlock the Power of Intelligent Coding with codehex : The
+                AI-Powered Compiler"
+              </p>
 
-            <div className={styles.ctaWrap}>
-              <NavLink to="/compiler" className={styles.cta}>
-                Start writing code
-              </NavLink>
+              <div className={styles.ctaWrap}>
+                <NavLink to="/compiler" className={styles.cta}>
+                  Start writing code
+                </NavLink>
+              </div>
             </div>
-          </div>
+          </Parallax>
           <div className={styles.about}>
-            <img src={workingStructure} alt="workingStructure" />
+            <Parallax scale={[1, 1.4]}>
+              <img src={workingStructure} alt="workingStructure" />
+            </Parallax>
+
             <h1>
               <span className={styles.logoname}>codehex</span> can help you
               learn coding in a new way
@@ -67,8 +72,8 @@ const Home = () => {
             </p>
 
             <div className={styles.features}>
-              <div>
-                <img src={altcodeIcon} alt="altcode" />
+              <div style={{ justifyContent: "center" }}>
+                <img src={altcodeIcon} alt="alt-code-icon" />
                 <h3>Alterntaive Code solutions</h3>
                 <p>
                   Unlock fresh perspectives and creative solutions for code
@@ -87,7 +92,7 @@ const Home = () => {
                 </p>
               </div>
               <div>
-                <img src={errcodeIcon} alt="coderr" />
+                <img src={errcodeIcon} alt="err-code-icon" />
                 <h3>Error detection and fix</h3>
                 <p>
                   Gain in-depth insights into complex code constructs,
@@ -105,7 +110,7 @@ const Home = () => {
                 </p>
               </div>
               <div>
-                <img src={codetrIcon} alt="codetr" />
+                <img src={codetrIcon} alt="code-tr-icon" />
                 <h3> Code translation</h3>
                 <p>
                   Seamlessly translate your code between programming languages,

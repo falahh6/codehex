@@ -34,6 +34,7 @@
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
     "react-scroll": "^1.8.9",
+    "react-scroll-parallax": "^3.4.2",
     "react-select": "^5.7.3",
     "react-type-animation": "^3.1.0",
     "replit-client": "^0.25.0",
