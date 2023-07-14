@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createClient } from "@supabase/supabase-js";
+import { toast } from "sonner";
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL,
   process.env.REACT_APP_SUPABASE_CLIENT_SECERATE
@@ -24,20 +25,22 @@ export const userAuthCheck = createAsyncThunk(
   }
 );
 
+export const userLogout = createAsyncThunk("authSlice/userLogout", async () => {
+  try {
+    await supabase.auth.signOut();
+    return true;
+  } catch (error) {
+    return error;
+  }
+});
+
 const authSlice = createSlice({
   name: "auth-slice",
   initialState: authInitialState,
   reducers: {
     login: (state) => {},
 
-    logout: (state) => {
-      supabase.auth.signOut();
-      console.log("user is logged out");
-      state.isLoggedIn = false;
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
-    },
+    logout: (state) => {},
 
     loginWithGoogle: (state) => {
       supabase.auth.signInWithOAuth({
@@ -58,9 +61,17 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
       console.log(action.payload);
       state.user = action.payload;
+      toast.success("User is Logged in");
     });
     builder.addCase(userAuthCheck.rejected, (state, action) => {
       console.log("no user found \n" + action.payload);
+    });
+    builder.addCase(userLogout.fulfilled, (state, action) => {
+      state.isLoggedIn = false;
+      window.location.reload();
+    });
+    builder.addCase(userLogout.rejected, (state, action) => {
+      console.log(action.payload);
     });
   },
 });

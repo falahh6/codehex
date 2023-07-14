@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userAuthCheck } from "../../store/auth-slice";
 import { Parallax } from "react-scroll-parallax";
+import { toast } from "sonner";
 const Home = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -78,7 +79,7 @@ const Home = () => {
             <div className={styles.features}>
               <div style={{ justifyContent: "center" }}>
                 <img src={altcodeIcon} alt="alt-code-icon" />
-                <h3>Alterntaive Code solutions</h3>
+                <h3>Alterntaive Code Solutions</h3>
                 <p>
                   Unlock fresh perspectives and creative solutions for code
                   challenges, expanding your problem-solving repertoire and
@@ -97,7 +98,7 @@ const Home = () => {
               </div>
               <div>
                 <img src={errcodeIcon} alt="err-code-icon" />
-                <h3>Error detection and fix</h3>
+                <h3>Error Detection and Fix</h3>
                 <p>
                   Gain in-depth insights into complex code constructs,
                   demystifying intricate concepts and enhancing your
@@ -106,7 +107,7 @@ const Home = () => {
               </div>
               <div>
                 <img src={coderefIcon} alt="coderef" />
-                <h3>Code refector</h3>
+                <h3>Code Refector</h3>
                 <p>
                   Streamline and optimize your codebase with expert refactoring
                   suggestions, improving performance, readability, and
@@ -115,7 +116,7 @@ const Home = () => {
               </div>
               <div>
                 <img src={codetrIcon} alt="code-tr-icon" />
-                <h3> Code translation</h3>
+                <h3> Code Translation</h3>
                 <p>
                   Seamlessly translate your code between programming languages,
                   enabling cross-platform compatibility and facilitating

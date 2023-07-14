@@ -6,7 +6,7 @@ import { Dropdown, Space } from "antd";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { authActions } from "../../store/auth-slice";
+import { userLogout } from "../../store/auth-slice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Header = () => {
   }
 
   const logoutUser = () => {
-    dispatch(authActions.logout());
+    dispatch(userLogout());
   };
 
   const items = [

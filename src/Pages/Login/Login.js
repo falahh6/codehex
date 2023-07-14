@@ -92,10 +92,10 @@ const Login = () => {
             )}
 
             <label>Email </label>
-            <input type="email" />
+            <input spellCheck={false} autoComplete="false" type="email" />
 
             <label>Password</label>
-            <input type="password" />
+            <input spellCheck={false} type="password" />
 
             {loginMode ? <a href="/">forget password?</a> : null}
 
