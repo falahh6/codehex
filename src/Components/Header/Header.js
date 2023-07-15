@@ -3,14 +3,22 @@ import styles from "./Header.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Dropdown, Space } from "antd";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUser,
+  faSunPlantWilt,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { userLogout } from "../../store/auth-slice";
+import { useTheme } from "next-themes";
+
+import sunIcon from "../../assets/features-icons/sun.svg";
+import moonIcon from "../../assets/features-icons/moon.svg";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { theme, setTheme } = useTheme();
   const redirectHandler = () => {
     navigate("/");
   };
@@ -39,25 +47,18 @@ const Header = () => {
       ),
     },
   ];
+
+  const themeChangeHandler = () => {
+    setTheme("dark");
+  };
   return (
     <header className={styles.header}>
       <Logo redirect={redirectHandler} />
-      <ul className={styles.mainItems}>
-        {/* <Link to="/features">
-          <li>Features</li>
-        </Link> */}
-        {/* <li>About</li> */}
-        <li>
-          {" "}
-          {/* <NavLink
-            className={({ isActive }) => (isActive ? styles.active : undefined)}
-            to="developer"
-          >
-            Developed by
-          </NavLink> */}
-        </li>
-      </ul>
+
       <ul className={styles.authItems}>
+        <span>
+          {/* <img onClick={themeChangeHandler} src={sunIcon} alt="" /> */}
+        </span>
         {isLoggedIn ? (
           <>
             <Dropdown
@@ -73,7 +74,9 @@ const Header = () => {
         ) : (
           <>
             <NavLink to="login">Login</NavLink>
-            <NavLink to="sign-up">Get Started</NavLink>
+            <NavLink to={isLoggedIn ? "compiler" : "login"}>
+              Get Started
+            </NavLink>
           </>
         )}
       </ul>

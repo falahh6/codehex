@@ -30,9 +30,25 @@ export const userLogout = createAsyncThunk("authSlice/userLogout", async () => {
     await supabase.auth.signOut();
     return true;
   } catch (error) {
-    return error;
+    return error.message;
   }
 });
+
+export const userLoginWithCredentials = createAsyncThunk(
+  "authSlice/userLoginWithCredentials",
+  async ({ userEmail, userPassword }) => {
+    const { data, error } = await supabase.auth.signUp({
+      email: userEmail,
+      password: userPassword,
+    });
+
+    console.log(data, error);
+
+    toast.success(
+      "an Varification Email has been sent to you, Please Confirm to Proceed"
+    );
+  }
+);
 
 const authSlice = createSlice({
   name: "auth-slice",
@@ -71,6 +87,12 @@ const authSlice = createSlice({
       window.location.reload();
     });
     builder.addCase(userLogout.rejected, (state, action) => {
+      console.log(action.payload);
+    });
+    builder.addCase(userLoginWithCredentials.fulfilled, (state, action) => {
+      console.log("user is Logged In");
+    });
+    builder.addCase(userLoginWithCredentials.rejected, (state, action) => {
       console.log(action.payload);
     });
   },
