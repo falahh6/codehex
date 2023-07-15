@@ -7,14 +7,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions, userLoginWithCredentials } from "../../store/auth-slice";
+import {
+  authActions,
+  userLoginWithCredentials,
+  userSignupWithCredentials,
+} from "../../store/auth-slice";
 import { useEffect } from "react";
 import { Divider } from "antd";
 const Login = () => {
   const [loginMode, setLoginMode] = useState(true);
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  console.log(loginMode);
   const emailRef = useRef();
   const passwordRef = useRef();
+  const nameRef = useRef();
 
   const [emailError, setEmailError] = useState("");
   const dispatch = useDispatch();
@@ -35,25 +40,18 @@ const Login = () => {
     const userEmail = emailRef.current.value;
     const userPassword = passwordRef.current.value;
 
-    const credentials = {
-      userEmail,
-      userPassword,
-    };
-
-    dispatch(userLoginWithCredentials(credentials));
-
-    // console.log(userEmail + "\n" + userPassword);
-
-    // if (!userEmail.trim().includes("@")) {
-    //   setEmailError(
-    //     "Please enter the valid email, for eg : codehex@gmail.com "
-    //   );
-    // }
+    if (loginMode) {
+      dispatch(userLoginWithCredentials({ userEmail, userPassword }));
+    } else {
+      const userName = nameRef.current.value;
+      dispatch(
+        userSignupWithCredentials({ userName, userEmail, userPassword })
+      );
+      nameRef.current.value = "";
+    }
+    emailRef.current.value = "";
+    passwordRef.current.value = "";
   };
-  useEffect(() => {
-    console.log(isLoggedIn);
-  });
-
   return (
     <AnimatePresence>
       <motion.div
@@ -94,7 +92,7 @@ const Login = () => {
           <Divider style={{ fontSize: "12px" }}>or</Divider>
 
           <form className={styles.form}>
-            {loginMode === false && (
+            {!loginMode && (
               <>
                 <motion.label
                   initial={{ opacity: 0, y: -20 }}
@@ -105,11 +103,13 @@ const Login = () => {
                   Username
                 </motion.label>
                 <motion.input
+                  ref={nameRef}
                   type="text"
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
+                  spellCheck={false}
                 />
               </>
             )}
@@ -126,9 +126,15 @@ const Login = () => {
             <label>Password</label>
             <input ref={passwordRef} spellCheck={false} type="password" />
 
-            {loginMode ? <a href="/">forget password?</a> : null}
+            {loginMode ? (
+              <a title="use Auth0 method (Sign in With Google)" href="/">
+                forget password?
+              </a>
+            ) : null}
 
-            <button onClick={loginWithCredentialsHandler}>Login</button>
+            <button onClick={loginWithCredentialsHandler}>
+              {loginMode ? "Login" : "Sign up"}
+            </button>
           </form>
 
           <p className={styles.noAccount}>

@@ -36,17 +36,39 @@ export const userLogout = createAsyncThunk("authSlice/userLogout", async () => {
 
 export const userLoginWithCredentials = createAsyncThunk(
   "authSlice/userLoginWithCredentials",
-  async ({ userEmail, userPassword }) => {
-    const { data, error } = await supabase.auth.signUp({
-      email: userEmail,
-      password: userPassword,
-    });
+  async ({ userEmail, userPassword }, { rejectWithValue }) => {
+    console.log(userEmail, userPassword, "Login reducer");
+    try {
+      const { data } = await supabase.auth.signInWithPassword({
+        email: userEmail,
+        password: userPassword,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
-    console.log(data, error);
+export const userSignupWithCredentials = createAsyncThunk(
+  "authSlice/userSignupWithCredentials",
+  async ({ userEmail, userPassword, userName }, { rejectWithValue }) => {
+    console.log(userName, userEmail, userPassword);
+    try {
+      const { data } = await supabase.auth.signUp({
+        email: userEmail,
+        password: userPassword,
+        options: {
+          data: {
+            name: userName,
+          },
+        },
+      });
 
-    toast.success(
-      "an Varification Email has been sent to you, Please Confirm to Proceed"
-    );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -73,6 +95,7 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    //check user
     builder.addCase(userAuthCheck.fulfilled, (state, action) => {
       state.isLoggedIn = true;
       console.log(action.payload);
@@ -82,6 +105,8 @@ const authSlice = createSlice({
     builder.addCase(userAuthCheck.rejected, (state, action) => {
       console.log("no user found \n" + action.payload);
     });
+
+    //logout
     builder.addCase(userLogout.fulfilled, (state, action) => {
       state.isLoggedIn = false;
       window.location.reload();
@@ -89,8 +114,27 @@ const authSlice = createSlice({
     builder.addCase(userLogout.rejected, (state, action) => {
       console.log(action.payload);
     });
+
+    //signup
+    builder.addCase(userSignupWithCredentials.fulfilled, (state, action) => {
+      // console.log(action.payload.user?.user_metadata.name);
+      // state.user = action.payload.user?.user_metadata.name;
+      console.log(action.payload);
+      toast.success(
+        "Thank you for signing up! Please check your email to verify your account and start exploring our platform."
+      );
+    });
+    builder.addCase(userSignupWithCredentials.rejected, (state, action) => {
+      console.log(action.payload);
+    });
+
+    //login
     builder.addCase(userLoginWithCredentials.fulfilled, (state, action) => {
-      console.log("user is Logged In");
+      console.log(action.payload);
+
+      if (action.payload.user === null) {
+        toast.error("User not found, Please Sign in!");
+      }
     });
     builder.addCase(userLoginWithCredentials.rejected, (state, action) => {
       console.log(action.payload);
