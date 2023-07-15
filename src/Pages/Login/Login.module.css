@@ -157,3 +157,13 @@ form input:nth-child(4){
     margin-bottom: 0;
     font-weight: bold;
 }
+
+.loadingIcon{
+    animation: load infinite;
+}
+
+@keyframes load{
+    0%{
+        transform: rotate(180deg);
+    }
+}

@@ -10,15 +10,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { userLogout } from "../../store/auth-slice";
-import { useTheme } from "next-themes";
-
-import sunIcon from "../../assets/features-icons/sun.svg";
-import moonIcon from "../../assets/features-icons/moon.svg";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { theme, setTheme } = useTheme();
   const redirectHandler = () => {
     navigate("/");
   };
@@ -26,10 +21,12 @@ const Header = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   let user = useSelector((state) => state.auth.user);
 
-  if (user.includes("@gmail.com")) {
-    user = user?.replace("@gmail.com", "");
-  } else if (user.includes("@github.com")) {
-    user = user?.replace("@github.com", "");
+  const emailDomains = [/@gmail\.com$/, /@github\.com$/, /@anjuman\.edu\.in$/];
+  for (const domain of emailDomains) {
+    if (domain.test(user)) {
+      user = user?.replace(domain, "");
+      break;
+    }
   }
 
   const logoutUser = () => {
@@ -48,9 +45,6 @@ const Header = () => {
     },
   ];
 
-  const themeChangeHandler = () => {
-    setTheme("dark");
-  };
   return (
     <header className={styles.header}>
       <Logo redirect={redirectHandler} />
@@ -73,7 +67,7 @@ const Header = () => {
           </>
         ) : (
           <>
-            <NavLink to="login">Login</NavLink>
+            <NavLink to="login"> Login</NavLink>
             <NavLink to={isLoggedIn ? "compiler" : "login"}>
               Get Started
             </NavLink>

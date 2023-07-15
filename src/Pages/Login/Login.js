@@ -12,8 +12,8 @@ import {
   userLoginWithCredentials,
   userSignupWithCredentials,
 } from "../../store/auth-slice";
-import { useEffect } from "react";
 import { Divider } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 const Login = () => {
   const [loginMode, setLoginMode] = useState(true);
   console.log(loginMode);
@@ -22,6 +22,9 @@ const Login = () => {
   const nameRef = useRef();
 
   const [emailError, setEmailError] = useState("");
+
+  const isLoading = useSelector((state) => state.auth.isLoading);
+
   const dispatch = useDispatch();
   const signinGoogle = () => {
     dispatch(authActions.loginWithGoogle());
@@ -133,6 +136,11 @@ const Login = () => {
             ) : null}
 
             <button onClick={loginWithCredentialsHandler}>
+              {isLoading && (
+                <span>
+                  <LoadingOutlined style={{ marginRight: "0.5rem" }} />
+                </span>
+              )}
               {loginMode ? "Login" : "Sign up"}
             </button>
           </form>

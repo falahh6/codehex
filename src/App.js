@@ -8,7 +8,6 @@ import DevelopedBy from "./Pages/DevelopedBy/DevelopedBy";
 import Login from "./Pages/Login/Login";
 import { ParallaxProvider } from "react-scroll-parallax";
 import { Toaster } from "sonner";
-import { ThemeProvider } from "next-themes";
 function App() {
   const router = createBrowserRouter([
     {
@@ -38,12 +37,10 @@ function App() {
   ]);
 
   return (
-    // <ThemeProvider>
     <ParallaxProvider>
       <Toaster richColors position="top-center" />
       <RouterProvider router={router}></RouterProvider>
     </ParallaxProvider>
-    // </ThemeProvider>
   );
 }
 

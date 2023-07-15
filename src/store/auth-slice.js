@@ -9,6 +9,7 @@ const supabase = createClient(
 const authInitialState = {
   isLoggedIn: false,
   user: "",
+  isLoading: false,
 };
 
 export const userAuthCheck = createAsyncThunk(
@@ -124,17 +125,23 @@ const authSlice = createSlice({
         "Thank you for signing up! Please check your email to verify your account and start exploring our platform."
       );
     });
+
+    builder.addCase(userLoginWithCredentials.pending, (state, action) => {
+      state.isLoading = true;
+    });
     builder.addCase(userSignupWithCredentials.rejected, (state, action) => {
       console.log(action.payload);
     });
 
     //login
     builder.addCase(userLoginWithCredentials.fulfilled, (state, action) => {
-      console.log(action.payload);
-
+      const userName = action.payload.user.user_metadata.name;
+      console.log(userName);
       if (action.payload.user === null) {
         toast.error("User not found, Please Sign in!");
       }
+      state.isLoggedIn = true;
+      state.user = userName;
     });
     builder.addCase(userLoginWithCredentials.rejected, (state, action) => {
       console.log(action.payload);
