@@ -5,7 +5,7 @@ import googleLogo from "../../assets/images/google-logo.png";
 import githubLogo from "../../assets/images/github-logo.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import { Helmet } from "react-helmet";
-import { NavLink } from "react-router-dom";
+import { NavLink, redirect, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   authActions,
@@ -14,6 +14,8 @@ import {
 } from "../../store/auth-slice";
 import { Divider } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Login = () => {
   const [loginMode, setLoginMode] = useState(true);
   console.log(loginMode);
@@ -21,11 +23,14 @@ const Login = () => {
   const passwordRef = useRef();
   const nameRef = useRef();
 
-  const [emailError, setEmailError] = useState("");
-
   const isLoading = useSelector((state) => state.auth.isLoading);
+  const user = useSelector((state) => state.auth.user);
+
+  const [emailError, setEmailError] = useState();
+  const [passwordError, setPasswordError] = useState();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const signinGoogle = () => {
     dispatch(authActions.loginWithGoogle());
   };
@@ -43,17 +48,46 @@ const Login = () => {
     const userEmail = emailRef.current.value;
     const userPassword = passwordRef.current.value;
 
-    if (loginMode) {
-      dispatch(userLoginWithCredentials({ userEmail, userPassword }));
-    } else {
-      const userName = nameRef.current.value;
-      dispatch(
-        userSignupWithCredentials({ userName, userEmail, userPassword })
-      );
-      nameRef.current.value = "";
+    if (!emailError && !passwordError) {
+      if (loginMode) {
+        dispatch(userLoginWithCredentials({ userEmail, userPassword }));
+      } else {
+        const userName = nameRef.current.value;
+        dispatch(
+          userSignupWithCredentials({ userName, userEmail, userPassword })
+        );
+        nameRef.current.value = "";
+      }
+
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
+
+      if (user !== null) {
+        navigate("/");
+      }
     }
-    emailRef.current.value = "";
-    passwordRef.current.value = "";
+  };
+
+  //email handler
+  const emailValidationHandler = (e) => {
+    const email = e.target.value;
+
+    if (email.includes("@")) {
+      setEmailError(false);
+    } else {
+      setEmailError(true);
+    }
+  };
+
+  //password handler
+  const passwordValidationHandler = (e) => {
+    const password = e.target.value;
+
+    if (password.length < 8) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
   };
   return (
     <AnimatePresence>
@@ -123,11 +157,43 @@ const Login = () => {
               spellCheck={false}
               autoComplete="false"
               type="email"
+              onChange={emailValidationHandler}
+              required
             />
-            <span>{emailError}</span>
+
+            <span>
+              {emailError && (
+                <p>
+                  <FontAwesomeIcon
+                    color="rgb(255, 160, 160)"
+                    icon={faExclamationCircle}
+                    style={{ marginRight: "0.3rem" }}
+                  />
+                  Please enter the valid email
+                </p>
+              )}
+            </span>
 
             <label>Password</label>
-            <input ref={passwordRef} spellCheck={false} type="password" />
+            <input
+              onChange={passwordValidationHandler}
+              ref={passwordRef}
+              spellCheck={false}
+              type="password"
+              required
+            />
+            <span>
+              {passwordError && (
+                <p>
+                  <FontAwesomeIcon
+                    color="rgb(255, 160, 160)"
+                    icon={faExclamationCircle}
+                    style={{ marginRight: "0.3rem" }}
+                  />
+                  Password should be atleast 8 characters long
+                </p>
+              )}
+            </span>
 
             {loginMode ? (
               <a title="use Auth0 method (Sign in With Google)" href="/">
@@ -136,10 +202,12 @@ const Login = () => {
             ) : null}
 
             <button onClick={loginWithCredentialsHandler}>
-              {isLoading && (
+              {isLoading ? (
                 <span>
                   <LoadingOutlined style={{ marginRight: "0.5rem" }} />
                 </span>
+              ) : (
+                ""
               )}
               {loginMode ? "Login" : "Sign up"}
             </button>

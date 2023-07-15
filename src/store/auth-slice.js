@@ -118,15 +118,14 @@ const authSlice = createSlice({
 
     //signup
     builder.addCase(userSignupWithCredentials.fulfilled, (state, action) => {
-      // console.log(action.payload.user?.user_metadata.name);
-      // state.user = action.payload.user?.user_metadata.name;
       console.log(action.payload);
       toast.success(
         "Thank you for signing up! Please check your email to verify your account and start exploring our platform."
       );
+      state.isLoading = false;
     });
 
-    builder.addCase(userLoginWithCredentials.pending, (state, action) => {
+    builder.addCase(userSignupWithCredentials.pending, (state, action) => {
       state.isLoading = true;
     });
     builder.addCase(userSignupWithCredentials.rejected, (state, action) => {
@@ -134,14 +133,21 @@ const authSlice = createSlice({
     });
 
     //login
+    builder.addCase(userLoginWithCredentials.pending, (state, action) => {
+      state.isLoading = true;
+    });
+
     builder.addCase(userLoginWithCredentials.fulfilled, (state, action) => {
-      const userName = action.payload.user.user_metadata.name;
+      const userName = action.payload.user?.user_metadata.name;
       console.log(userName);
       if (action.payload.user === null) {
         toast.error("User not found, Please Sign in!");
+        state.isLoading = false;
       }
       state.isLoggedIn = true;
       state.user = userName;
+      state.isLoading = false;
+      toast.success("login success");
     });
     builder.addCase(userLoginWithCredentials.rejected, (state, action) => {
       console.log(action.payload);

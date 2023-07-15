@@ -41,11 +41,10 @@
 }
 
 .form label{
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
 }
 
-.form input {
-    margin-bottom: 0.8rem;
+.form input { 
     height: 1.5rem;
     padding: 4px;
     border-radius: 6px;
@@ -55,8 +54,20 @@
     font-weight: 500;
     color: rgb(53, 53, 53);
 }
-form input:nth-child(4){
-    margin-bottom: 0.4rem;
+
+.form input:nth-child(2){
+    margin-bottom: 0.8rem;
+}
+
+.form > span {
+    margin: 4px;
+    margin-bottom: 0.8rem;
+    /* font-size: 8px; */
+    color: rgb(255, 0, 0);
+}
+
+.form > span p{
+    font-size: 9px;
 }
 
 .form a{

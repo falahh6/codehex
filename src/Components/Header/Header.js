@@ -3,11 +3,7 @@ import styles from "./Header.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Dropdown, Space } from "antd";
-import {
-  faUser,
-  faSunPlantWilt,
-  faRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { userLogout } from "../../store/auth-slice";
 
