@@ -143,6 +143,7 @@ const authSlice = createSlice({
       if (action.payload.user === null) {
         toast.error("User not found, Please Sign in!");
         state.isLoading = false;
+        return;
       }
       state.isLoggedIn = true;
       state.user = userName;

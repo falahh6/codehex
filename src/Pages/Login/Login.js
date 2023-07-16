@@ -5,7 +5,7 @@ import googleLogo from "../../assets/images/google-logo.png";
 import githubLogo from "../../assets/images/github-logo.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import { Helmet } from "react-helmet";
-import { NavLink, redirect, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   authActions,
@@ -24,7 +24,8 @@ const Login = () => {
   const nameRef = useRef();
 
   const isLoading = useSelector((state) => state.auth.isLoading);
-  const user = useSelector((state) => state.auth.user);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  // const user = useSelector((state) => state.auth.user);
 
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
@@ -62,7 +63,7 @@ const Login = () => {
       emailRef.current.value = "";
       passwordRef.current.value = "";
 
-      if (user !== null) {
+      if (isLoggedIn) {
         navigate("/");
       }
     }

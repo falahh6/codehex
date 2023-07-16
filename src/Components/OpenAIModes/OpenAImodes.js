@@ -1,7 +1,5 @@
 import { useState } from "react";
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-regular-svg-icons";
 import styles from "./OpenAImodes.module.css";
 import DropdownComponent from "../UI/Dropdown/DropdownComponent";
 import {
@@ -14,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
 import Response from "./Response";
+import { SendOutlined } from "@ant-design/icons";
 
 const OpenAImodes = (props) => {
   const [mode, setMode] = useState({ key: "", label: "" });
@@ -62,17 +61,6 @@ const OpenAImodes = (props) => {
     });
   };
 
-  // useEffect(() => {
-  //   if (mode === "Alternative code") {
-  //     setModeDisplay("0");
-  //   } else if (mode === "code explanation") {
-  //     setModeDisplay("1");
-  //   } else if (mode === "error detection and fix") {
-  //     setModeDisplay("2");
-  //   }
-  //   console.log(mode, modeDisplay);
-  // }, [mode]);
-
   const toLangauageHandler = (event) => {
     const languageName = event.target.value.trim();
     setToLangauge(languageName);
@@ -112,7 +100,7 @@ const OpenAImodes = (props) => {
             onOptionSelect={handlerModeSelect}
           />
           <div className={styles.sendBtn}>
-            <FontAwesomeIcon onClick={promptHandler} icon={faPaperPlane} />
+            <SendOutlined onClick={promptHandler} />
           </div>
         </div>
         <div className={styles.openAIresponse}>

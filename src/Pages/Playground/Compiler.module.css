@@ -143,35 +143,10 @@
     cursor: pointer;
 }
 
-.consoleTabNavs {
-    color: rgb(78, 78, 78);
-    font-size: 12px;
-    font-weight: bold;
-    width: 98%;
-    display: flex;
-    justify-content: left;
-    border-radius: 4px;
-}
-
-.consoleTabNavs span {
-    background-color: #F0F1F2;
-    color: rgb(54, 54, 54);
-    border-radius: 8px;
-    padding: 5px 8px;
-    margin: 4px;
-    border: 1px solid transparent;
-}
-
-.consoleTabNavs span:hover {
-    cursor: pointer;
-    background-color: #b4b4b4;
-}
-
-
 .Terminal {
     background-color: lightgray;
     font-weight: bolder;
-    height: 80vh;
+    height: 75vh;
     color: black;
     display: flex;
     align-items: baseline;

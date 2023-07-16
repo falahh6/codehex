@@ -17,6 +17,7 @@ import PreLoader from "../../Components/UI/PreLoader";
 import useDropdown from "../../hooks/useDropdown";
 import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
 import OpenAImodes from "../../Components/OpenAIModes/OpenAImodes";
+import { Tabs } from "antd";
 
 const checkingIfInputNeeded = (userCode) => {
   const inputPatterns = [
@@ -55,7 +56,6 @@ const Compiler = () => {
   const output = useSelector((state) => state.compiler.output);
   const finalOutput = useSelector((state) => state.compiler.finalOutput);
   const [finalOutputState, setFinalOutputState] = useState(finalOutput);
-  const [switchTab, setSwitchTab] = useState("output");
   const [programTakingInput, setProgramTakingInput] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const alternativeCodeIni = useSelector(
@@ -126,15 +126,6 @@ const Compiler = () => {
     setFinalOutputState(finalOutput);
   };
 
-  const switchToOutput = () => {
-    setSwitchTab("output");
-  };
-
-  const switchToOpenAI = () => {
-    setSwitchTab("openAI");
-  };
-  const activeStyleForTabs = switchTab === "output" ? "tabActive" : "";
-
   const codeReplacehandler = () => {
     setUserCode(alternativeCodeIni);
   };
@@ -189,60 +180,6 @@ const Compiler = () => {
                           setUserCode(value);
                         }}
                         options={{
-                          acceptSuggestionOnCommitCharacter: true,
-                          acceptSuggestionOnEnter: "on",
-                          accessibilitySupport: "auto",
-                          autoIndent: true,
-                          automaticLayout: true,
-                          codeLens: true,
-                          colorDecorators: true,
-                          contextmenu: true,
-                          cursorBlinking: "blink",
-                          cursorSmoothCaretAnimation: false,
-                          cursorStyle: "line",
-                          disableLayerHinting: false,
-                          disableMonospaceOptimizations: false,
-                          dragAndDrop: false,
-                          fixedOverflowWidgets: false,
-                          foldingStrategy: "auto",
-                          fontLigatures: false,
-                          formatOnPaste: false,
-                          formatOnType: false,
-                          hideCursorInOverviewRuler: false,
-                          highlightActiveIndentGuide: true,
-                          links: true,
-                          mouseWheelZoom: false,
-                          multiCursorMergeOverlapping: true,
-                          multiCursorModifier: "alt",
-                          overviewRulerLanes: 2,
-                          quickSuggestions: true,
-                          quickSuggestionsDelay: 100,
-                          readOnly: false,
-                          renderControlCharacters: false,
-                          renderFinalNewline: true,
-                          renderIndentGuides: true,
-                          renderLineHighlight: "all",
-                          renderWhitespace: "none",
-                          revealHorizontalRightPadding: 30,
-                          roundedSelection: true,
-                          rulers: [],
-                          scrollBeyondLastColumn: 5,
-                          scrollBeyondLastLine: true,
-                          selectOnLineNumbers: true,
-                          selectionClipboard: true,
-                          selectionHighlight: true,
-                          showFoldingControls: "mouseover",
-                          smoothScrolling: false,
-                          suggestOnTriggerCharacters: true,
-                          wordBasedSuggestions: true,
-                          wordSeparators: "~!@#$%^&*()-=+[{]}|;:'\",.<>/?",
-                          wordWrap: "off",
-                          wordWrapBreakAfterCharacters: "\t})]?|&,;",
-                          wordWrapBreakBeforeCharacters: "{([+",
-                          wordWrapBreakObtrusiveCharacters: ".",
-                          wordWrapColumn: 80,
-                          wordWrapMinified: true,
-                          wrappingIndent: "none",
                           padding: {
                             top: 10,
                             bottom: 10,
@@ -259,43 +196,50 @@ const Compiler = () => {
                   </div>
                 </form>
                 <div className={styles.outputComponent}>
-                  <div className={styles.consoleTabNavs}>
-                    <span
-                      onClick={switchToOutput}
-                      className={activeStyleForTabs}
-                    >
-                      Output
-                    </span>
-                    <span onClick={switchToOpenAI}>OpenAI</span>
-                  </div>
-                  {switchTab === "output" && (
-                    <div className={styles.Terminal}>
-                      <div className={styles.outputForConsole}>
-                        <span className={styles.promptLabel}>$</span>
-                        <p className={styles.output}>{output}</p>
-                        <span>
-                          {programTakingInput ? (
-                            <form
-                              className={styles.outputForConsoleForm}
-                              onSubmit={consoleInputFormOnSubmit}
-                            >
-                              <input ref={inputRef} type="text" />
-                            </form>
-                          ) : null}
-                        </span>
-                      </div>
-                      <p className={styles.commandMessage}>
-                        {finalOutputState.message}
-                      </p>
-                    </div>
-                  )}
-
-                  {switchTab === "openAI" && (
-                    <OpenAImodes
-                      code={[userCode, setUserCode]}
-                      codeReplaceHandlerProp={codeReplacehandler}
-                    />
-                  )}
+                  <Tabs
+                    tabBarStyle={{
+                      paddingLeft: "0.5rem",
+                      marginBottom: "0",
+                      fontWeight: "500",
+                    }}
+                    items={[
+                      {
+                        label: "Output",
+                        key: 1,
+                        children: (
+                          <div className={styles.Terminal}>
+                            <div className={styles.outputForConsole}>
+                              <span className={styles.promptLabel}>$</span>
+                              <p className={styles.output}>{output}</p>
+                              <span>
+                                {programTakingInput ? (
+                                  <form
+                                    className={styles.outputForConsoleForm}
+                                    onSubmit={consoleInputFormOnSubmit}
+                                  >
+                                    <input ref={inputRef} type="text" />
+                                  </form>
+                                ) : null}
+                              </span>
+                            </div>
+                            <p className={styles.commandMessage}>
+                              {finalOutputState.message}
+                            </p>
+                          </div>
+                        ),
+                      },
+                      {
+                        label: "OpenAI",
+                        key: 2,
+                        children: (
+                          <OpenAImodes
+                            code={[userCode, setUserCode]}
+                            codeReplaceHandlerProp={codeReplacehandler}
+                          />
+                        ),
+                      },
+                    ]}
+                  />
                 </div>
               </div>
             </div>

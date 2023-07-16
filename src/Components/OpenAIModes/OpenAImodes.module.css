@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&display=swap');
+
 .openAI {
     color: grey;
     height: 100%;
     margin-bottom: 0;
     border-radius: 4px;
-    font-family: 'AvenirLStd-Heavy';
+    font-family: "Inter", sans-serif;
 }
 
 .prompt {
@@ -12,9 +14,9 @@
     width: 100%;
 }
 
-.sendBtn svg {
+/* .sendBtn svg {
     rotate: 55deg;
-}
+} */
 
 .sendBtn svg:hover {
     cursor: pointer;
@@ -25,9 +27,9 @@
     width: fit-content;
     margin: 1rem;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 12px;
     width: 250px;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 .modeDropdown div:hover {
