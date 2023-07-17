@@ -11,13 +11,12 @@ import {
   compilerOutput,
   initialExecutionForInput,
 } from "../../store/compiler-slice";
-import MonacoEditor from "react-monaco-editor/lib/editor";
-import "./editor.css";
 import PreLoader from "../../Components/UI/PreLoader";
 import useDropdown from "../../hooks/useDropdown";
 import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
 import OpenAImodes from "../../Components/OpenAIModes/OpenAImodes";
 import { Tabs } from "antd";
+import CodeEditor from "../../Components/CodeEditor.js/CodeEditor";
 
 const checkingIfInputNeeded = (userCode) => {
   const inputPatterns = [
@@ -50,7 +49,9 @@ export const languagesItems = programmingLanguages.map((language, index) => ({
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionState, setExtension] = useState();
-  const [userCode, setUserCode] = useState("");
+  const [userCode, setUserCode] = useState(`const greeting = () => {
+    alert("Hello world");
+}`);
   const [language, setLanguage] = useState("");
 
   const output = useSelector((state) => state.compiler.output);
@@ -75,12 +76,6 @@ const Compiler = () => {
   });
 
   const inputRef = useRef();
-
-  // const languagesItems = programmingLanguages.map((language, index) => ({
-  //   key: `${index}`,
-  //   label: language,
-  //   extension: extensions[index],
-  // }));
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -129,6 +124,9 @@ const Compiler = () => {
   const codeReplacehandler = () => {
     setUserCode(alternativeCodeIni);
   };
+  const handleCode = (code) => {
+    setUserCode(code);
+  };
 
   return (
     <>
@@ -170,28 +168,7 @@ const Compiler = () => {
                       main<span>{extensionState}</span>
                     </h4>
                     <div className={styles.codeInput}>
-                      <MonacoEditor
-                        value={userCode}
-                        language="typescript"
-                        theme={"GitHub"}
-                        height="80vh"
-                        width="95%"
-                        onChange={(value) => {
-                          setUserCode(value);
-                        }}
-                        options={{
-                          padding: {
-                            top: 10,
-                            bottom: 10,
-                          },
-                          folding: true,
-                          lightbulb: {
-                            enabled: true,
-                          },
-                          overviewRulerBorder: true,
-                          extraEditorClassName: "editor",
-                        }}
-                      />
+                      <CodeEditor language={language} onCode={handleCode} />
                     </div>
                   </div>
                 </form>
