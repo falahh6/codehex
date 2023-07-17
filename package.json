@@ -43,6 +43,7 @@
     "sonner": "^0.6.2",
     "web-vitals": "^2.1.4"
   },
+  "homepage": "https://codehexx.netlify.app/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
