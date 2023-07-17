@@ -32,6 +32,7 @@ const CodeEditor = ({ onCode, language }) => {
             top: 10,
             bottom: 10,
           },
+          fontWeight: "700",
           folding: true,
           lightbulb: {
             enabled: true,

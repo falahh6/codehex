@@ -5,5 +5,7 @@
     overflow: hidden;
     height: 80vh;
     margin-right: 0.5rem;
-    z-index: 999;
+
+
+    font-weight: 600;
 }
