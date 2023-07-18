@@ -38,10 +38,8 @@ export const alternativeCode = createAsyncThunk(
         model: "gpt-3.5-turbo",
         messages: [
           {
-            role: "user",
-            content: `Provide me the alternative code for the following code and the functionality remains same
-           ${userCode}
-            the output should be : a little explanation with code wrapped with three backticks`,
+            role: "system",
+            content: `Below is a piece of code provided to you, and your task is to provide the alternative for the same programming language with same functionality. [note that the code should be always wrapped with three backticks] \n ${userCode}`,
           },
         ],
       });

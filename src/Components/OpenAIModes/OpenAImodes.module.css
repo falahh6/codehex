@@ -48,26 +48,7 @@
     background-color: aliceblue;
 }
 
-.codeSnippet {
-    font-size: 14px;
-    padding: 0.5rem 1rem;
-    padding-top: 0;
-    margin-top: -1px;
-    border-radius: 0px 0px 4px 4px;
-    word-break: keep-all;
-    word-wrap: break-word;
-    font-weight: bolder;
-}
-.codeSnippetHead{
-    background-color: #011627;
-    margin-top: 1rem;
-    margin-bottom: 0;
-    padding: 8px;
-    border-radius: 4px 4px 0px 0px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-}
+
 
 .textCursor{
   position: absolute;

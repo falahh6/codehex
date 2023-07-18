@@ -3,6 +3,7 @@ import axios from "axios";
 const compilerInitialState = {
   output: "",
   finalOutput: "",
+  isLoading: false,
 };
 
 export const initialExecutionForInput = createAsyncThunk(
@@ -13,12 +14,12 @@ export const initialExecutionForInput = createAsyncThunk(
       url: "https://onecompiler-apis.p.rapidapi.com/api/v1/run",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": process.env.REACT_APP_API_KEY_2,
+        "X-RapidAPI-Key": process.env.REACT_APP_API_KEY,
         "X-RapidAPI-Host": "onecompiler-apis.p.rapidapi.com",
       },
       data: {
         language: Selectedlanguage,
-        stdin: "",
+        stdin: "7 89",
         files: [
           {
             name: "index" + extension,
@@ -95,21 +96,32 @@ const compilerSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(initialExecutionForInput.fulfilled, (state, action) => {
       state.output = action.payload;
+      state.isLoading = false;
       console.log(action.payload);
+    });
+    builder.addCase(initialExecutionForInput.pending, (state, action) => {
+      state.isLoading = true;
     });
     builder.addCase(initialExecutionForInput.rejected, (state, action) => {
       console.log(action.payload);
+      state.isLoading = false;
     });
     builder.addCase(compilerOutput.fulfilled, (state, action) => {
-      const existingOutput = state.output;
-      state.finalOutput = action.payload.replace(
-        new RegExp(existingOutput, "g"),
-        ""
-      );
+      // const existingOutput = state.output;
+      // state.finalOutput = action.payload.replace(
+      //   new RegExp(existingOutput, "g"),
+      //   ""
+      // );
+      state.output = action.payload;
+      state.isLoading = false;
       console.log(action.payload);
+    });
+    builder.addCase(compilerOutput.pending, (state, action) => {
+      state.isLoading = true;
     });
     builder.addCase(compilerOutput.rejected, (state, action) => {
       console.log(action.payload);
+      state.isLoading = false;
     });
   },
 });

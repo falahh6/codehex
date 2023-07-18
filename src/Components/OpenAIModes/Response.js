@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
 import { Highlight, themes } from "prism-react-renderer";
 import { TypeAnimation } from "react-type-animation";
-import styles from "./OpenAImodes.module.css";
+import styles from "./Response.module.css";
+import { Copy } from "lucide-react";
 const Response = (props) => {
   const response = props.response;
   const codeBlocks = response.split(/(```[\w-]*\n[\s\S]*?\n```)/);
@@ -21,6 +21,10 @@ const Response = (props) => {
       console.log(languageName);
       console.log(updatedCodeBlock);
 
+      const copyHandler = () => {
+        navigator.clipboard.writeText(updatedCodeBlock);
+      };
+
       return (
         <Highlight
           theme={themes.jettwaveDark}
@@ -32,7 +36,11 @@ const Response = (props) => {
             <>
               <div className={styles.codeSnippetHead}>
                 <span>{languageName}</span>
-                <FontAwesomeIcon icon={faCopy} />
+                <Copy
+                  onClick={copyHandler}
+                  className={styles.copyIcon}
+                  size={"15"}
+                />
               </div>
               <pre key={index} className={styles.codeSnippet} style={style}>
                 {tokens.map((line, i) => (

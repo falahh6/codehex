@@ -17,28 +17,30 @@ import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
 import OpenAImodes from "../../Components/OpenAIModes/OpenAImodes";
 import { Tabs } from "antd";
 import CodeEditor from "../../Components/CodeEditor.js/CodeEditor";
+import { LoadingOutlined } from "@ant-design/icons";
+import { toast } from "sonner";
 
-const checkingIfInputNeeded = (userCode) => {
-  const inputPatterns = [
-    /prompt\(/i,
-    /readline\(/i,
-    /input\(/i,
-    /raw_input\(/i,
-    /sys.stdin.readline\(/i,
-    /Scanner\s*\w+\s*=\s*new\s*Scanner\(System\.in\)/i,
-    /gets\(/i,
-    /STDIN.gets\(/i,
-  ];
+// const checkingIfInputNeeded = (userCode) => {
+//   const inputPatterns = [
+//     /prompt\(/i,
+//     /readline\(/i,
+//     /input\(/i,
+//     /raw_input\(/i,
+//     /sys.stdin.readline\(/i,
+//     /Scanner\s*\w+\s*=\s*new\s*Scanner\(System\.in\)/i,
+//     /gets\(/i,
+//     /STDIN.gets\(/i,
+//   ];
 
-  let inputCount = 0;
-  for (const pattern of inputPatterns) {
-    const matches = userCode.match(pattern);
-    if (matches) {
-      inputCount += matches.length;
-    }
-  }
-  return inputCount;
-};
+//   let inputCount = 0;
+//   for (const pattern of inputPatterns) {
+//     const matches = userCode.match(pattern);
+//     if (matches) {
+//       inputCount += matches.length;
+//     }
+//   }
+//   return inputCount;
+// };
 
 export const languagesItems = programmingLanguages.map((language, index) => ({
   key: `${index}`,
@@ -49,9 +51,7 @@ export const languagesItems = programmingLanguages.map((language, index) => ({
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionState, setExtension] = useState();
-  const [userCode, setUserCode] = useState(`const greeting = () => {
-    alert("Hello world");
-}`);
+  const [userCode, setUserCode] = useState(``);
   const [language, setLanguage] = useState("");
 
   const output = useSelector((state) => state.compiler.output);
@@ -62,6 +62,7 @@ const Compiler = () => {
   const alternativeCodeIni = useSelector(
     (state) => state.openai.alternativeCodeIni.response
   );
+  const isLoadingState = useSelector((state) => state.compiler.isLoading);
   const languageDropdown = useDropdown("1");
 
   const handlerLanguageSelect = (selectedOption) => {
@@ -85,18 +86,16 @@ const Compiler = () => {
 
     console.log(Selectedlanguage, extension);
     console.log(userCode);
-    const doesProgramNeedsInput = checkingIfInputNeeded(userCode);
-
-    if (doesProgramNeedsInput) {
-      setProgramTakingInput(true);
-    }
 
     const payload = {
       Selectedlanguage,
       extension,
       userCode,
-      doesProgramNeedsInput,
     };
+
+    if (userCode.length === 0 && Selectedlanguage.length === 0) {
+      toast.error("look at the fields, you dumb!!");
+    }
 
     dispatch(initialExecutionForInput(payload));
   };
@@ -107,14 +106,11 @@ const Compiler = () => {
     const newInput = inputRef.current.value;
     const extension = extensionState;
     const Selectedlanguage = language;
-
-    const doesProgramNeedsInput = checkingIfInputNeeded(userCode);
     const payload = {
       Selectedlanguage,
       extension,
       userCode,
       newInput,
-      doesProgramNeedsInput,
     };
 
     dispatch(compilerOutput(payload));
@@ -159,7 +155,11 @@ const Compiler = () => {
                       onOptionSelect={handlerLanguageSelect}
                     />
                     <button className={styles.runButton}>
-                      <FontAwesomeIcon icon={faPlay} />
+                      {isLoadingState ? (
+                        <LoadingOutlined />
+                      ) : (
+                        <FontAwesomeIcon icon={faPlay} />
+                      )}
                       <span> Run </span>
                     </button>
                   </div>

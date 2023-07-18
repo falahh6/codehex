@@ -38,7 +38,7 @@ function App() {
 
   return (
     <ParallaxProvider>
-      <Toaster richColors position="top-center" />
+      <Toaster duration={1500} richColors position="top-center" />
       <RouterProvider router={router}></RouterProvider>
     </ParallaxProvider>
   );
