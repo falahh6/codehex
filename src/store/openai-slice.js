@@ -60,7 +60,7 @@ export const codeExplanation = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `Below is a piece of code provided to you, and your task is to Explain the code in very simple way,[note that if you are providing the code then it should be always wrapped with three backticks and response should include some description what have been changes form the original cide], here's the code \n ${userCode}`,
+            content: `Below is a piece of code provided to you, and your task is to Explain the code in concise way,[note that if you are providing the code then it should be always wrapped with three backticks and response should include some description what have been changes form the original cide], here's the code \n ${userCode}`,
           },
         ],
       });
@@ -81,10 +81,7 @@ export const errorDnF = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `Given the following code, detect if the code has any errors and provide me the fix of the every error , if the code does not have any errors then respond with only 'code is correct ;) '
-            ${userCode}    
-            the output should be : the code snippets where the code has error and potential fixes with little high quality information
-            note that the code should be wrappen within three backticks`,
+            content: `Below is a piece of code provided to you, and your task is to check if the code has any errors, if the code has any errors then provide the fixes of it and if there are not errors in the code then respnse 'YOUR CODE IS CORRECT (smile emoji)' [note that if you are providing the code then it should be always wrapped with three backticks and response should include some description what have been changes form the original cide], here's the code \n ${userCode}`,
           },
         ],
       });
@@ -105,9 +102,7 @@ export const codeRefactor = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `Given the following code, refactor the code with the best practices used to write the given code.
-            ${userCode}
-            the output should be : a refactored code and the statements what all have been refactored`,
+            content: `Below is a piece of code provided to you, and your task is to list the points how the provided code can be refactored in a good way,[note that if you are providing the code then it should be always wrapped with three backticks and response should include some description what have been changes form the original cide], here's the code \n ${userCode}`,
           },
         ],
       });
@@ -128,9 +123,7 @@ export const codeTranslation = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `Given the following code, translate the code into ${toLangauge}
-            ${userCode}
-            the output should be : only the translated code with no explanation or statements `,
+            content: `Below is a piece of code provided to you, and your task is to translate the code in to ${toLangauge},[note that if you are providing the code then it should be always wrapped with three backticks and response should include some description what have been changes form the original code], here's the code \n ${userCode}`,
           },
         ],
       });

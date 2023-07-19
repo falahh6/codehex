@@ -89,6 +89,8 @@ const OpenAImodes = (props) => {
     console.log(toLangauge);
   };
 
+  console.log(alternativeCodeIni.response);
+
   return (
     <>
       <div className={styles.openAI}>

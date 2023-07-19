@@ -14,6 +14,7 @@ const Response = (props) => {
   useEffect(() => {
     Prism.highlightAll();
   }, []);
+  console.log(codeBlocks);
   const formattedResponse = codeBlocks.map((block, index) => {
     if (index % 2 === 1) {
       const language = codeBlocks[index - 1];

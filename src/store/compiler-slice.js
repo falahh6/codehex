@@ -19,7 +19,7 @@ export const initialExecutionForInput = createAsyncThunk(
       },
       data: {
         language: Selectedlanguage,
-        stdin: "700 89",
+        stdin: "7 89",
         files: [
           {
             name: "index" + extension,
