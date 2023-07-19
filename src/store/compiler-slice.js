@@ -19,7 +19,7 @@ export const initialExecutionForInput = createAsyncThunk(
       },
       data: {
         language: Selectedlanguage,
-        stdin: "7 89",
+        stdin: "700 89",
         files: [
           {
             name: "index" + extension,
@@ -31,8 +31,12 @@ export const initialExecutionForInput = createAsyncThunk(
 
     try {
       const response = await axios.request(options);
-      if (doesProgramNeedsInput) {
-        console.log("input is required");
+      // if (doesProgramNeedsInput) {
+      //   console.log("input is required");
+      // }
+
+      if (response.data.stderr) {
+        return response.data.stderr;
       }
       return response.data.stdout;
     } catch (error) {

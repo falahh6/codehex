@@ -1,12 +1,19 @@
-import React from "react";
-import { Highlight, themes } from "prism-react-renderer";
+import React, { useEffect, useState } from "react";
 import { TypeAnimation } from "react-type-animation";
 import styles from "./Response.module.css";
-import { Copy } from "lucide-react";
+import { Copy, Check } from "lucide-react";
+import "prismjs";
+import "prismjs/components/prism-javascript";
+import "prismjs/themes/prism.css";
+import Prism from "prismjs";
 const Response = (props) => {
   const response = props.response;
   const codeBlocks = response.split(/(```[\w-]*\n[\s\S]*?\n```)/);
+  const [isCopied, setIsCopied] = useState(false);
 
+  useEffect(() => {
+    Prism.highlightAll();
+  }, []);
   const formattedResponse = codeBlocks.map((block, index) => {
     if (index % 2 === 1) {
       const language = codeBlocks[index - 1];
@@ -23,41 +30,31 @@ const Response = (props) => {
 
       const copyHandler = () => {
         navigator.clipboard.writeText(updatedCodeBlock);
+        setIsCopied(true);
+        setTimeout(() => {
+          setIsCopied(false);
+        }, 1000);
       };
 
       return (
-        <Highlight
-          theme={themes.jettwaveDark}
-          code={updatedCodeBlock}
-          language={language}
-          key={index}
-        >
-          {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <>
-              <div className={styles.codeSnippetHead}>
-                <span>{languageName}</span>
+        <React.Fragment className={styles.codeSnippet}>
+          <pre style={{ padding: "4px" }}>
+            <span className={styles.codeSnippetHead}>
+              <span>{languageName}</span>
+              {isCopied ? (
+                <Check size={"15"} />
+              ) : (
                 <Copy
                   onClick={copyHandler}
                   className={styles.copyIcon}
                   size={"15"}
                 />
-              </div>
-              <pre key={index} className={styles.codeSnippet} style={style}>
-                {tokens.map((line, i) => (
-                  <div key={i} {...getLineProps({ line })}>
-                    {line.map((token, key) => (
-                      <TypeAnimation
-                        key={index}
-                        sequence={[token.content]}
-                        cursor={false}
-                      />
-                    ))}
-                  </div>
-                ))}
-              </pre>
-            </>
-          )}
-        </Highlight>
+              )}
+            </span>
+
+            <code className="language-javascript">{updatedCodeBlock}</code>
+          </pre>
+        </React.Fragment>
       );
     }
 
