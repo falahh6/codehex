@@ -111,11 +111,6 @@ const compilerSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(compilerOutput.fulfilled, (state, action) => {
-      // const existingOutput = state.output;
-      // state.finalOutput = action.payload.replace(
-      //   new RegExp(existingOutput, "g"),
-      //   ""
-      // );
       state.output = action.payload;
       state.isLoading = false;
       console.log(action.payload);

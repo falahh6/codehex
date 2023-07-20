@@ -34,6 +34,7 @@
     "react-helmet": "^6.1.0",
     "react-redux": "^8.0.5",
     "react-redux-loading-bar": "^5.0.4",
+    "react-resizable": "^3.0.5",
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
     "react-scroll": "^1.8.9",

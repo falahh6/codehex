@@ -64,7 +64,6 @@ const OpenAImodes = (props) => {
   const toLangauageHandler = (event) => {
     const languageName = event.target.value.trim();
     setToLangauge(languageName);
-    console.log(languageName);
   };
 
   const promptHandler = async () => {
@@ -85,12 +84,7 @@ const OpenAImodes = (props) => {
     } else if (mode.label === "code translation") {
       dispatch(codeTranslation(payload));
     }
-
-    console.log(toLangauge);
   };
-
-  console.log(alternativeCodeIni.response);
-  console.log(codeExplanationIni.response);
 
   return (
     <>

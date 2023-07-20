@@ -62,7 +62,7 @@ const Compiler = () => {
   const alternativeCodeIni = useSelector(
     (state) => state.openai.alternativeCodeIni.response
   );
-  const isLoadingState = useSelector((state) => state.compiler.isLoading);
+  let isLoadingState = useSelector((state) => state.compiler.isLoading);
   const languageDropdown = useDropdown("1");
 
   const handlerLanguageSelect = (selectedOption) => {
@@ -95,6 +95,7 @@ const Compiler = () => {
 
     if (userCode.length === 0 && Selectedlanguage.length === 0) {
       toast.error("look at the fields, you dumb!!");
+      isLoadingState = false;
     }
 
     dispatch(initialExecutionForInput(payload));

@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { TypeAnimation } from "react-type-animation";
+import React, { useState } from "react";
 import styles from "./Response.module.css";
 import { Copy, Check } from "lucide-react";
 import "prismjs";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism.css";
-import Prism from "prismjs";
 const Response = (props) => {
   const response = props.response;
   const [isCopied, setIsCopied] = useState(false);
 
-  const codeBlocks = response.split(/(```[\w-]*\n[\s\S]*?\n```)/);
+  const codeBlocks = response?.split(/(```[\w-]*\n[\s\S]*?\n```)/);
   const formattedBlocks = codeBlocks.map((block, index) => ({
     content: block,
     type: `${block.includes("```") ? "code" : "string"}`,
@@ -31,8 +29,6 @@ const Response = (props) => {
       return block;
     }
   });
-
-  console.log(updatedCodeBlock);
   const codeBlockStyles = {
     backgroundColor: "#f6f8fa",
     borderRadius: "4px",
@@ -68,8 +64,6 @@ const Response = (props) => {
   };
 
   const languageName = "c";
-  console.log(updatedCodeBlock.split("\n").splice(0, 1));
-
   return (
     <>
       {replacedCodeBlocks.map((block) =>
@@ -79,7 +73,7 @@ const Response = (props) => {
           <div key={block.key} className={styles.codeSnippet}>
             <pre style={codeBlockStyles}>
               <span className={styles.codeSnippetHead}>
-                <span>{languageName}</span>
+                <span></span>
                 {isCopied ? (
                   <Check size={"15"} />
                 ) : (

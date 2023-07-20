@@ -28,7 +28,7 @@
     flex-direction: column;
     height: 80vh;
     max-height: 80vh;
-    margin-top: 5.3rem;
+    margin-top: 5.4rem;
     border: 1px solid darkgray;
     border-radius: 0.4rem;
     overflow: scroll;
@@ -41,11 +41,6 @@
     font-size: 1rem;
 
 }
-
-/* .outputComponent p {
-    padding: 8px;
-} */
-
 
 .actions {
     width: 202%;
