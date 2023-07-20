@@ -13,7 +13,7 @@ const Response = (props) => {
   const codeBlocks = response.split(/(```[\w-]*\n[\s\S]*?\n```)/);
   const formattedBlocks = codeBlocks.map((block, index) => ({
     content: block,
-    type: `${block.includes(";") ? "code" : "string"}`,
+    type: `${block.includes("```") ? "code" : "string"}`,
     key: index,
   }));
 
@@ -32,7 +32,7 @@ const Response = (props) => {
     }
   });
 
-  console.log(replacedCodeBlocks);
+  console.log(updatedCodeBlock);
   const codeBlockStyles = {
     backgroundColor: "#f6f8fa",
     borderRadius: "4px",
@@ -60,26 +60,21 @@ const Response = (props) => {
   };
 
   const copyHandler = () => {
-    navigator.clipboard.writeText(updatedCodeBlock);
+    navigator.clipboard.writeText(updatedCodeBlock.replace("```", ""));
     setIsCopied(true);
     setTimeout(() => {
       setIsCopied(false);
     }, 1000);
   };
 
-  const languageName = "python";
+  const languageName = "c";
+  console.log(updatedCodeBlock.split("\n").splice(0, 1));
 
   return (
     <>
       {replacedCodeBlocks.map((block) =>
         block.type === "string" ? (
-          <TypeAnimation
-            style={paraStyles}
-            key={block.key}
-            sequence={[block.content]}
-            cursor={false}
-            speed={99}
-          />
+          <p style={paraStyles}>{block.content}</p>
         ) : (
           <div key={block.key} className={styles.codeSnippet}>
             <pre style={codeBlockStyles}>
