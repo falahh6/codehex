@@ -90,6 +90,7 @@ const OpenAImodes = (props) => {
   };
 
   console.log(alternativeCodeIni.response);
+  console.log(codeExplanationIni.response);
 
   return (
     <>

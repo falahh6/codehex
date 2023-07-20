@@ -1,14 +1,15 @@
+.copyIcon {
+    z-index: 999;
+}
 .copyIcon:hover{
     cursor: pointer;
 }
 
 
 .codeSnippet {
-    font-size: 10px;
+    font-size: 12px;
     padding: 4px;
-    margin-top: -1px;
     border-radius: 4px;
-
 }
 .codeSnippetHead{
     background-color:transparent;
@@ -18,10 +19,13 @@
     justify-content: space-between;
     border-bottom: 1px solid lightgrey;
     padding: 4px;
+    padding-top: 0;
+    margin-bottom: 0.5rem;
 }
 .codeSnippetHead span{
     font-weight: 700;
     letter-spacing: 1px;
+    font-size:14px ;
 }
 
 .mainDiv{

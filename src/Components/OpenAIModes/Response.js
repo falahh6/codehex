@@ -8,68 +8,102 @@ import "prismjs/themes/prism.css";
 import Prism from "prismjs";
 const Response = (props) => {
   const response = props.response;
-  const codeBlocks = response.split(/(```[\w-]*\n[\s\S]*?\n```)/);
   const [isCopied, setIsCopied] = useState(false);
 
-  useEffect(() => {
-    Prism.highlightAll();
-  }, []);
-  console.log(codeBlocks);
-  const formattedResponse = codeBlocks.map((block, index) => {
-    if (index % 2 === 1) {
-      const language = codeBlocks[index - 1];
-      const blockLength = block.length;
-      console.log(blockLength);
+  const codeBlocks = response.split(/(```[\w-]*\n[\s\S]*?\n```)/);
+  const formattedBlocks = codeBlocks.map((block, index) => ({
+    content: block,
+    type: `${block.includes(";") ? "code" : "string"}`,
+    key: index,
+  }));
 
-      const code = block.replace(new RegExp("```", "g"), "");
-      const languageRegex = /(?<=^|\n)([a-zA-Z]+)(?=\n)/;
-      const matches = code.match(languageRegex);
-      const languageName = matches && matches[1];
-      const updatedCodeBlock = code.replace(languageName, "");
-      console.log(languageName);
-      console.log(updatedCodeBlock);
+  let updatedCodeBlock;
+  const replacedCodeBlocks = formattedBlocks.map((block) => {
+    if (block.type === "code") {
+      const lines = block.content.split("\n");
 
-      const copyHandler = () => {
-        navigator.clipboard.writeText(updatedCodeBlock);
-        setIsCopied(true);
-        setTimeout(() => {
-          setIsCopied(false);
-        }, 1000);
-      };
+      lines.splice(0, 1);
 
-      return (
-        <React.Fragment className={styles.codeSnippet}>
-          <pre style={{ padding: "4px" }}>
-            <span className={styles.codeSnippetHead}>
-              <span>{languageName}</span>
-              {isCopied ? (
-                <Check size={"15"} />
-              ) : (
-                <Copy
-                  onClick={copyHandler}
-                  className={styles.copyIcon}
-                  size={"15"}
-                />
-              )}
-            </span>
+      updatedCodeBlock = lines.join("\n");
 
-            <code className="language-javascript">{updatedCodeBlock}</code>
-          </pre>
-        </React.Fragment>
-      );
+      return { ...block, content: updatedCodeBlock };
+    } else {
+      return block;
     }
-
-    return (
-      <TypeAnimation
-        key={index}
-        sequence={[block]}
-        speed={100}
-        cursor={false}
-      />
-    );
   });
 
-  return <>{formattedResponse}</>;
+  console.log(replacedCodeBlocks);
+  const codeBlockStyles = {
+    backgroundColor: "#f6f8fa",
+    borderRadius: "4px",
+    padding: "10px",
+    marginBottom: "4px",
+    overflowX: "auto",
+    marginLeft: "0",
+    paddingLeft: "4px",
+    marginTop: "0",
+  };
+
+  const codeStyles = {
+    fontFamily: "Menlo, Monaco, monospace",
+    fontSize: "12px",
+    lineHeight: "1.7",
+    color: "#333",
+    maxWidth: "fit-content",
+    fontWeight: "bold",
+  };
+
+  const paraStyles = {
+    fontSize: "12px",
+    fontWeight: "bold",
+    letterSpacing: "0.5px",
+  };
+
+  const copyHandler = () => {
+    navigator.clipboard.writeText(updatedCodeBlock);
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 1000);
+  };
+
+  const languageName = "python";
+
+  return (
+    <>
+      {replacedCodeBlocks.map((block) =>
+        block.type === "string" ? (
+          <TypeAnimation
+            style={paraStyles}
+            key={block.key}
+            sequence={[block.content]}
+            cursor={false}
+            speed={99}
+          />
+        ) : (
+          <div key={block.key} className={styles.codeSnippet}>
+            <pre style={codeBlockStyles}>
+              <span className={styles.codeSnippetHead}>
+                <span>{languageName}</span>
+                {isCopied ? (
+                  <Check size={"15"} />
+                ) : (
+                  <Copy
+                    onClick={copyHandler}
+                    className={styles.copyIcon}
+                    size={"15"}
+                  />
+                )}
+              </span>
+              <code style={codeStyles} className="language-javascript">
+                {block.content.replace("```", "")}
+              </code>
+            </pre>
+          </div>
+        )
+      )}
+    </>
+  );
 };
 
 export default Response;
