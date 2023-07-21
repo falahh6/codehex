@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useDropdown from "../../hooks/useDropdown";
 import Response from "./Response";
 import { SendOutlined } from "@ant-design/icons";
+import { toast } from "sonner";
 
 const OpenAImodes = (props) => {
   const [mode, setMode] = useState({ key: "", label: "" });
@@ -33,31 +34,36 @@ const OpenAImodes = (props) => {
   );
   const modeItems = [
     {
-      key: "0",
+      key: 0,
       label: "Alternative code",
     },
     {
-      key: "1",
+      key: 1,
       label: "code explanation",
     },
     {
-      key: "2",
+      key: 2,
       label: "error detection and fix",
     },
     {
-      key: "3",
+      key: 3,
       label: "code refactoring suggestions",
     },
     {
-      key: "4",
+      key: 4,
       label: "code translation",
     },
   ];
 
   const handlerModeSelect = (selectedOption) => {
+    // setMode({
+    //   key: modeItems.find((item) => item.label === selectedOption.label).key,
+    //   label: selectedOption.label,
+    // });
+    console.log(selectedOption);
     setMode({
-      key: modeItems.find((item) => item.label === selectedOption.label).key,
-      label: selectedOption.label,
+      key: modeItems[selectedOption].key,
+      label: modeItems[selectedOption].label,
     });
   };
 
@@ -66,6 +72,8 @@ const OpenAImodes = (props) => {
     setToLangauge(languageName);
   };
 
+  console.log(mode);
+
   const promptHandler = async () => {
     const payload = {
       mode,
@@ -73,16 +81,20 @@ const OpenAImodes = (props) => {
       toLangauge,
     };
 
-    if (mode.label === "Alternative code") {
-      dispatch(alternativeCode(payload));
-    } else if (mode.label === "code explanation") {
-      dispatch(codeExplanation(payload));
-    } else if (mode.label === "error detection and fix") {
-      dispatch(errorDnF(payload));
-    } else if (mode.label === "code refactoring suggestions") {
-      dispatch(codeRefactor(payload));
-    } else if (mode.label === "code translation") {
-      dispatch(codeTranslation(payload));
+    if (userCode.length > 0) {
+      if (mode.label === "Alternative code") {
+        dispatch(alternativeCode(payload));
+      } else if (mode.label === "code explanation") {
+        dispatch(codeExplanation(payload));
+      } else if (mode.label === "error detection and fix") {
+        dispatch(errorDnF(payload));
+      } else if (mode.label === "code refactoring suggestions") {
+        dispatch(codeRefactor(payload));
+      } else if (mode.label === "code translation") {
+        dispatch(codeTranslation(payload));
+      }
+    } else {
+      toast.error("you need to write the code first!");
     }
   };
 
@@ -95,6 +107,7 @@ const OpenAImodes = (props) => {
             dropdownHook={modeDropdown}
             dropdownStyle={styles.modeDropdown}
             onOptionSelect={handlerModeSelect}
+            placeHolder={"select your mode"}
           />
           <div className={styles.sendBtn}>
             <SendOutlined onClick={promptHandler} />

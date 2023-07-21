@@ -1,33 +1,48 @@
 import React from "react";
-import Select from "react-select";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 const DropdownComponent = ({
   dropdownHook,
   items,
   dropdownStyle,
   onOptionSelect,
+  maxMenuHeight,
+  placeHolder,
 }) => {
   const { selectedKey, onChangeHandler } = dropdownHook;
 
-  const options = items.map((item) => ({
-    value: item.key,
-    label: item.label,
-    extension: item.extension,
-  }));
-
   const handleChange = (selectedOption) => {
-    onChangeHandler(selectedOption.value);
+    onChangeHandler(selectedOption);
     onOptionSelect(selectedOption);
+    console.log(selectedOption);
   };
+
+  if (!items || !Array.isArray(items) || items.length === 0) {
+    return null; // Or render a default state, or a message indicating no items available
+  }
 
   return (
     <Select
-      options={options}
-      value={options.find((option) => option.value === selectedKey)}
+      showSearch
+      value={selectedKey}
       onChange={handleChange}
       className={dropdownStyle}
-      maxMenuHeight
-    />
+      dropdownRender={(menu) => <div>{menu}</div>}
+      optionFilterProp="label"
+      filterOption={(input, option) =>
+        option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      }
+      placeholder={placeHolder}
+      listHeight={maxMenuHeight}
+    >
+      {items.map((item) => (
+        <Option key={item.key} value={item.key} label={item.label}>
+          {item.label}
+        </Option>
+      ))}
+    </Select>
   );
 };
 

@@ -57,7 +57,7 @@ const Compiler = () => {
   const output = useSelector((state) => state.compiler.output);
   const finalOutput = useSelector((state) => state.compiler.finalOutput);
   const [finalOutputState, setFinalOutputState] = useState(finalOutput);
-  const [programTakingInput, setProgramTakingInput] = useState(false);
+  const [programTakingInput] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const alternativeCodeIni = useSelector(
     (state) => state.openai.alternativeCodeIni.response
@@ -66,8 +66,9 @@ const Compiler = () => {
   const languageDropdown = useDropdown("1");
 
   const handlerLanguageSelect = (selectedOption) => {
-    setExtension(selectedOption.extension);
-    setLanguage(selectedOption.label);
+    console.log(selectedOption);
+    setExtension(languagesItems[selectedOption].extension);
+    setLanguage(languagesItems[selectedOption].label);
   };
 
   useEffect(() => {
@@ -124,6 +125,12 @@ const Compiler = () => {
   const handleCode = (code) => {
     setUserCode(code);
   };
+  const keySubmitHandler = (event) => {
+    // event.preventDefault();
+    if ((event.metaKey || event.crtlKey) && event.key === "Enter") {
+      console.log("key pressed");
+    }
+  };
 
   return (
     <>
@@ -152,8 +159,9 @@ const Compiler = () => {
                       items={languagesItems}
                       dropdownHook={languageDropdown}
                       dropdownStyle={styles.langSelect}
-                      maxMenuHeight="90vh"
+                      maxMenuHeight="85vh"
                       onOptionSelect={handlerLanguageSelect}
+                      placeHolder="Select a Language"
                     />
                     <button className={styles.runButton}>
                       {isLoadingState ? (
@@ -169,7 +177,11 @@ const Compiler = () => {
                       main<span>{extensionState}</span>
                     </h4>
                     <div className={styles.codeInput}>
-                      <CodeEditor language={language} onCode={handleCode} />
+                      <CodeEditor
+                        onKeyDown={keySubmitHandler}
+                        language={language}
+                        onCode={handleCode}
+                      />
                     </div>
                   </div>
                 </form>

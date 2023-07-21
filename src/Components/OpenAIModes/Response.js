@@ -63,7 +63,7 @@ const Response = (props) => {
     }, 1000);
   };
 
-  const languageName = "c";
+  // const languageName = "c";
   return (
     <>
       {replacedCodeBlocks.map((block) =>

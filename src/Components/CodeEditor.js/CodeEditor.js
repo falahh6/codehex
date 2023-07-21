@@ -12,6 +12,7 @@ const CodeEditor = ({ onCode, language }) => {
     <main>
       <Editor
         height="30rem"
+        onKeyDown={onkeydown}
         value={code}
         theme="vs-light"
         className={styles.editor}
