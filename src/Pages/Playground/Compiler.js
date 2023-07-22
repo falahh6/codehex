@@ -15,10 +15,11 @@ import PreLoader from "../../Components/UI/PreLoader";
 import useDropdown from "../../hooks/useDropdown";
 import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
 import OpenAImodes from "../../Components/OpenAIModes/OpenAImodes";
-import { Tabs } from "antd";
+import { Tabs, Button, Tooltip } from "antd";
 import CodeEditor from "../../Components/CodeEditor.js/CodeEditor";
 import { LoadingOutlined } from "@ant-design/icons";
 import { toast } from "sonner";
+import { Share } from "lucide-react";
 
 // const checkingIfInputNeeded = (userCode) => {
 //   const inputPatterns = [
@@ -59,6 +60,7 @@ const Compiler = () => {
   const [finalOutputState, setFinalOutputState] = useState(finalOutput);
   const [programTakingInput] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [shareButtonDisabled, setShareButtonDisabled] = useState(true);
   const alternativeCodeIni = useSelector(
     (state) => state.openai.alternativeCodeIni.response
   );
@@ -102,6 +104,14 @@ const Compiler = () => {
     dispatch(initialExecutionForInput(payload));
   };
 
+  useEffect(() => {
+    if (userCode.length > 0) {
+      setShareButtonDisabled(false);
+    } else {
+      setShareButtonDisabled(true);
+    }
+  }, [userCode]);
+
   const consoleInputFormOnSubmit = (e) => {
     e.preventDefault();
 
@@ -126,7 +136,6 @@ const Compiler = () => {
     setUserCode(code);
   };
   const keySubmitHandler = (event) => {
-    // event.preventDefault();
     if ((event.metaKey || event.crtlKey) && event.key === "Enter") {
       console.log("key pressed");
     }
@@ -150,7 +159,7 @@ const Compiler = () => {
               </Helmet>
               <div className={styles.mainDiv}>
                 <form
-                  onSubmit={submitHandler}
+                  // onSubmit={submitHandler}
                   action=""
                   className={styles.form}
                 >
@@ -163,14 +172,34 @@ const Compiler = () => {
                       onOptionSelect={handlerLanguageSelect}
                       placeHolder="Select a Language"
                     />
-                    <button className={styles.runButton}>
-                      {isLoadingState ? (
-                        <LoadingOutlined />
-                      ) : (
-                        <FontAwesomeIcon icon={faPlay} />
-                      )}
-                      <span> Run </span>
-                    </button>
+                    <div>
+                      <Tooltip
+                        overlayStyle={{ fontWeight: "600", fontSize: "10px" }}
+                        placement="bottomRight"
+                        title={
+                          shareButtonDisabled
+                            ? "Please write the code first"
+                            : "Share your code"
+                        }
+                      >
+                        <Button className={styles.shareButton}>
+                          <Share size={15} />
+                          <span> Share </span>
+                        </Button>
+                      </Tooltip>
+                      <Button
+                        type="primary"
+                        onClick={submitHandler}
+                        className={styles.runButton}
+                      >
+                        {isLoadingState ? (
+                          <LoadingOutlined />
+                        ) : (
+                          <FontAwesomeIcon icon={faPlay} />
+                        )}
+                        <span> Run </span>
+                      </Button>
+                    </div>
                   </div>
                   <div className={styles.codeBlock}>
                     <h4 className={styles.fileName}>

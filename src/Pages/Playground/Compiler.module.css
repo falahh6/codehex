@@ -10,7 +10,7 @@
 .mainDiv {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .form {
@@ -21,7 +21,10 @@
     margin: 6px 0px;
     font-size: 1rem;
 }
-
+.codeBlock{
+    margin-top: 1.8rem;
+    position: sticky;
+}
 .outputComponent {
     width: 45%;
     display: flex;
@@ -43,37 +46,54 @@
 }
 
 .actions {
-    width: 202%;
+    width: 200%;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
 }
 
-.actions a {
-    background-color: #F0F1F2;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    border: none;
-    margin-bottom: 1rem;
-    border: 1px solid #F0F1F2;
+
+.actions div:nth-child(2){
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 16%;
 }
+
 
 .langSelect:hover {
     cursor: pointer;
 }
 
 .runButton {
-    padding: 0.6rem 1rem;
+    /* padding: 0.3rem 1rem;
     margin-bottom: 1rem;
     border: none;
-    background-color: #7aeb8d;
-    border-radius: 4px;
     display: flex;
     align-items: center;
-    height: 40px;
-    width: 8%;
+    height: 35px;
     justify-content: center;
     font-size: 16px;
+    margin-top: 4px; */
+    font-weight: 700;
+}
+
+/* .shareButton{
+    background-color: rgba(233, 233, 233, 0.618);
+    border: 1px solid lightgrey;
+}
+.shareButton:hover{
+    color: white;
+    border: none;
+} */
+
+.shareButton{
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+ .shareButton svg{
+    margin-right: 0.5rem;
 }
 
 .runButton:hover {
@@ -108,34 +128,6 @@
     100% {
         opacity: 1;
     }
-}
-
-.accbody {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    width: 90%;
-    align-items: flex-start;
-}
-
-.accbody p {
-    margin: 0;
-    padding: 0;
-}
-
-.accbody button {
-    border: none;
-    /* background-color: #7aeb8d; */
-    border-radius: 4px;
-    display: flex;
-    padding: 4px 16px;
-    margin-bottom: 1rem;
-
-}
-
-.accbody button:hover {
-    background-color: #E7F1FF;
-    cursor: pointer;
 }
 
 .Terminal {
@@ -194,10 +186,11 @@
 }
 
 .langSelect {
-    width: 220px;
+    width: 12%;
     max-height: 20rem;
 }
 
 .langSelect div:hover {
     cursor: pointer;
 }
+
