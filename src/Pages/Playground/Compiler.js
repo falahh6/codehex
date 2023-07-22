@@ -15,14 +15,9 @@ import PreLoader from "../../Components/UI/PreLoader";
 import useDropdown from "../../hooks/useDropdown";
 import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
 import OpenAImodes from "../../Components/OpenAIModes/OpenAImodes";
-import { Tabs, Button, Dropdown, Modal, Divider, Space } from "antd";
+import { Tabs, Button } from "antd";
 import CodeEditor from "../../Components/CodeEditor.js/CodeEditor";
-import {
-  LoadingOutlined,
-  WhatsAppOutlined,
-  FileAddOutlined,
-  DownOutlined,
-} from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 import { toast } from "sonner";
 import { Share } from "lucide-react";
 import ShareModal from "../../Components/ShareModal/ShareModal";
@@ -58,7 +53,7 @@ export const languagesItems = programmingLanguages.map((language, index) => ({
 const Compiler = () => {
   const dispatch = useDispatch();
   const [extensionState, setExtension] = useState();
-  const [userCode, setUserCode] = useState(``);
+  const [userCode, setUserCode] = useState("");
   const [language, setLanguage] = useState("");
 
   const output = useSelector((state) => state.compiler.output);
@@ -66,7 +61,6 @@ const Compiler = () => {
   const [finalOutputState, setFinalOutputState] = useState(finalOutput);
   const [programTakingInput] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [shareButtonDisabled, setShareButtonDisabled] = useState(true);
   const [modal2Open, setModal2Open] = useState(false);
   const alternativeCodeIni = useSelector(
     (state) => state.openai.alternativeCodeIni.response
@@ -109,14 +103,6 @@ const Compiler = () => {
 
     dispatch(initialExecutionForInput(payload));
   };
-
-  useEffect(() => {
-    if (userCode.length > 0) {
-      setShareButtonDisabled(false);
-    } else {
-      setShareButtonDisabled(true);
-    }
-  }, [userCode]);
 
   const consoleInputFormOnSubmit = (e) => {
     e.preventDefault();
@@ -168,11 +154,7 @@ const Compiler = () => {
                 <title>Compiler</title>
               </Helmet>
               <div className={styles.mainDiv}>
-                <form
-                  // onSubmit={submitHandler}
-                  action=""
-                  className={styles.form}
-                >
+                <form action="" className={styles.form}>
                   <div className={styles.actions}>
                     <DropdownComponent
                       items={languagesItems}
@@ -206,37 +188,11 @@ const Compiler = () => {
                         <span> Run </span>
                       </Button>
                     </div>
-
-                    {/* <Modal
-                      title="Share your code with your fellow mate!!"
-                      centered
-                      open={modal2Open}
-                      onOk={() => setModal2Open(false)}
-                      onCancel={() => setModal2Open(false)}
-                      maskStyle={{ backgroundColor: "#74747486" }}
-                      footer={
-                        <Space align="end">
-                          <Dropdown.Button
-                            icon={<DownOutlined />}
-                            menu={{
-                              items,
-                            }}
-                          >
-                            Share
-                          </Dropdown.Button>
-                        </Space>
-                      }
-                    >
-                      <Divider className={styles.modalDivider} />
-                      <p className={styles.modalP}>
-                        You can choose what all you want to share with your
-                        friend from this page.
-                      </p>
-                      <div className={styles.shareContentDiv}></div>
-                    </Modal> */}
                     <ShareModal
                       onModalOpen={modal2Open}
                       onModalClose={() => setModal2Open(false)}
+                      userCode={userCode}
+                      codeOutput={output}
                     />
                   </div>
                   <div className={styles.codeBlock}>

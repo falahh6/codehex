@@ -39,7 +39,7 @@ export const alternativeCode = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `Below is a piece of code provided to you, and your task is to provide the alternative code , the langauge and functionality should remain same. [note that the code should be always wrapped with three backticks and response should include some description what have been changes form the original cide], here's the code \n ${userCode}`,
+            content: `Below is a piece of code provided to you, and your task is to provide the alternative code , the langauge and functionality should remain same. [note that the code should be always wrapped with three backticks and response should include some description what have been changes form the original code], here's the code \n ${userCode}`,
           },
         ],
       });
@@ -60,10 +60,12 @@ export const codeExplanation = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `Below is a piece of code provided to you, and your task is to Explain the code in concise way,[note that if you are providing the code then it should be always wrapped with three backticks and response should include some description what have been changes form the original cide], here's the code \n ${userCode}`,
+            content: `Below is a piece of code provided to you, and your task is to Explain the code in concise way,[note that if you are providing the code then it should be always wrapped with three backticks and response should include some description what have been changes form the original code], here's the code \n ${userCode}`,
           },
         ],
       });
+
+      console.log(userCode);
 
       return response.data.choices[0].message.content;
     } catch (error) {
@@ -81,7 +83,7 @@ export const errorDnF = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `Below is a piece of code provided to you, and your task is to check if the code has any errors, if the code has any errors then provide the fixes of it and if there are not errors in the code then respnse 'YOUR CODE IS CORRECT (smile emoji)' [note that if you are providing the code then it should be always wrapped with three backticks and response should include some description what have been changes form the original cide], here's the code \n ${userCode}`,
+            content: `Below is a piece of code provided to you, and your task is to check if the code has any errors, if the code has any errors then provide the fixes of it and if there are not errors in the code then respnse 'YOUR CODE IS CORRECT (smile emoji)' [note that if you are providing the code then it should be always wrapped with three backticks and response should include some description what have been changes form the original code], here's the code \n ${userCode}`,
           },
         ],
       });
@@ -102,7 +104,7 @@ export const codeRefactor = createAsyncThunk(
         messages: [
           {
             role: "user",
-            content: `Below is a piece of code provided to you, and your task is to list the points how the provided code can be refactored in a good way,[note that if you are providing the code then it should be always wrapped with three backticks and response should include some description what have been changes form the original cide], here's the code \n ${userCode}`,
+            content: `Below is a piece of code provided to you, and your task is to list the points how the provided code can be refactored in a good way,[note that if you are providing the code then it should be always wrapped with three backticks and response should include some description what have been changes form the original code], here's the code \n ${userCode}`,
           },
         ],
       });

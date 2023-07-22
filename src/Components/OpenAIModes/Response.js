@@ -56,7 +56,8 @@ const Response = (props) => {
   };
 
   const copyHandler = () => {
-    navigator.clipboard.writeText(updatedCodeBlock.replace("```", ""));
+    const codeToCopy = updatedCodeBlock.replace("```", "");
+    navigator.clipboard.writeText(codeToCopy);
     setIsCopied(true);
     setTimeout(() => {
       setIsCopied(false);

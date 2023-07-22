@@ -1,0 +1,21 @@
+.modalDivider{
+    margin-top: 4px;
+    margin-bottom: 8px;
+}
+
+.modalP{
+    font-size: 12px;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.shareContentDiv{
+    border: 1px solid transparent;
+    max-height: 60vh;
+    overflow-y: scroll;
+    font-size: 12px;
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: rgba(235, 235, 235, 0.47);
+}
+
