@@ -52,8 +52,6 @@ const languages = [
   "ruby",
   "rust",
   "scala",
-  "scheme",
-  "scheme (chicken)",
   "shell",
   "smalltalk",
   "sql",

@@ -52,8 +52,6 @@ const extensions = [
   ".rb",
   ".rs",
   ".scala",
-  ".scm",
-  ".scm",
   ".sh",
   ".st",
   ".sql",

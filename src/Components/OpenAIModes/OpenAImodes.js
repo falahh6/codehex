@@ -98,6 +98,7 @@ const OpenAImodes = (props) => {
     }
   };
 
+  console.log("KEY :" + mode.key);
   return (
     <>
       <div className={styles.openAI}>
@@ -114,7 +115,7 @@ const OpenAImodes = (props) => {
           </div>
         </div>
         <div className={styles.openAIresponse}>
-          {mode.key === "0" && (
+          {mode.key === 0 && (
             <div>
               {alternativeCodeIni.status === "pending" ? (
                 <span className={styles.textCursor}></span>
@@ -124,7 +125,7 @@ const OpenAImodes = (props) => {
               <Response response={alternativeCodeIni.response} />
             </div>
           )}
-          {mode.key === "1" && (
+          {mode.key === 1 && (
             <div>
               {codeExplanationIni.status === "pending" ? (
                 <span className={styles.textCursor}></span>
@@ -135,7 +136,7 @@ const OpenAImodes = (props) => {
               <Response response={codeExplanationIni.response} />
             </div>
           )}
-          {mode.key === "2" && (
+          {mode.key === 2 && (
             <div>
               {errorDnFIni.status === "pending" ? (
                 <span className={styles.textCursor}></span>
@@ -145,7 +146,7 @@ const OpenAImodes = (props) => {
               <Response response={errorDnFIni.response} />
             </div>
           )}
-          {mode.key === "3" && (
+          {mode.key === 3 && (
             <div>
               {codeRefactorIni.status === "pending" ? (
                 <span className={styles.textCursor}></span>
@@ -156,7 +157,7 @@ const OpenAImodes = (props) => {
               <Response response={codeRefactorIni.response} />
             </div>
           )}
-          {mode.key === "4" && (
+          {mode.key === 4 && (
             <>
               <span> Enter the langauge in which you want to translate : </span>{" "}
               <input

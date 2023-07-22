@@ -15,9 +15,9 @@ import PreLoader from "../../Components/UI/PreLoader";
 import useDropdown from "../../hooks/useDropdown";
 import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
 import OpenAImodes from "../../Components/OpenAIModes/OpenAImodes";
-import { Tabs, Button, Tooltip } from "antd";
+import { Tabs, Button, Tooltip, Modal, Divider, Collapse, theme } from "antd";
 import CodeEditor from "../../Components/CodeEditor.js/CodeEditor";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, CaretRightOutlined } from "@ant-design/icons";
 import { toast } from "sonner";
 import { Share } from "lucide-react";
 
@@ -61,12 +61,14 @@ const Compiler = () => {
   const [programTakingInput] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [shareButtonDisabled, setShareButtonDisabled] = useState(true);
+  const [modal2Open, setModal2Open] = useState(false);
   const alternativeCodeIni = useSelector(
     (state) => state.openai.alternativeCodeIni.response
   );
   let isLoadingState = useSelector((state) => state.compiler.isLoading);
   const languageDropdown = useDropdown("1");
 
+  const { token } = theme.useToken();
   const handlerLanguageSelect = (selectedOption) => {
     console.log(selectedOption);
     setExtension(languagesItems[selectedOption].extension);
@@ -141,6 +143,10 @@ const Compiler = () => {
     }
   };
 
+  const shareHandler = () => {
+    setModal2Open(true);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -182,7 +188,10 @@ const Compiler = () => {
                             : "Share your code"
                         }
                       >
-                        <Button className={styles.shareButton}>
+                        <Button
+                          className={styles.shareButton}
+                          onClick={shareHandler}
+                        >
                           <Share size={15} />
                           <span> Share </span>
                         </Button>
@@ -193,13 +202,30 @@ const Compiler = () => {
                         className={styles.runButton}
                       >
                         {isLoadingState ? (
-                          <LoadingOutlined />
+                          <LoadingOutlined
+                            size={18}
+                            style={{ marginLeft: "0" }}
+                          />
                         ) : (
                           <FontAwesomeIcon icon={faPlay} />
                         )}
                         <span> Run </span>
                       </Button>
                     </div>
+                    <Modal
+                      title="Share your code with your fellow mate!!"
+                      centered
+                      open={modal2Open}
+                      onOk={() => setModal2Open(false)}
+                      onCancel={() => setModal2Open(false)}
+                      maskStyle={{ backgroundColor: "#74747486" }}
+                    >
+                      <Divider className={styles.modalDivider} />
+                      <p className={styles.modalP}>
+                        You can choose what all you want to share with your
+                        friend from this page.
+                      </p>
+                    </Modal>
                   </div>
                   <div className={styles.codeBlock}>
                     <h4 className={styles.fileName}>
