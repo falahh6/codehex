@@ -15,11 +15,17 @@ import PreLoader from "../../Components/UI/PreLoader";
 import useDropdown from "../../hooks/useDropdown";
 import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
 import OpenAImodes from "../../Components/OpenAIModes/OpenAImodes";
-import { Tabs, Button, Tooltip, Modal, Divider, Collapse, theme } from "antd";
+import { Tabs, Button, Dropdown, Modal, Divider, Space } from "antd";
 import CodeEditor from "../../Components/CodeEditor.js/CodeEditor";
-import { LoadingOutlined, CaretRightOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  WhatsAppOutlined,
+  FileAddOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 import { toast } from "sonner";
 import { Share } from "lucide-react";
+import ShareModal from "../../Components/ShareModal/ShareModal";
 
 // const checkingIfInputNeeded = (userCode) => {
 //   const inputPatterns = [
@@ -67,8 +73,6 @@ const Compiler = () => {
   );
   let isLoadingState = useSelector((state) => state.compiler.isLoading);
   const languageDropdown = useDropdown("1");
-
-  const { token } = theme.useToken();
   const handlerLanguageSelect = (selectedOption) => {
     console.log(selectedOption);
     setExtension(languagesItems[selectedOption].extension);
@@ -179,23 +183,13 @@ const Compiler = () => {
                       placeHolder="Select a Language"
                     />
                     <div>
-                      <Tooltip
-                        overlayStyle={{ fontWeight: "600", fontSize: "10px" }}
-                        placement="bottomRight"
-                        title={
-                          shareButtonDisabled
-                            ? "Please write the code first"
-                            : "Share your code"
-                        }
+                      <Button
+                        className={styles.shareButton}
+                        onClick={shareHandler}
                       >
-                        <Button
-                          className={styles.shareButton}
-                          onClick={shareHandler}
-                        >
-                          <Share size={15} />
-                          <span> Share </span>
-                        </Button>
-                      </Tooltip>
+                        <Share size={15} />
+                        <span> Share </span>
+                      </Button>
                       <Button
                         type="primary"
                         onClick={submitHandler}
@@ -212,20 +206,38 @@ const Compiler = () => {
                         <span> Run </span>
                       </Button>
                     </div>
-                    <Modal
+
+                    {/* <Modal
                       title="Share your code with your fellow mate!!"
                       centered
                       open={modal2Open}
                       onOk={() => setModal2Open(false)}
                       onCancel={() => setModal2Open(false)}
                       maskStyle={{ backgroundColor: "#74747486" }}
+                      footer={
+                        <Space align="end">
+                          <Dropdown.Button
+                            icon={<DownOutlined />}
+                            menu={{
+                              items,
+                            }}
+                          >
+                            Share
+                          </Dropdown.Button>
+                        </Space>
+                      }
                     >
                       <Divider className={styles.modalDivider} />
                       <p className={styles.modalP}>
                         You can choose what all you want to share with your
                         friend from this page.
                       </p>
-                    </Modal>
+                      <div className={styles.shareContentDiv}></div>
+                    </Modal> */}
+                    <ShareModal
+                      onModalOpen={modal2Open}
+                      onModalClose={() => setModal2Open(false)}
+                    />
                   </div>
                   <div className={styles.codeBlock}>
                     <h4 className={styles.fileName}>

@@ -56,10 +56,6 @@ const OpenAImodes = (props) => {
   ];
 
   const handlerModeSelect = (selectedOption) => {
-    // setMode({
-    //   key: modeItems.find((item) => item.label === selectedOption.label).key,
-    //   label: selectedOption.label,
-    // });
     console.log(selectedOption);
     setMode({
       key: modeItems[selectedOption].key,
