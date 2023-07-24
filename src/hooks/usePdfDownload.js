@@ -1,7 +1,12 @@
 import { codehexLogoDataURL } from "../utils/codehex-logo-DATAURL";
 import jsPDF from "jspdf";
 
-const usePdfDownload = ({ userCode, codeOutput, codeExpl, fileName }) => {
+const usePdfDownload = ({
+  userCode,
+  codeOutput,
+  codeExplanation,
+  fileName,
+}) => {
   const handleDownloadPDF = () => {
     const pdf = new jsPDF("p", "mm", "a4");
 
@@ -27,7 +32,7 @@ const usePdfDownload = ({ userCode, codeOutput, codeExpl, fileName }) => {
 
     pdf.setFontSize(10);
     pdf.setFont("Courier", "normal", "bolder");
-    pdf.text(codeExpl, 10, 180, { maxWidth: 180 });
+    pdf.text(codeExplanation, 10, 180, { maxWidth: 180 });
 
     pdf.addImage(codehexLogoDataURL, "JPEG", 90, 260);
 

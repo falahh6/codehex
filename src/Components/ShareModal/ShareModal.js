@@ -24,13 +24,13 @@ const ShareModal = ({ onModalOpen, onModalClose, userCode, codeOutput }) => {
   const contentSharingRef = useRef();
 
   const { Title, Text } = Typography;
-  const [shouldShareExplanation, setShouldShareExplanation] = useState(false);
+  //   const [shouldShareExplanation, setShouldShareExplanation] = useState(false);
   const [fileName, setFileName] = useState("");
 
   const shareSelectionHandler = {
     userCode,
     codeOutput,
-    codeExpl: shouldShareExplanation ? codeExplanation : null,
+    codeExplanation,
     fileName,
   };
 
@@ -54,9 +54,9 @@ const ShareModal = ({ onModalOpen, onModalClose, userCode, codeOutput }) => {
     },
   ];
 
-  const checkCodeExplanatioHandler = () => {
-    setShouldShareExplanation((prevState) => !prevState);
-  };
+  //   const checkCodeExplanatioHandler = () => {
+  //     setShouldShareExplanation((prevState) => !prevState);
+  //   };
 
   return (
     <Modal
@@ -90,6 +90,7 @@ const ShareModal = ({ onModalOpen, onModalClose, userCode, codeOutput }) => {
         suffix=".pdf"
         value={fileName}
         onChange={fileNameSetHandler}
+        required
       />
       <p className={styles.modalP}>
         You can choose what all you want to share with your friend from this
@@ -120,8 +121,10 @@ const ShareModal = ({ onModalOpen, onModalClose, userCode, codeOutput }) => {
               <Title level={5}>
                 {" "}
                 <Checkbox
-                  checked={shouldShareExplanation}
-                  onChange={checkCodeExplanatioHandler}
+                  //   checked={shouldShareExplanation}
+                  checked
+                  disabled
+                  //   onChange={checkCodeExplanatioHandler}
                   className={styles.checkbox}
                 />
                 Code Explanation
