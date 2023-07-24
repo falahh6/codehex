@@ -195,3 +195,10 @@
  color: #74747486;
 }
 
+.userInputField{
+    margin: auto;
+    margin-top: 1rem;
+    width: 95%;
+    margin-bottom: 0.5rem;
+    height: 8%;
+}

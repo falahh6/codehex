@@ -7,15 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet } from "react-helmet";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  compilerOutput,
-  initialExecutionForInput,
-} from "../../store/compiler-slice";
+import { initialExecutionForInput } from "../../store/compiler-slice";
 import PreLoader from "../../Components/UI/PreLoader";
 import useDropdown from "../../hooks/useDropdown";
 import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
 import OpenAImodes from "../../Components/OpenAIModes/OpenAImodes";
-import { Tabs, Button } from "antd";
+import { Tabs, Button, Input } from "antd";
 import CodeEditor from "../../Components/CodeEditor.js/CodeEditor";
 import { LoadingOutlined } from "@ant-design/icons";
 import { toast } from "sonner";
@@ -58,8 +55,7 @@ const Compiler = () => {
 
   const output = useSelector((state) => state.compiler.output);
   const finalOutput = useSelector((state) => state.compiler.finalOutput);
-  const [finalOutputState, setFinalOutputState] = useState(finalOutput);
-  const [programTakingInput] = useState(false);
+  const [finalOutputState] = useState(finalOutput);
   const [isLoading, setIsLoading] = useState(true);
   const [modal2Open, setModal2Open] = useState(false);
   const alternativeCodeIni = useSelector(
@@ -90,10 +86,13 @@ const Compiler = () => {
     console.log(Selectedlanguage, extension);
     console.log(userCode);
 
+    const userInput = inputRef.current.input.value;
+
     const payload = {
       Selectedlanguage,
       extension,
       userCode,
+      userInput,
     };
 
     if (userCode.length === 0 && Selectedlanguage.length === 0) {
@@ -102,23 +101,6 @@ const Compiler = () => {
     }
 
     dispatch(initialExecutionForInput(payload));
-  };
-
-  const consoleInputFormOnSubmit = (e) => {
-    e.preventDefault();
-
-    const newInput = inputRef.current.value;
-    const extension = extensionState;
-    const Selectedlanguage = language;
-    const payload = {
-      Selectedlanguage,
-      extension,
-      userCode,
-      newInput,
-    };
-
-    dispatch(compilerOutput(payload));
-    setFinalOutputState(finalOutput);
   };
 
   const codeReplacehandler = () => {
@@ -221,19 +203,15 @@ const Compiler = () => {
                         key: 1,
                         children: (
                           <div className={styles.Terminal}>
+                            <Input
+                              placeholder="Your input here"
+                              className={styles.userInputField}
+                              ref={inputRef}
+                            />
                             <div className={styles.outputForConsole}>
                               <span className={styles.promptLabel}>$</span>
                               <p className={styles.output}>{output}</p>
-                              <span>
-                                {programTakingInput ? (
-                                  <form
-                                    className={styles.outputForConsoleForm}
-                                    onSubmit={consoleInputFormOnSubmit}
-                                  >
-                                    <input ref={inputRef} type="text" />
-                                  </form>
-                                ) : null}
-                              </span>
+                              <span></span>
                             </div>
                             <p className={styles.commandMessage}>
                               {finalOutputState.message}

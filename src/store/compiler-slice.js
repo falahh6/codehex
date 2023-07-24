@@ -8,7 +8,7 @@ const compilerInitialState = {
 
 export const initialExecutionForInput = createAsyncThunk(
   "compilerSlice/input",
-  async ({ Selectedlanguage, extension, userCode, doesProgramNeedsInput }) => {
+  async ({ Selectedlanguage, extension, userCode, userInput }) => {
     const options = {
       method: "POST",
       url: "https://onecompiler-apis.p.rapidapi.com/api/v1/run",
@@ -19,7 +19,7 @@ export const initialExecutionForInput = createAsyncThunk(
       },
       data: {
         language: Selectedlanguage,
-        stdin: "7 89",
+        stdin: userInput,
         files: [
           {
             name: "index" + extension,
