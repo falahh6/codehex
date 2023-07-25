@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userAuthCheck } from "../../store/auth-slice";
 import { Parallax } from "react-scroll-parallax";
+import { Drawer } from "antd";
 const Home = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
