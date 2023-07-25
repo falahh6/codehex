@@ -92,6 +92,7 @@
     text-align: center;
 }
 
+
 @media (max-width: 480px){
 
     .header{
@@ -105,10 +106,19 @@
 
     .hamburger{
         display: block;
+        z-index: 999;
+    }
+
+    .hamburger:hover{
+        cursor: pointer;
     }
 
     .authItems {
         display: none;
+    }
+
+    .drawer p{
+        margin: 0 ;
     }
     
 }
