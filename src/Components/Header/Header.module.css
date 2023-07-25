@@ -91,3 +91,24 @@
 .dropdownOverlay{
     text-align: center;
 }
+
+@media (max-width: 480px){
+
+    .header{
+        width: 77%;
+    }
+
+    .header img{
+        width: 6rem;
+        margin-left: 0;
+    }
+
+    .hamburger{
+        display: block;
+    }
+
+    .authItems {
+        display: none;
+    }
+    
+}

@@ -18,6 +18,7 @@
 
 .logo img {
     width: 7rem;
+    display: none;
 }
 
 .copyrightsection {
@@ -27,8 +28,50 @@
 
 .secondsec {
     display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 }
 
 .secondsec p:nth-child(2) {
     margin-left: 1rem;
+}
+
+.footerInLogo img{
+    display: block;
+}
+
+@media (max-width: 480px){
+    .logo img {
+        width: 5rem;
+        display: none;
+    }
+
+
+    .footer {
+        font-size: 8px;
+    }
+
+    .copyrightsection{
+        display:flex;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+
+    .secondsec{
+        display: flex;
+        flex-direction: column;
+        /* padding-bottom: 1rem ; */
+        justify-content: space-between;
+    }
+
+    .secondsec p:nth-child(2){
+        margin: 0;
+    }
+
+    .footerInLogo img{
+        display: block;
+        width: 5rem;
+    }
 }

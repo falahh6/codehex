@@ -144,7 +144,6 @@
     grid-template-columns: repeat(7, 1fr);
     justify-content: center;
     gap: 1rem;
-
     font-family: 'Inter', sans-serif;
 }
 
@@ -168,7 +167,6 @@
     font-family: 'Inter', sans-serif;
 }
 .features div h3{
-
     margin-top: 8px;
     margin-bottom: 8px;
     font-weight: 600;
@@ -202,3 +200,79 @@
 .features div:nth-child(5){
     grid-column: span 2;
 }
+
+
+/* Phone Size */
+@media (max-width: 480px) {
+    .main {
+      width: 95%;
+      margin-top: 4rem;
+      background-image : none;
+      height: 100vh;
+    }
+    .main p {
+        padding: none;
+        margin-bottom: 3rem;
+        font-size: 10px;
+        width: 80%;
+    }    
+  
+    .h1 {
+      font-size: 24px;
+    }
+  
+    .cta {
+      /* margin-top: 0; */
+      /* margin: 1.5rem; */
+      font-size: 10px;
+    }
+    .cta::after{
+        display: none;
+    }
+  
+    .about img {
+        width: 90%;
+        display: none;
+      /* margin: -6rem auto 2rem auto; */
+    }
+  
+    .about p {
+      padding: 0 5%;
+      font-size: 10px;
+    }
+
+    .about h1{
+        font-size: 22px;
+        width: 80%;
+    }
+
+    .about > p{
+        /* background-color: #004AAD; */
+        width: 80%;
+        line-height: 14px;
+    letter-spacing: 1px;
+    }
+  
+    .features {
+      height: auto;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .features div img{
+        display: block;
+    }
+
+    .features div{
+        height: 14rem;
+    }
+
+    .features div:nth-child(1),
+    .features div:nth-child(2),
+    .features div:nth-child(3),
+    .features div:nth-child(4),
+    .features div:nth-child(5) {
+      grid-column: span 2;
+      grid-row: auto;
+    }
+  }
+  
