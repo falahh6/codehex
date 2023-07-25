@@ -30,7 +30,7 @@ const Home = () => {
           exit={{ opacity: 0 }}
           transition={{ duration: 1 }}
         >
-          <Parallax scale={[1.5, 0.5]}>
+          <Parallax scale={[1.3, 0.5]}>
             <div className={styles.main}>
               <TypeAnimation
                 className={styles.h1}

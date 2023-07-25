@@ -14,6 +14,9 @@
     letter-spacing: 2px;
     margin: auto;
     font-family: 'Gotham';
+    /* background-color: white; */
+    padding-bottom: 2rem;
+    z-index: 999;
 }
 
 @font-face {
@@ -92,11 +95,18 @@
     text-align: center;
 }
 
+.drawer{
+    display: none;
+}
+
 
 @media (max-width: 480px){
-
     .header{
-        width: 77%;
+        width: 83%;
+        background-color: white;
+        z-index: 999;
+        padding: 2rem;
+        padding-bottom: 1rem;
     }
 
     .header img{
@@ -117,8 +127,50 @@
         display: none;
     }
 
-    .drawer p{
-        margin: 0 ;
+    .drawer{
+        display: block;
+        background-color: white;
+        height: 25vh;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top : 0;
+        z-index: 1;
+        transition: all 0.5s ease-in-out;
     }
-    
+
+    .backdrop{
+        position: absolute;
+        background-color: #8c8c8ca1;
+        backdrop-filter: blur(20);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+    }
+
+    .drawer button{
+        width: 90%;
+        margin-left: 5%;
+        height: 2.5rem;
+        font-weight: 600;
+    }
+
+    .drawer button:nth-child(1){
+        margin-top: 5rem;
+        margin-bottom: 1rem;
+    }
+    /* .drawer button{
+       width: 80%;
+    }
+
+    .drawer button:nth-child(2){
+        margin-top: 1rem;
+    }
+
+    .drawerRoot{
+        z-index: 999;
+    } */
 }

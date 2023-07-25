@@ -2,13 +2,13 @@ import Logo from "../../utils/Logo";
 import styles from "./Header.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Dropdown, Space, Drawer, Divider } from "antd";
+import { Dropdown, Space, Button } from "antd";
 import { faUser, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { userLogout } from "../../store/auth-slice";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
-
+import "./Header.css";
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,61 +46,65 @@ const Header = () => {
   ];
 
   const hamburgerClickHandler = () => {
-    setDrawerOpen(true);
+    setDrawerOpen((prevState) => !prevState);
     console.log("testing drawer");
+
+    document.body.classList.toggle("no-scroll");
   };
 
-  const drawerCloseHandler = () => {
-    setDrawerOpen(false);
+  const drawerButtonClickHandler = () => {
+    navigate("/login");
   };
 
   return (
-    <header className={styles.header}>
-      <Drawer
+    <>
+      {drawerOpen && (
+        <div
+          onClick={() => setDrawerOpen(false)}
+          className={styles.backdrop}
+        ></div>
+      )}
+      <div
+        style={drawerOpen ? { top: "0" } : { top: "-15rem" }}
         className={styles.drawer}
-        title="Login / Sign up"
-        placement={"top"}
-        closable={true}
-        onClose={drawerCloseHandler}
-        open={drawerOpen}
-        key={"placement"}
-        height={"20vh"}
       >
-        <p>test</p>
-        {/* <Divider /> */}
-        <p>Get Started</p>
-      </Drawer>
-      <Logo redirect={redirectHandler} />
-
-      <ul className={styles.authItems}>
-        <span>
-          {/* <img onClick={themeChangeHandler} src={sunIcon} alt="" /> */}
-        </span>
-        {isLoggedIn ? (
-          <>
-            <Dropdown
-              overlayClassName={styles.dropdownOverlay}
-              menu={{ items }}
-            >
-              <Space className={styles.dropdownSpace}>
-                <FontAwesomeIcon icon={faUser} />
-                {user}
-              </Space>
-            </Dropdown>
-          </>
-        ) : (
-          <>
-            <NavLink to="login"> Login</NavLink>
-            <NavLink to={isLoggedIn ? "compiler" : "login"}>
-              Get Started
-            </NavLink>
-          </>
-        )}
-      </ul>
-      <div className={styles.hamburger} onClick={hamburgerClickHandler}>
-        <Menu />
+        <Button onClick={drawerButtonClickHandler}>Login</Button>
+        <Button onClick={drawerButtonClickHandler} type="primary">
+          Get Started
+        </Button>
       </div>
-    </header>
+
+      <header className={styles.header}>
+        <Logo redirect={redirectHandler} />
+
+        <ul className={styles.authItems}>
+          <span></span>
+          {isLoggedIn ? (
+            <>
+              <Dropdown
+                overlayClassName={styles.dropdownOverlay}
+                menu={{ items }}
+              >
+                <Space className={styles.dropdownSpace}>
+                  <FontAwesomeIcon icon={faUser} />
+                  {user}
+                </Space>
+              </Dropdown>
+            </>
+          ) : (
+            <>
+              <NavLink to="login"> Login</NavLink>
+              <NavLink to={isLoggedIn ? "compiler" : "login"}>
+                Get Started
+              </NavLink>
+            </>
+          )}
+        </ul>
+        <div className={styles.hamburger} onClick={hamburgerClickHandler}>
+          {drawerOpen ? <X /> : <Menu />}
+        </div>
+      </header>
+    </>
   );
 };
 
