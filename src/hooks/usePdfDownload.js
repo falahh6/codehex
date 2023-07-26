@@ -14,25 +14,28 @@ const usePdfDownload = ({
     pdf.setFont("Courier", "normal", "Bold");
     pdf.text("Code", 10, 10);
 
-    pdf.setFontSize(10);
+    pdf.setFontSize(8);
     pdf.setFont("Helvetica", "normal");
     pdf.text(userCode, 30, 10);
 
+    const userCodeLines = pdf.splitTextToSize(userCode, 180);
+    const userCodeHeight = userCodeLines.length * 3.2;
+
     pdf.setFontSize(18);
     pdf.setFont("Courier", "normal", "Bold");
-    pdf.text("Output", 10, 140);
+    pdf.text("Output", 10, 20 + userCodeHeight);
 
-    pdf.setFontSize(10);
+    pdf.setFontSize(8);
     pdf.setFont("Helvetica", "normal");
-    pdf.text(codeOutput, 10, 150);
+    pdf.text(codeOutput, 30, 20 + userCodeHeight);
 
     pdf.setFontSize(18);
     pdf.setFont("Courier", "normal", "bolder");
-    pdf.text("Code Explanation", 10, 170);
+    pdf.text("Code Explanation", 10, 60 + userCodeHeight);
 
-    pdf.setFontSize(10);
+    pdf.setFontSize(8);
     pdf.setFont("Courier", "normal", "bolder");
-    pdf.text(codeExplanation, 10, 180, { maxWidth: 180 });
+    pdf.text(codeExplanation, 30, 70 + userCodeHeight, { maxWidth: 150 });
 
     pdf.addImage(codehexLogoDataURL, "JPEG", 90, 260);
 

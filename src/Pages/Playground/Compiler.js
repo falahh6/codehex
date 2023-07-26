@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet } from "react-helmet";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { initialExecutionForInput } from "../../store/compiler-slice";
+import { compilerAndRun } from "../../store/compiler-slice";
 import PreLoader from "../../Components/UI/PreLoader";
 import useDropdown from "../../hooks/useDropdown";
 import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
@@ -19,28 +19,6 @@ import { toast } from "sonner";
 import { Computer, Share } from "lucide-react";
 import ShareModal from "../../Components/ShareModal/ShareModal";
 import { NavLink } from "react-router-dom";
-
-// const checkingIfInputNeeded = (userCode) => {
-//   const inputPatterns = [
-//     /prompt\(/i,
-//     /readline\(/i,
-//     /input\(/i,
-//     /raw_input\(/i,
-//     /sys.stdin.readline\(/i,
-//     /Scanner\s*\w+\s*=\s*new\s*Scanner\(System\.in\)/i,
-//     /gets\(/i,
-//     /STDIN.gets\(/i,
-//   ];
-
-//   let inputCount = 0;
-//   for (const pattern of inputPatterns) {
-//     const matches = userCode.match(pattern);
-//     if (matches) {
-//       inputCount += matches.length;
-//     }
-//   }
-//   return inputCount;
-// };
 
 export const languagesItems = programmingLanguages.map((language, index) => ({
   key: `${index}`,
@@ -55,8 +33,6 @@ const Compiler = () => {
   const [language, setLanguage] = useState("");
 
   const output = useSelector((state) => state.compiler.output);
-  const finalOutput = useSelector((state) => state.compiler.finalOutput);
-  const [finalOutputState] = useState(finalOutput);
   const [isLoading, setIsLoading] = useState(true);
   const [modal2Open, setModal2Open] = useState(false);
   const alternativeCodeIni = useSelector(
@@ -101,7 +77,7 @@ const Compiler = () => {
       isLoadingState = false;
     }
 
-    dispatch(initialExecutionForInput(payload));
+    dispatch(compilerAndRun(payload));
   };
 
   const codeReplacehandler = () => {
@@ -137,7 +113,7 @@ const Compiler = () => {
               </Helmet>
               <div className={styles.mainDivRes}>
                 <div>
-                  <p>It's recommeneded to use our compiler only on PC</p>
+                  <p>Our compiler is currently only built for Computers.</p>
                   <Divider className={styles.divider}>
                     <Computer size={12} />
                   </Divider>
@@ -216,17 +192,18 @@ const Compiler = () => {
                         children: (
                           <div className={styles.Terminal}>
                             <Input
-                              placeholder="Your input here"
+                              placeholder="stdin : for multiple inputs, write all the inputs saperated by space "
                               className={styles.userInputField}
                               ref={inputRef}
                             />
+
                             <div className={styles.outputForConsole}>
                               <span className={styles.promptLabel}>$</span>
                               <p className={styles.output}>{output}</p>
                               <span></span>
                             </div>
                             <p className={styles.commandMessage}>
-                              {finalOutputState.message}
+                              {output.message}
                             </p>
                           </div>
                         ),

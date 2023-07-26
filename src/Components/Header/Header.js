@@ -52,6 +52,12 @@ const Header = () => {
     document.body.classList.toggle("no-scroll");
   };
 
+  const closeDrawerHandler = () => {
+    setDrawerOpen((prevState) => !prevState);
+
+    document.body.classList.toggle("no-scroll");
+  };
+
   const drawerButtonClickHandler = () => {
     navigate("/login");
   };
@@ -59,10 +65,7 @@ const Header = () => {
   return (
     <>
       {drawerOpen && (
-        <div
-          onClick={() => setDrawerOpen(false)}
-          className={styles.backdrop}
-        ></div>
+        <div onClick={closeDrawerHandler} className={styles.backdrop}></div>
       )}
 
       <div
