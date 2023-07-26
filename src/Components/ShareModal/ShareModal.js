@@ -9,11 +9,7 @@ import {
   Checkbox,
   Input,
 } from "antd";
-import {
-  DownOutlined,
-  WhatsAppOutlined,
-  FileAddOutlined,
-} from "@ant-design/icons";
+import { DownOutlined, FileAddOutlined } from "@ant-design/icons";
 import styles from "./ShareModal.module.css";
 import { useSelector } from "react-redux";
 import usePdfDownload from "../../hooks/usePdfDownload";
@@ -24,7 +20,6 @@ const ShareModal = ({ onModalOpen, onModalClose, userCode, codeOutput }) => {
   const contentSharingRef = useRef();
 
   const { Title, Text } = Typography;
-  //   const [shouldShareExplanation, setShouldShareExplanation] = useState(false);
   const [fileName, setFileName] = useState("");
 
   const shareSelectionHandler = {
@@ -42,21 +37,32 @@ const ShareModal = ({ onModalOpen, onModalClose, userCode, codeOutput }) => {
 
   const items = [
     {
-      label: "Share on Whatsapp",
-      key: "1",
-      icon: <WhatsAppOutlined />,
-    },
-    {
       label: "Save as PDF",
-      key: "2",
+      key: "1",
       icon: <FileAddOutlined />,
       onClick: handleDownloadPDF,
     },
   ];
 
-  //   const checkCodeExplanatioHandler = () => {
-  //     setShouldShareExplanation((prevState) => !prevState);
-  //   };
+  const shareHandler = () => {
+    if (navigator.share) {
+      const combinedText = `Code : ${userCode}\nOutput : ${codeOutput} \nCode Explanation : ${codeExplanation}`;
+      navigator
+        .share({
+          title: fileName,
+          text: combinedText,
+          url: `\n\n ${window.location.href}`,
+        })
+        .then(() => {
+          console.log("Combined Input and Textarea value shared!");
+        })
+        .catch((error) => {
+          console.error("Sharing failed:", error);
+        });
+    } else {
+      console.error("Web Share API not supported in your browser.");
+    }
+  };
 
   return (
     <Modal
@@ -74,6 +80,7 @@ const ShareModal = ({ onModalOpen, onModalClose, userCode, codeOutput }) => {
         <Space align="end">
           <Dropdown.Button
             icon={<DownOutlined />}
+            onClick={shareHandler}
             menu={{
               items,
             }}
