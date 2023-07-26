@@ -178,3 +178,22 @@
         transform: rotate(180deg);
     }
 }
+
+@media (max-width: 480px){
+    .main > div{
+        width: 80%;
+        margin-top: -2rem;
+    }
+    .Dlogin button{
+        width: 100%;
+    }
+
+    .main h4{
+        margin-top: 0.5rem;
+    }
+
+    .noAccount{
+        padding-top: 1rem ;
+    }
+
+}

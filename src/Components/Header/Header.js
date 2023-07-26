@@ -3,10 +3,10 @@ import styles from "./Header.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Dropdown, Space, Button } from "antd";
-import { faUser, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { userLogout } from "../../store/auth-slice";
-import { Menu, X } from "lucide-react";
+import { LogOut, Menu, User, X } from "lucide-react";
 import { useState } from "react";
 import "./Header.css";
 const Header = () => {
@@ -64,14 +64,27 @@ const Header = () => {
           className={styles.backdrop}
         ></div>
       )}
+
       <div
         style={drawerOpen ? { top: "0" } : { top: "-15rem" }}
         className={styles.drawer}
       >
-        <Button onClick={drawerButtonClickHandler}>Login</Button>
-        <Button onClick={drawerButtonClickHandler} type="primary">
-          Get Started
-        </Button>
+        {isLoggedIn ? (
+          <div className={styles.profileViewerRes}>
+            <Space className={styles.dropdownSpace}>
+              <User size={25} />
+              {user}
+              <LogOut size={25} onClick={logoutUser} />
+            </Space>
+          </div>
+        ) : (
+          <>
+            <Button onClick={drawerButtonClickHandler}>Login</Button>
+            <Button onClick={drawerButtonClickHandler} type="primary">
+              Get Started
+            </Button>
+          </>
+        )}
       </div>
 
       <header className={styles.header}>
@@ -86,7 +99,7 @@ const Header = () => {
                 menu={{ items }}
               >
                 <Space className={styles.dropdownSpace}>
-                  <FontAwesomeIcon icon={faUser} />
+                  <User size={25} />
                   {user}
                 </Space>
               </Dropdown>

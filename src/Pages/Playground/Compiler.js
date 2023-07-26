@@ -12,12 +12,13 @@ import PreLoader from "../../Components/UI/PreLoader";
 import useDropdown from "../../hooks/useDropdown";
 import DropdownComponent from "../../Components/UI/Dropdown/DropdownComponent";
 import OpenAImodes from "../../Components/OpenAIModes/OpenAImodes";
-import { Tabs, Button, Input } from "antd";
+import { Tabs, Button, Input, Divider } from "antd";
 import CodeEditor from "../../Components/CodeEditor.js/CodeEditor";
 import { LoadingOutlined } from "@ant-design/icons";
 import { toast } from "sonner";
-import { Share } from "lucide-react";
+import { Computer, Share } from "lucide-react";
 import ShareModal from "../../Components/ShareModal/ShareModal";
+import { NavLink } from "react-router-dom";
 
 // const checkingIfInputNeeded = (userCode) => {
 //   const inputPatterns = [
@@ -118,9 +119,8 @@ const Compiler = () => {
   const shareHandler = () => {
     setModal2Open(true);
   };
-
   return (
-    <>
+    <div>
       {isLoading ? (
         <PreLoader />
       ) : (
@@ -135,6 +135,18 @@ const Compiler = () => {
               <Helmet>
                 <title>Compiler</title>
               </Helmet>
+              <div className={styles.mainDivRes}>
+                <div>
+                  <p>It's recommeneded to use our compiler only on PC</p>
+                  <Divider className={styles.divider}>
+                    <Computer size={12} />
+                  </Divider>
+                  <p>The responsive version of our compiler is coming soon!!</p>
+                  <Button>
+                    <NavLink to={"/"}>Go Back</NavLink>
+                  </Button>
+                </div>
+              </div>
               <div className={styles.mainDiv}>
                 <form action="" className={styles.form}>
                   <div className={styles.actions}>
@@ -237,7 +249,7 @@ const Compiler = () => {
           </motion.div>
         </AnimatePresence>
       )}
-    </>
+    </div>
   );
 };
 

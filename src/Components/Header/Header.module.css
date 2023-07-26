@@ -162,6 +162,10 @@
         margin-top: 5rem;
         margin-bottom: 1rem;
     }
+    .profileViewerRes{
+        margin-top: 5rem;
+        height: fit-content;
+    }
     /* .drawer button{
        width: 80%;
     }
@@ -173,4 +177,22 @@
     .drawerRoot{
         z-index: 999;
     } */
+
+    .dropdownSpace{
+        display: block;
+        color: #094AAD;
+        display: flex;
+        font-size: 12px;
+        justify-content: space-around;
+    }
+
+    .dropdownSpace svg{
+        margin: 1rem;
+        size: 10px;
+        background-color: transparent;
+    }
+
+    .dropdownSpace:hover{
+        background-color: transparent;
+    }
 }

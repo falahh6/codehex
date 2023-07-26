@@ -203,3 +203,46 @@
     height: 8%;
 }
 
+.mainDivRes div{
+    display: none;
+}
+
+
+@media  (max-width : 480px){
+    .mainDivRes{
+        height: 100vh;
+        margin-top: auto;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .mainDivRes div{
+       display: flex;
+       justify-content: center;
+       flex-direction: column;
+       width: 80%;
+       align-items: center;
+       margin: auto;
+       display: block;
+    }
+
+    .mainDivRes p{
+        font-size: 10px;
+        margin-bottom: 0;
+        text-align: center;
+    }
+
+    .divider{
+       margin-top: 0px;
+    }
+
+    .mainDiv{
+        display: none;
+    }
+
+    .mainDivRes button{
+        font-size: 12px;
+        width: 100%;
+        margin-top: 1rem;
+    }
+}
