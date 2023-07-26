@@ -13,7 +13,7 @@ export const compilerAndRun = createAsyncThunk(
       url: "https://onecompiler-apis.p.rapidapi.com/api/v1/run",
       headers: {
         "content-type": "application/json",
-        "X-RapidAPI-Key": process.env.REACT_APP_API_KEY,
+        "X-RapidAPI-Key": process.env.REACT_APP_API_KEY_2,
         "X-RapidAPI-Host": "onecompiler-apis.p.rapidapi.com",
       },
       data: {

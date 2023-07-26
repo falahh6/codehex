@@ -4,7 +4,6 @@ import Error from "./Pages/Error/Error";
 import "./App.css";
 import Home from "./Pages/Landing/Home";
 import Compiler from "./Pages/Playground/Compiler";
-import DevelopedBy from "./Pages/DevelopedBy/DevelopedBy";
 import Login from "./Pages/Login/Login";
 import { ParallaxProvider } from "react-scroll-parallax";
 import { Toaster } from "sonner";
@@ -18,10 +17,6 @@ function App() {
         {
           path: "/",
           element: <Home />,
-        },
-        {
-          path: "/developer",
-          element: <DevelopedBy />,
         },
       ],
     },

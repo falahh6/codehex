@@ -25,7 +25,6 @@ const Login = () => {
 
   const isLoading = useSelector((state) => state.auth.isLoading);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  // const user = useSelector((state) => state.auth.user);
 
   const [emailError, setEmailError] = useState();
   const [passwordError, setPasswordError] = useState();
@@ -48,6 +47,12 @@ const Login = () => {
     event.preventDefault();
     const userEmail = emailRef.current.value;
     const userPassword = passwordRef.current.value;
+
+    if (userEmail.length === 0 || userPassword.length === 0) {
+      setEmailError(true);
+      setPasswordError(true);
+      return;
+    }
 
     if (!emailError && !passwordError) {
       if (loginMode) {

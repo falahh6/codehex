@@ -47,7 +47,6 @@ const Header = () => {
 
   const hamburgerClickHandler = () => {
     setDrawerOpen((prevState) => !prevState);
-    console.log("testing drawer");
 
     document.body.classList.toggle("no-scroll");
   };

@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { codehexLogoDataURL } from "../utils/codehex-logo-DATAURL";
 import jsPDF from "jspdf";
 
@@ -8,6 +9,10 @@ const usePdfDownload = ({
   fileName,
 }) => {
   const handleDownloadPDF = () => {
+    if (userCode.length === 0) {
+      toast.error("Empty data cannot be downloaded");
+      return;
+    }
     const pdf = new jsPDF("p", "mm", "a4");
 
     pdf.setFontSize(18);
@@ -40,6 +45,8 @@ const usePdfDownload = ({
     pdf.addImage(codehexLogoDataURL, "JPEG", 90, 260);
 
     pdf.save(fileName + ".pdf");
+
+    toast.success(`Your PDF (${fileName}) has been saved successfully`);
   };
   return { handleDownloadPDF };
 };

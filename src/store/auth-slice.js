@@ -77,10 +77,6 @@ const authSlice = createSlice({
   name: "auth-slice",
   initialState: authInitialState,
   reducers: {
-    login: (state) => {},
-
-    logout: (state) => {},
-
     loginWithGoogle: (state) => {
       supabase.auth.signInWithOAuth({
         provider: "google",
@@ -89,17 +85,17 @@ const authSlice = createSlice({
     },
 
     loginWithGitHub: (state) => {
-      supabase.auth.signInWithOAuth({
+      const { data } = supabase.auth.signInWithOAuth({
         provider: "github",
       });
       state.isLoggedIn = true;
+      console.log(data);
     },
   },
   extraReducers: (builder) => {
     //check user
     builder.addCase(userAuthCheck.fulfilled, (state, action) => {
       state.isLoggedIn = true;
-      console.log(action.payload);
       state.user = action.payload;
       toast.success("User is Logged in");
     });

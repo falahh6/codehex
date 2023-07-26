@@ -203,7 +203,7 @@ const Compiler = () => {
                               <span></span>
                             </div>
                             <p className={styles.commandMessage}>
-                              {output.message}
+                              {output?.message}
                             </p>
                           </div>
                         ),
