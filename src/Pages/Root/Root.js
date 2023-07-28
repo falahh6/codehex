@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import Header from "../../Components/Header/Header";
 import { Helmet } from "react-helmet";
 import Footer from "../../Components/Footer/Footer";
-import { LoadingBar } from "react-redux-loading-bar";
 import { useEffect, useState } from "react";
 import PreLoader from "../../Components/UI/PreLoader";
 
@@ -24,7 +23,6 @@ const Root = () => {
             <title>codehex</title>
           </Helmet>
           <Header />
-          <LoadingBar />
           <main>
             <Outlet />
           </main>

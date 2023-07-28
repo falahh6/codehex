@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Response.module.css";
 import { Copy, Check } from "lucide-react";
-import "prismjs";
-import "prismjs/components/prism-javascript";
-import "prismjs/themes/prism.css";
 const Response = (props) => {
   const response = props.response;
   const [isCopied, setIsCopied] = useState(false);
