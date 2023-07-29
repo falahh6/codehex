@@ -220,7 +220,7 @@ const Login = () => {
           </form>
 
           <p className={styles.noAccount}>
-            Don't have and account?{" "}
+            Don't have an account?{" "}
             <span onClick={changeAuthMode}>
               {loginMode ? "Sign up" : "Log in"}
             </span>

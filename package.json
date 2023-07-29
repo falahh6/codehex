@@ -37,6 +37,7 @@
     "react-type-animation": "^3.1.0",
     "replit-client": "^0.25.0",
     "sonner": "^0.6.2",
+    "vercel": "^31.1.1",
     "web-vitals": "^2.1.4"
   },
   "homepage": "https://codehexx.netlify.app/",
