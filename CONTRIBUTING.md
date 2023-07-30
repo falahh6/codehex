@@ -45,6 +45,6 @@ If you have an idea or feature request for the project, please [open an issue](h
 
 ## License
 
-By contributing to this project, you agree that your contributions will be licensed under the project's [LICENSE](LICENSE.md).
+By contributing to this project, you agree that your contributions will be licensed under the project's [LICENSE](LICENSE).
 
 Thank you for your interest in contributing to our project! Your contributions are valuable, and we look forward to working with you.
