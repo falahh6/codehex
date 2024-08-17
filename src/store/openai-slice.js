@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
-  organization: "org-vBr2OjQTvBZS9SFiOOkOiDSj",
+  organization: "org-LKRq9OZJPcOpHmjKaChicy3I",
   apiKey: process.env.REACT_APP_OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
@@ -35,7 +35,7 @@ export const alternativeCode = createAsyncThunk(
   async ({ mode, userCode }) => {
     try {
       const response = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
+        model: "gpt-3.5-turbo-0125",
         messages: [
           {
             role: "user",
